@@ -257,9 +257,9 @@
 		B58501C81FFF4516009C2F65 /* Game Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B58501C91FFF453B009C2F65 /* UsefulFunctions.swift */,
 				B58501C41FFF1DCF009C2F65 /* AsteroidManager.swift */,
 				B58501DC1FFFD1FA009C2F65 /* TextureManager.swift */,
+				B58501C91FFF453B009C2F65 /* UsefulFunctions.swift */,
 			);
 			path = "Game Managers";
 			sourceTree = "<group>";

@@ -36,7 +36,7 @@ class Miner : Structure {
     }
     
     init() {
-        let xy = sceneWidth * 0.08
+        let xy = sceneWidth * 0.06
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.miner, color: .blue, size: rSize)

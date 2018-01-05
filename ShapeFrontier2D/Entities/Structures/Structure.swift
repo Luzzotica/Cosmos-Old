@@ -69,6 +69,14 @@ class Structure : Entity {
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
+        
+        physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
+        physicsBody?.categoryBitMask = CollisionType.Structure
+        physicsBody?.contactTestBitMask = CollisionType.Structure
+        physicsBody?.collisionBitMask = CollisionType.Nothing
+        
+        zPosition = Layer.Player
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

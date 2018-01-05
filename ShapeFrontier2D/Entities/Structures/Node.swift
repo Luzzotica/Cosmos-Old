@@ -37,7 +37,7 @@ class Node : Structure {
     }
     
     init() {
-        let xy = sceneWidth * 0.04
+        let xy = sceneWidth * 0.06
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.node, color: .blue, size: rSize)

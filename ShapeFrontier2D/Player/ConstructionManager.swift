@@ -22,9 +22,9 @@ class ConstructionManager : SKNode {
         structures.append(BuildingItem(PulseLaser()))
         
         let anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        let iconSize = CGSize(width: sceneWidth * 0.08, height: sceneWidth * 0.08)
-        let xBuffer : CGFloat = sceneWidth * 0.02
-        let yBuffer : CGFloat = sceneHeight * 0.02
+        let iconSize = CGSize(width: sceneWidth * 0.1, height: sceneWidth * 0.1)
+        let xBuffer : CGFloat = sceneWidth * 0.04
+        let yBuffer : CGFloat = sceneHeight * 0.04
         
         var point = CGPoint(x: xBuffer, y: yBuffer)
         
@@ -71,6 +71,7 @@ extension PlayerButtonHandler {
         
         structure.isDisable = true
         structure.position = location
+        structure.name?.append("UnderConstruction")
         
         gameScene.startConstructionMode(structure: structure)
     }

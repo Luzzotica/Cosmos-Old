@@ -36,7 +36,7 @@ class PulseLaser : Turret {
     }
     
     init() {
-        let xy = sceneWidth * 0.12
+        let xy = sceneWidth * 0.10
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.pulseLaserLevel1, color: .blue, size: rSize)

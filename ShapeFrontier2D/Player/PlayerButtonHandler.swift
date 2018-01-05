@@ -20,6 +20,7 @@ class PlayerButtonHandler : NSObject {
             
             if (node.name?.contains("Constructor"))! {
                 startStructureCreation(name: node.name!, location: location)
+                return
             }
         }
     }

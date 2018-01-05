@@ -16,22 +16,27 @@ class BuildingItem: NSObject {
     
 	private var nameLabel : SKLabelNode = SKLabelNode()
 	
-	var building : Structure! {
-		didSet {
-            nameLabel.text = building.name
-            nameLabel.fontName = fontStyleN
-            nameLabel.fontSize = fontSizeN
-            
-            nameLabel.position.y = fontSizeN * 0.5
-            
-            building.addChild(nameLabel)
-		}
-	}
+	var building : Structure!
     
     init(_ structure: Structure) {
         super.init()
         
+        // Label above it
+        nameLabel = SKLabelNode(text: structure.name)
+        nameLabel.fontName = fontStyleN
+        nameLabel.fontSize = fontSizeN
+        nameLabel.horizontalAlignmentMode = .center
+        
+        nameLabel.position.y = fontSizeN * 0.5
+        
+        // Build stuff
         building = structure
         building.name?.append("Constructor")
+        
+        building.addChild(nameLabel)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

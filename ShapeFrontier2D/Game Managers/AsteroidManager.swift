@@ -31,9 +31,7 @@ class AsteroidManager : NSObject {
             let y = atPoint.y + CGFloat((sin(angle) * Double(radius)))
             
             // Create the asteroid at the point, add it to the cluster
-//            let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
-            let asteroid = PulseLaser()
-            asteroid.position = CGPoint(x: x, y: y)
+            let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
             asteroid.zRotation = CGFloat(angle)
             
             //asteroid.texture = asteroidTexture

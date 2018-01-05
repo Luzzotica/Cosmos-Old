@@ -15,7 +15,7 @@ class AsteroidBig : Asteroid {
         let xy = sceneWidth * 0.16
         let aSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, size: aSize, minerals: minerals)
+        super.init(texture: Structures.reactorLevel3, size: aSize, minerals: minerals)
     }
     
     required init?(coder aDecoder: NSCoder) {

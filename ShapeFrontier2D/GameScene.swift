@@ -20,20 +20,19 @@ struct Layer {
     static let Player: CGFloat = 9
     static let PlayerBullets: CGFloat = 6
     static let Enemies: CGFloat = 5
-    static let Blocks: CGFloat = 4
+    static let Asteroids: CGFloat = 1
     static let EnemyBullets: CGFloat = 7
 }
 
 struct CollisionType {
     static let Nothing: UInt32 = 1
-    static let Player: UInt32 = 2
-    static let PlayerBullet: UInt32 = 4
-    static let Enemy: UInt32 = 8
-    static let Blocks: UInt32 = 16
-    static let Decoration: UInt32 = 32
-    static let Ground: UInt32 = 64
-    static let Powerup: UInt32 = 128
-    static let AllObjects: UInt32 = PlayerBullet | Enemy | Blocks | Powerup
+    static let Structure: UInt32 = 2
+    static let StructureMissile: UInt32 = 4
+    static let Construction: UInt32 = 8
+    static let Enemy: UInt32 = 16
+    static let EnemyMissile: UInt32 = 32
+    static let Asteroid: UInt32 = 64
+    static let Ground: UInt32 = 128
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -45,7 +44,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Construction Mode
     var toBuild : Structure!
+    var buildingImpedments : [Entity] = []
     var isBuilding = false
+    var isValidSpot = false
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -90,7 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else {
             for t in touches {
                 let touchedNodes = nodes(at: t.location(in: self))
-                
                 PlayerHUDHandler.shared.buttonPressedUp(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
             }
         }
@@ -104,6 +104,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        if isBuilding {
+            
+            if buildingImpedments.count == 0 {
+                isValidSpot = true
+            }
+            else {
+                isValidSpot = false
+            }
+            
+        }
         
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
@@ -119,6 +130,59 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         self.lastUpdateTime = currentTime
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node == nil || contact.bodyB.node == nil {
+            print("test1")
+            return
+        }
+        
+        let bodyA = contact.bodyA.node
+        let bodyB = contact.bodyB.node
+        let nameA = bodyA?.name
+        let nameB = bodyB?.name
+        print("Name A: \(nameA), name B: \(nameB)")
+        
+        if nameA == nil || nameB == nil {
+            return
+        }
+        
+        if (nameA?.contains("UnderConstruction"))! {
+            print("isNotValid")
+            buildingImpedments.append(bodyA as! Entity)
+        }
+        else if (nameB?.contains("UnderConstruction"))! {
+            print("isNotValid")
+            buildingImpedments.append(bodyB as! Entity)
+        }
+        
+    }
+    
+    func didEnd(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node == nil || contact.bodyB.node == nil {
+            return
+        }
+        
+        let bodyA = contact.bodyA.node
+        let bodyB = contact.bodyB.node
+        let nameA = bodyA?.name
+        let nameB = bodyB?.name
+        print("Name A: \(nameA), name B: \(nameB)")
+        
+        if nameA == nil || nameB == nil {
+            return
+        }
+        
+        if (nameA?.contains("UnderConstruction"))! {
+            print("isValid")
+            removeFromImpediments(entity: bodyA as! Entity)
+        }
+        else if (nameB?.contains("UnderConstruction"))! {
+            print("isValid")
+            removeFromImpediments(entity: bodyB as! Entity)
+        }
+        
     }
     
     /*
@@ -140,16 +204,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func updateConstructionMode(translation: CGPoint) {
         toBuild.position = toBuild.position + translation
         
+        if isValidSpot {
+            let color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
+            toBuild.run(color)
+        }
+        else {
+            let color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
+            toBuild.run(color)
+        }
+        
+        //let overlay = SKSpriteNode(texture: , size: toBuild.size)
         
     }
     
     func endConstructionMode() {
-        print("swag")
+        if isValidSpot {
+            let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
+            toBuild.run(color)
+            
+            // Made it
+            for _ in 0...16 {
+                toBuild.name?.removeLast()
+            }
+            toBuild.isDisable = false
+            
+            
+        }
+        else {
+            toBuild.removeFromParent()
+        }
         
-        toBuild.isDisable = false
         isBuilding = false
-        
         toBuild = nil
+        isValidSpot = true
+        
+    }
+    
+    func removeFromImpediments(entity: Entity) {
+        for i in 0..<buildingImpedments.count {
+            if buildingImpedments[i].isEqual(entity) {
+                buildingImpedments.remove(at: i)
+                print("removed")
+                return
+            }
+        }
     }
     
     /*
@@ -195,6 +293,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Setup asteroids
         let cluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 10000)
         addChild(cluster)
+//        for asteroid in cluster.children {
+//            asteroids.append(asteroid as! Asteroid)
+//        }
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {
