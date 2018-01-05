@@ -31,8 +31,7 @@ class Miner : Structure {
         powerToUse = 1
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "test_reactor"))
-        lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
+        lowPowerOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
         
     }
     
@@ -41,7 +40,7 @@ class Miner : Structure {
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: texture, color: .blue, size: rSize)
-		self.name = "Miner"
+        self.name = "Miner"
         
         setupStructure()
         

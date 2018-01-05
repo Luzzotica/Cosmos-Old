@@ -40,10 +40,8 @@ class Node : Structure {
         let xy = sceneWidth * 0.04
         let rSize = CGSize(width: xy, height: xy)
         
-        let nodeTexture = SKTexture(image: #imageLiteral(resourceName: "test_reactor"))
-        
-        super.init(texture: nodeTexture, color: .blue, size: rSize)
-		self.name = "Node"
+        super.init(texture: texture, color: .blue, size: rSize)
+        self.name = "Node"
         
         setupStructure()
         
