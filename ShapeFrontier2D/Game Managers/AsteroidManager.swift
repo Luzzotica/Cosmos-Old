@@ -11,7 +11,7 @@ import SpriteKit
 
 class AsteroidManager : NSObject {
     
-    
+    static let shared = AsteroidManager()
     
     func createAsteroidCluster(atPoint: CGPoint, mineralCap: Int) -> SKNode {
         let clusterNode = SKNode()
@@ -19,9 +19,6 @@ class AsteroidManager : NSObject {
         let clusterRadius = Int(arc4random_uniform(UInt32(sceneWidth * 0.6))) + Int(sceneWidth * 0.2)
         
         var currentMinerals = mineralCap
-        
-        //let asteroidTexture = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
-        //let asteroidTexture = SKTexture(imageNamed: "Asteroid1")
         
         while currentMinerals > 100 {
             // Randomize radius, and, and minerals to give
@@ -35,7 +32,7 @@ class AsteroidManager : NSObject {
             
             // Create the asteroid at the point, add it to the cluster
 //            let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
-            let asteroid = PulseLaser(texture: Structures.pulseLaserLevel1)
+            let asteroid = PulseLaser()
             asteroid.position = CGPoint(x: x, y: y)
             asteroid.zRotation = CGFloat(angle)
             

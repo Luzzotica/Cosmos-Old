@@ -56,10 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
-        let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 10000)
-        addChild(cluster)
-        
-		
 		// Pinch to zoom gesture recognizer
 		let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
 		view.addGestureRecognizer(pinch)
@@ -67,7 +63,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        for t in touches {
+            let touchedNodes = nodes(at: t.location(in: self))
+            
+            PlayerHUDHandler.shared.buttonPressedDown(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,15 +75,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let translationInScene = touch!.location(in: self) - touch!.previousLocation(in: self)
         
-        PlayerHUDHandler.shared.cameraMoved(dx: translationInScene.x, dy: translationInScene.y)
+        if !isBuilding {
+            PlayerHUDHandler.shared.cameraMoved(dPoint: translationInScene)
+        }
+        else {
+            updateConstructionMode(translation: translationInScene)
+        }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for t in touches {
-            let touchedNodes = nodes(at: t.location(in: self))
-            
-            PlayerHUDHandler.shared.buttonPressed(touchedNodes: touchedNodes)
+        if isBuilding {
+            endConstructionMode()
+        }
+        else {
+            for t in touches {
+                let touchedNodes = nodes(at: t.location(in: self))
+                
+                PlayerHUDHandler.shared.buttonPressedUp(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
+            }
         }
         
     }
@@ -110,8 +121,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         self.lastUpdateTime = currentTime
-		
-		PlayerHUDHandler.shared.update(currentTime)
+    }
+    
+    /*
+ 
+    Construction Actions
+ 
+    */
+    
+    func startConstructionMode(structure: Structure) {
+        toBuild = structure
+        toBuild.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
+        
+        addChild(toBuild)
+        
+        isBuilding = true
+        
+    }
+    
+    func updateConstructionMode(translation: CGPoint) {
+        toBuild.position = toBuild.position + translation
+        
+        
+    }
+    
+    func endConstructionMode() {
+        print("swag")
+        
+        toBuild.isDisable = false
+        isBuilding = false
+        
+        toBuild = nil
     }
     
     /*
@@ -149,11 +189,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func setupGame() {
-        // Add and create the map
-        
+        // Add and create the camera
         let camera = PlayerHUDHandler.shared.setupHUD()
         addChild(camera)
         self.camera = camera
+        
+        // Setup asteroids
+        let cluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 10000)
+        addChild(cluster)
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {
