@@ -157,14 +157,13 @@ public class CollectionNode: SKNode {
         switch panGestureRecognizer.state {
         case .began:
 			newBuilding = SKSpriteNode()
-			newBuilding!.color = .cyan
-			newBuilding!.size = CGSize(width: 60, height: 60)
+//			newBuilding!.size = CGSize(width: 60, height: 60)
 			
             date = Date()
         case .changed:
             updateIndex()
 			
-			delegate?.updatePositionForSelectedNode(selectedNode: newBuilding!, panGesture: panGestureRecognizer)
+			delegate?.updatePositionForSelectedNode(selectedNode: newBuilding!, index: index, panGesture: panGestureRecognizer)
 			
 			return
             pureVelocity = Double(panGestureRecognizer.velocity(in: self.skview).x)
@@ -256,7 +255,7 @@ public protocol CollectionNodeDelegate: class {
 	/**
 	called each time an item is dragged
 	*/
-	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, panGesture:UIPanGestureRecognizer)
+	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index:Int, panGesture:UIPanGestureRecognizer)
 }
 
 public extension CollectionNodeDelegate {

@@ -22,6 +22,9 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 	// Bottom HUD
 	private var collectionNode: CollectionNode!
 	private var buildings:[Structure] = []
+	private let colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.green, UIColor.blue, UIColor.purple, UIColor.brown]
+	
+	private var offset: CGPoint = CGPoint(x: 0, y: 0)
 	
     
     func setupHUD() -> SKCameraNode {
@@ -36,7 +39,28 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		// Setup Buildings
 		
 		let reactor = Reactor()
+		reactor.color = .red
 		buildings.append(reactor)
+		
+		let reactor1 = Reactor()
+		reactor1.color = .orange
+		buildings.append(reactor1)
+		
+		let reactor2 = Reactor()
+		reactor1.color = .green
+		buildings.append(reactor2)
+		
+		let reactor3 = Reactor()
+		reactor1.color = .blue
+		buildings.append(reactor3)
+		
+		let reactor4 = Reactor()
+		reactor1.color = .purple
+		buildings.append(reactor4)
+		
+		let reactor5 = Reactor()
+		reactor1.color = .brown
+		buildings.append(reactor5)
 		
 		
         // setup other game handlers and all their glorious things, add them to the camera
@@ -113,6 +137,9 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
     func cameraMoved(dx: CGFloat, dy: CGFloat) {
         playerCamera.position.x -= dx
         playerCamera.position.y -= dy
+		
+		offset.x -= dx
+		offset.y -= dy
     }
     
     func zoom(scale: CGFloat) {
@@ -179,12 +206,15 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 	}
 	
 	
-	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, panGesture: UIPanGestureRecognizer) {
+	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index: Int, panGesture: UIPanGestureRecognizer) {
 		if selectedNode.parent == nil {
+			selectedNode.color = colors[index]
 			gameScene.addChild(selectedNode)
 		}
 		
 		let location = panGesture.location(in: gameScene.view)
-		selectedNode.position = CGPoint(x:location.x * playerCamera.xScale, y:-(location.y * playerCamera.yScale) + sceneHeight * playerCamera.yScale)
+		let x = location.x * playerCamera.xScale + offset.x
+		let y = -(location.y * playerCamera.yScale) + sceneHeight * playerCamera.yScale + offset.y
+		selectedNode.position = CGPoint(x: x, y: y)
 	}
 }
