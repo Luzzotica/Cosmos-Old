@@ -47,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Setup
     
     let asteroidManager = AsteroidManager()
+	let playerResourcesManager = PlayerResourcesHUD()
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self

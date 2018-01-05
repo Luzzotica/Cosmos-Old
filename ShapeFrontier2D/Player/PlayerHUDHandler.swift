@@ -17,6 +17,7 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
     private override init() {}
     
     let playerButtonHandler = PlayerButtonHandler()
+	let playerResourceHUD = PlayerResourcesHUD()
     
     var playerCamera : SKCameraNode!
     
@@ -35,6 +36,9 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
         playerCamera.position.y = sceneHeight * 0.5
         playerCamera.zPosition = Layer.UI
         playerCamera.name = "mainCamera"
+		
+		playerResourceHUD.setup()
+		playerCamera.addChild(playerResourceHUD)
         
         // Setup Buildings
         
