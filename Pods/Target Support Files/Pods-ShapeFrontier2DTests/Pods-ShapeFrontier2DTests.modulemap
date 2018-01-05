@@ -1,0 +1,6 @@
+framework module Pods_ShapeFrontier2DTests {
+  umbrella header "Pods-ShapeFrontier2DTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
