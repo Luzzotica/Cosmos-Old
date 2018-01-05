@@ -178,7 +178,7 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 			gameScene.addChild(selectedNode)
 		}
 		
-		let location = panGesture.location(in: sceneView)
+		let location = panGesture.location(in: gameScene.view)
 		selectedNode.position = CGPoint(x: location.x, y: -location.y + sceneHeight)
 	}
 }
