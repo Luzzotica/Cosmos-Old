@@ -1,0 +1,6 @@
+framework module CollectionNode {
+  umbrella header "CollectionNode-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03B617095870EDFEB9277B4A040AB50E"
+               BlueprintIdentifier = "87F1E061153A811EFE46768473F35792"
                BuildableName = "Pods_ShapeFrontier2D.framework"
                BlueprintName = "Pods-ShapeFrontier2D"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03B617095870EDFEB9277B4A040AB50E"
+            BlueprintIdentifier = "87F1E061153A811EFE46768473F35792"
             BuildableName = "Pods_ShapeFrontier2D.framework"
             BlueprintName = "Pods-ShapeFrontier2D"
             ReferencedContainer = "container:Pods.xcodeproj">

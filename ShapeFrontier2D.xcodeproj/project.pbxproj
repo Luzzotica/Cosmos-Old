@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07D9DE031FFF621300D973BA /* BuildingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D9DE021FFF621200D973BA /* BuildingItem.swift */; };
 		3E51B8552BCA4D0D27DC1FB5 /* Pods_ShapeFrontier2DUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
 		B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585017D1FFF1018009C2F65 /* GameScene.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07D9DE021FFF621200D973BA /* BuildingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingItem.swift; sourceTree = "<group>"; };
 		35F15813B3CD4E6D834DF659 /* Pods-ShapeFrontier2DTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.release.xcconfig"; sourceTree = "<group>"; };
 		43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +159,7 @@
 				B58501751FFF1018009C2F65 /* Products */,
 				A893C8C2E565774D69D2CB05 /* Pods */,
 				124E5B6409BB2497B70FDF7D /* Frameworks */,
+				07D9DE011FFF61A300D973BA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +215,7 @@
 				B58501B01FFF1440009C2F65 /* UIHandler.swift */,
 				B58501AC1FFF1435009C2F65 /* PlayerButtonHandler.swift */,
 				B58501AD1FFF1435009C2F65 /* PlayerHUDHandler.swift */,
+				07D9DE021FFF621200D973BA /* BuildingItem.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -400,11 +404,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftySKScrollView/SwiftySKScrollView.framework",
+				"${BUILT_PRODUCTS_DIR}/CollectionNode/CollectionNode.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftySKScrollView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollectionNode.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -547,6 +551,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07D9DE031FFF621300D973BA /* BuildingItem.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
@@ -739,7 +744,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74874V9Z5H;
+				DEVELOPMENT_TEAM = A5JHWHDAMA;
 				INFOPLIST_FILE = ShapeFrontier2D/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -756,7 +761,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74874V9Z5H;
+				DEVELOPMENT_TEAM = A5JHWHDAMA;
 				INFOPLIST_FILE = ShapeFrontier2D/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

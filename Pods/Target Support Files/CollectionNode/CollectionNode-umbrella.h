@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double SwiftySKScrollViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char SwiftySKScrollViewVersionString[];
+FOUNDATION_EXPORT double CollectionNodeVersionNumber;
+FOUNDATION_EXPORT const unsigned char CollectionNodeVersionString[];
 

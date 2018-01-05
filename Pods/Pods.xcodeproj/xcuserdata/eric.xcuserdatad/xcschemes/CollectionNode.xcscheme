@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '38167ECD668F8394E43C197D49E2DC0E'
-               BlueprintName = 'SwiftySKScrollView'
+               BlueprintIdentifier = '163A45ADBAC16EB4994AD1C8C59741A2'
+               BlueprintName = 'CollectionNode'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftySKScrollView.framework'>
+               BuildableName = 'CollectionNode.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
