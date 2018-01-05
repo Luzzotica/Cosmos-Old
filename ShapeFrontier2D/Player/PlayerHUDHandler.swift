@@ -62,14 +62,12 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		
 		let hudContainer = UIView(frame: CGRect(x: 0, y: sceneHeight - 76, width: sceneWidth, height: 76))
 		hudContainer.backgroundColor = .clear
-//		sceneView.addSubview(hudContainer)
-//		sceneView.sendSubview(toBack: hudContainer)
 		sceneView.insertSubview(hudContainer, at: 0)
 		
 		collectionNode = CollectionNode(at: hudContainer)
 		
-		collectionNode.dataSource = self
-		collectionNode.delegate = self
+//        collectionNode.dataSource = self
+//        collectionNode.delegate = self
 		
 		// TODO: - Fix Magic Numbers
 		collectionNode.position = CGPoint(x:  -sceneWidth / 2 + 30, y: -(sceneHeight / 2) + 30)

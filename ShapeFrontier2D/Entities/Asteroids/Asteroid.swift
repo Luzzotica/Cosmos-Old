@@ -13,12 +13,11 @@ class Asteroid : Entity {
     
     var minerals_current : Int = 0
     
-    init(texture: SKTexture?, color: UIColor, size: CGSize, minerals: Int) {
-        let asteroidTexture = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
-        
-		super.init(texture: asteroidTexture, color: color, size: size)
+    init(texture: SKTexture?, size: CGSize, minerals: Int) {
         
         
+        
+		super.init(texture: texture, color: .blue, size: size)
         
         minerals_current = minerals
     }

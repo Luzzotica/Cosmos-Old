@@ -32,12 +32,11 @@ class Node : Structure {
         powerToUse = 0
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "NodeNoPwr"))
-        lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
+        lowPowerOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: self.size)
         
     }
     
-    init() {
+    init(texture: SKTexture) {
         let xy = sceneWidth * 0.04
         let rSize = CGSize(width: xy, height: xy)
         

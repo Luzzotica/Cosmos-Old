@@ -11,13 +11,11 @@ import SpriteKit
 
 class Miner : Structure {
     
-    
     override func build() {
         super.build()
         
         if !isBuilding {
-            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "MinerPwr"))
-            texture = normalTexture
+            texture = Structures.miner
         }
     }
     
@@ -38,13 +36,11 @@ class Miner : Structure {
         
     }
     
-    init() {
+    init(texture: SKTexture) {
         let xy = sceneWidth * 0.08
         let rSize = CGSize(width: xy, height: xy)
         
-        let minerTexture = SKTexture(image: #imageLiteral(resourceName: "MinerNoPwr"))
-        
-        super.init(texture: minerTexture, color: .blue, size: rSize)
+        super.init(texture: texture, color: .blue, size: rSize)
 		self.name = "Miner"
         
         setupStructure()

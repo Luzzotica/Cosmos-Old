@@ -32,12 +32,11 @@ class MissileCannon : Turret {
         powerToUse = 1
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "LowPwrOverlay"))
-        lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
+        lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
         
     }
     
-    init() {
+    init(texture: SKTexture) {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         

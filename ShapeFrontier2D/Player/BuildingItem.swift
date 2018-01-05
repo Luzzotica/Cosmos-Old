@@ -17,7 +17,7 @@ class BuildingItem: CollectionNodeItem {
 	private var imageNode : SKSpriteNode!
 	
 	var building : Structure! {
-		didSet{
+		didSet {
 			nameLabel.text = building.name
 			
 			imageNode = SKSpriteNode(texture: building.texture)
