@@ -41,7 +41,7 @@ class PulseLaser : Turret {
         
         super.init(texture: Structures.pulseLaserLevel1, color: .blue, size: rSize)
         
-		self.name = "PulseLaser"
+        self.name = "PulseLaser"
         
         setupStructure()
         

@@ -129,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild.position.y += sceneHeight * 0.2
+        toBuild.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
         
         addChild(toBuild)
         

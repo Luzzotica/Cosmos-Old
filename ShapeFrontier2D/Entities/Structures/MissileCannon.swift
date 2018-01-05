@@ -41,7 +41,7 @@ class MissileCannon : Turret {
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.missileCannon, color: .blue, size: rSize)
-		self.name = "MissileCannon"
+        self.name = "MissileCannon"
         
         setupStructure()
         

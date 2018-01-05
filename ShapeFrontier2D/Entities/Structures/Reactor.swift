@@ -44,7 +44,7 @@ class Reactor : Structure {
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.reactorLevel1, color: .blue, size: rSize)
-		self.name = "Reactor"
+        self.name = "Reactor"
         
         setupStructure()
         

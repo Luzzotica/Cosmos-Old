@@ -41,7 +41,7 @@ class Node : Structure {
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.node, color: .blue, size: rSize)
-		self.name = "Node"
+        self.name = "Node"
         
         setupStructure()
         

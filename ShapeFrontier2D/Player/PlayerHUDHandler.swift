@@ -20,7 +20,7 @@ class PlayerHUDHandler : NSObject {
     let constructionManager = ConstructionManager()
     
     var playerCamera : SKCameraNode!
-	
+    
     
     func setupHUD() -> SKCameraNode {
         // Create a camera node and shift it to center the scene
@@ -30,10 +30,10 @@ class PlayerHUDHandler : NSObject {
         playerCamera.position.y = sceneHeight * 0.5
         playerCamera.zPosition = Layer.UI
         playerCamera.name = "mainCamera"
-		
-		// Setup Building Constructor
+        
+        // Setup Building Constructor
         playerCamera.addChild(constructionManager)
-		
+        
         return playerCamera
     }
     
@@ -44,7 +44,6 @@ class PlayerHUDHandler : NSObject {
     // Move the camera function
     func cameraMoved(dPoint: CGPoint) {
         playerCamera.position = playerCamera.position - dPoint
-
     }
     
     func zoom(scale: CGFloat) {
@@ -62,7 +61,6 @@ class PlayerHUDHandler : NSObject {
                 return;
             }
         }
-        
         
         playerCamera.run(SKAction.scale(by: 1.0 / scale, duration: 0))
         
@@ -83,5 +81,5 @@ class PlayerHUDHandler : NSObject {
 //    func handleScore(name: String) {
 //        playerLeftHUD.handleScore(name: name)
 //    }
-	
+    
 }

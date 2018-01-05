@@ -40,7 +40,7 @@ class Miner : Structure {
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.miner, color: .blue, size: rSize)
-		self.name = "Miner"
+        self.name = "Miner"
         
         setupStructure()
         
