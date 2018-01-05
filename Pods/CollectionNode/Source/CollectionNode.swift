@@ -67,7 +67,7 @@ public class CollectionNode: SKNode {
         if shouldBeginUpdating {
             updateIndex()
 
-			return
+            return
             let time = date.timeIntervalSinceNow
             let distance = -(trueVelocity * time)
             
@@ -135,9 +135,9 @@ public class CollectionNode: SKNode {
     private var biggestItem : SKNode!
     private var shouldBeginUpdating : Bool = false
     private var date : Date!
-	private var newBuilding: SKSpriteNode?
-	private var isBuilding: Bool = false
-	private let longPressThreshold = 0.5
+    private var newBuilding: SKSpriteNode?
+    private var isBuilding: Bool = false
+    private let longPressThreshold = 0.5
     private var pureVelocity : Double!
     private var trueVelocity : Double!
     private var previousVelocity : Double!
@@ -156,16 +156,16 @@ public class CollectionNode: SKNode {
     @objc private func handlePan() {
         switch panGestureRecognizer.state {
         case .began:
-			newBuilding = SKSpriteNode()
-//			newBuilding!.size = CGSize(width: 60, height: 60)
-			
+            newBuilding = SKSpriteNode()
+//            newBuilding!.size = CGSize(width: 60, height: 60)
+            
             date = Date()
         case .changed:
             updateIndex()
-			
-			delegate?.updatePositionForSelectedNode(selectedNode: newBuilding!, index: index, panGesture: panGestureRecognizer)
-			
-			return
+            
+            delegate?.updatePositionForSelectedNode(selectedNode: newBuilding!, index: index, panGesture: panGestureRecognizer)
+            
+            return
             pureVelocity = Double(panGestureRecognizer.velocity(in: self.skview).x)
             damping = index == 0 && pureVelocity > 0 || index == dataSource!.numberOfItems()-1 && pureVelocity < 0 ? pureVelocity*0.5 : 0
             trueVelocity = pureVelocity - damping
@@ -185,7 +185,7 @@ public class CollectionNode: SKNode {
             previousVelocity = trueVelocity
             trueVelocity = pureVelocity
             shouldBeginUpdating = true
-			newBuilding = nil
+            newBuilding = nil
         default:
             print("nothing interesting happening")
         }
@@ -251,17 +251,17 @@ public protocol CollectionNodeDelegate: class {
      called each time an item is selected
      */
     func collectionNode(_ collectionNode: CollectionNode, didSelectItem item: CollectionNodeItem, at index: Index ) -> Void
-	
-	/**
-	called each time an item is dragged
-	*/
-	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index:Int, panGesture:UIPanGestureRecognizer)
+    
+    /**
+    called each time an item is dragged
+    */
+    func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index:Int, panGesture:UIPanGestureRecognizer)
 }
 
 public extension CollectionNodeDelegate {
     func collectionNode(_ collectionNode: CollectionNode, didShowItemAt index: Index) -> Void {  }
     func collectionNode(_ collectionNode: CollectionNode, didSelectItem item: CollectionNodeItem, at index: Index ) -> Void {  }
-//	func updatePositionForSelectedNode(selectedNode: CollectionNodeItem) -> Void {	}
+//    func updatePositionForSelectedNode(selectedNode: CollectionNodeItem) -> Void {    }
 }
 
 private extension CGPoint {

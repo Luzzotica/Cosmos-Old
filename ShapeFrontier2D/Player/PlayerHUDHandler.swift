@@ -14,6 +14,7 @@ import CollectionNode
 
 class PlayerHUDHandler : NSObject {
     static let shared = PlayerHUDHandler()
+    private override init() {}
     
     let playerButtonHandler = PlayerButtonHandler()
     let constructionManager = ConstructionManager()

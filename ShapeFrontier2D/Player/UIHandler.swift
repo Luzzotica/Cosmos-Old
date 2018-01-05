@@ -12,6 +12,7 @@ import SpriteKit
 class UIHandler : NSObject {
     
     static let shared = UIHandler()
+	private override init() {}
     
     func createPauseGameUI() -> SKNode {
         let pauseLabel = SKLabelNode(text: "Game Paused!")
