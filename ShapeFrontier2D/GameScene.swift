@@ -42,6 +42,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
+	
+	var toBuild: Structure?
+	var isBuilding = false
     
     
     // MARK: - Setup
@@ -131,26 +134,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
+        toBuild!.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
         
-        addChild(toBuild)
+        addChild(toBuild!)
         
         isBuilding = true
         
     }
     
     func updateConstructionMode(translation: CGPoint) {
-        toBuild.position = toBuild.position + translation
-        
-        
+		if let structToBuild = toBuild {
+			structToBuild.position = structToBuild.position + translation
+		}
     }
     
     func endConstructionMode() {
         print("swag")
-        
-        toBuild.isDisable = false
+		
+		if let structToBuild = toBuild {
+			structToBuild.isDisabled = false
+		}
+		
         isBuilding = false
-        
         toBuild = nil
     }
     
