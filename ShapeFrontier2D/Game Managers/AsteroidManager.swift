@@ -42,10 +42,16 @@ class AsteroidManager : NSObject {
     
     func createAsteroid(minerals: Int, atPoint: CGPoint) -> Asteroid {
         
-        let mineralThreshold = 250
+        let smallThreshold = 150
+        let mediumThreshold = 350
         
-        if minerals < mineralThreshold {
+        if minerals < smallThreshold {
             let asteroid = AsteroidSmall(minerals: minerals)
+            asteroid.position = atPoint
+            return asteroid
+        }
+        else if minerals < mediumThreshold {
+            let asteroid = AsteroidMedium(minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }

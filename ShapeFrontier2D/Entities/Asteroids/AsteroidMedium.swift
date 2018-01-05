@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class AsteroidSmall : Asteroid {
+class AsteroidMedium : Asteroid {
     
     init(minerals: Int) {
         let xy = sceneWidth * 0.12
