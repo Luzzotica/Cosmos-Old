@@ -11,11 +11,11 @@ import SpriteKit
 
 class AsteroidBig : Asteroid {
     
-    init(minerals: Int) {
+    init(texture: SKTexture, minerals: Int) {
         let xy = sceneWidth * 0.16
         let aSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: nil, color: .green, size: aSize, minerals: minerals)
+        super.init(texture: texture, size: aSize, minerals: minerals)
     }
     
     required init?(coder aDecoder: NSCoder) {

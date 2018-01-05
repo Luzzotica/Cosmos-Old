@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,11 +39,11 @@
 		17A0BBD09145DD2FB15EB8225966A28C /* Pods-ShapeFrontier2DTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ShapeFrontier2DTests-umbrella.h"; sourceTree = "<group>"; };
 		1A4CEA9F4D0BD2F64B3EF6DD24F4C140 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
 		1A7FF737A092BAF3066BC25CAC6CA26F /* Pods-ShapeFrontier2DTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ShapeFrontier2DTests.release.xcconfig"; sourceTree = "<group>"; };
-		1CB48E3027435083D3CB5E65088D45B2 /* CollectionNode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CollectionNode.framework; path = CollectionNode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CB48E3027435083D3CB5E65088D45B2 /* CollectionNode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CollectionNode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8D8825DEDA1E91505215E8C141F7E1 /* Pods-ShapeFrontier2DTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ShapeFrontier2DTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1FF6B0C33276DB47713C6AD0E2596787 /* CollectionNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CollectionNode.swift; path = Source/CollectionNode.swift; sourceTree = "<group>"; };
-		24C9FDD7CD41FC921B8B02DB86FA5A1F /* Pods-ShapeFrontier2DUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ShapeFrontier2DUITests.modulemap"; sourceTree = "<group>"; };
-		2D7B217E65C64E370734A7C124A146C1 /* Pods_ShapeFrontier2D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ShapeFrontier2D.framework; path = "Pods-ShapeFrontier2D.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		24C9FDD7CD41FC921B8B02DB86FA5A1F /* Pods-ShapeFrontier2DUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ShapeFrontier2DUITests.modulemap"; sourceTree = "<group>"; };
+		2D7B217E65C64E370734A7C124A146C1 /* Pods_ShapeFrontier2D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D1CA9676255A595750AAE83389F831 /* Pods-ShapeFrontier2D-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ShapeFrontier2D-resources.sh"; sourceTree = "<group>"; };
 		37AF891CADFD2F9854B95CCA31471189 /* Pods-ShapeFrontier2DTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ShapeFrontier2DTests-dummy.m"; sourceTree = "<group>"; };
 		391D3F2D606A2E000DFF19E3BF457D31 /* Pods-ShapeFrontier2D-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ShapeFrontier2D-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -56,20 +56,20 @@
 		6BE54D8C81E88E2A0C897B5EC2DE8742 /* Pods-ShapeFrontier2DTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ShapeFrontier2DTests-resources.sh"; sourceTree = "<group>"; };
 		6BE8D625F0A314ACA54F7548AC370A1F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		723C6A8E9577F5F18A037E0237A16733 /* Pods-ShapeFrontier2D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ShapeFrontier2D.release.xcconfig"; sourceTree = "<group>"; };
-		748EF9D8DB0EFFE92720676B6A3B30B9 /* Pods-ShapeFrontier2DTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ShapeFrontier2DTests.modulemap"; sourceTree = "<group>"; };
+		748EF9D8DB0EFFE92720676B6A3B30B9 /* Pods-ShapeFrontier2DTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ShapeFrontier2DTests.modulemap"; sourceTree = "<group>"; };
 		7B49AC9B9AE3D09CB0D618B9ED8B3FCC /* CollectionNode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CollectionNode.xcconfig; sourceTree = "<group>"; };
 		8372FEA90D0A74D2B4171F72736B2896 /* Pods-ShapeFrontier2D-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ShapeFrontier2D-dummy.m"; sourceTree = "<group>"; };
 		85892B922F34CC4A89170D29CA2BC948 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D3DA4E95F7CA3C9FF386C3E19345BB1 /* CollectionNode-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollectionNode-prefix.pch"; sourceTree = "<group>"; };
 		910C8587A731BE6DFED5974CFF918E8B /* Pods-ShapeFrontier2DTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ShapeFrontier2DTests-frameworks.sh"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		950275E30E71E62DB628D4CE1AD0CEC9 /* Pods-ShapeFrontier2D.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ShapeFrontier2D.modulemap"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		950275E30E71E62DB628D4CE1AD0CEC9 /* Pods-ShapeFrontier2D.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ShapeFrontier2D.modulemap"; sourceTree = "<group>"; };
 		95CF4E12168F5A936A3B26233A967D4B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		99D4C6FF6032A9730C0E110298707FB8 /* CollectionNode.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CollectionNode.modulemap; sourceTree = "<group>"; };
-		9AF12B7AB90A85544EA470023653BC29 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ShapeFrontier2DUITests.framework; path = "Pods-ShapeFrontier2DUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D4C6FF6032A9730C0E110298707FB8 /* CollectionNode.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CollectionNode.modulemap; sourceTree = "<group>"; };
+		9AF12B7AB90A85544EA470023653BC29 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83FBE160F7E6AF5C7010EAEB1316638 /* Pods-ShapeFrontier2DUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ShapeFrontier2DUITests-dummy.m"; sourceTree = "<group>"; };
 		B2D99B661531592A9A34FE83C32B08B6 /* Pods-ShapeFrontier2DTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ShapeFrontier2DTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		BB7B3792DDA4767AAA3B17FDDEC7D8F6 /* Pods_ShapeFrontier2DTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ShapeFrontier2DTests.framework; path = "Pods-ShapeFrontier2DTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB7B3792DDA4767AAA3B17FDDEC7D8F6 /* Pods_ShapeFrontier2DTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01A306F19A147B04B5429B93042BAFD /* Pods-ShapeFrontier2DUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ShapeFrontier2DUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D37115D492C8ADC8BE63681EDF19B8BE /* Pods-ShapeFrontier2D-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ShapeFrontier2D-acknowledgements.plist"; sourceTree = "<group>"; };
 		E7177FFE0B65B07BB4284F8EF4E212FC /* Pods-ShapeFrontier2DUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ShapeFrontier2DUITests-frameworks.sh"; sourceTree = "<group>"; };
@@ -222,7 +222,6 @@
 				1FF6B0C33276DB47713C6AD0E2596787 /* CollectionNode.swift */,
 				ECF2C855EF99CBF3E542D03B3752644F /* Support Files */,
 			);
-			name = CollectionNode;
 			path = CollectionNode;
 			sourceTree = "<group>";
 		};
@@ -362,7 +361,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -512,6 +511,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;

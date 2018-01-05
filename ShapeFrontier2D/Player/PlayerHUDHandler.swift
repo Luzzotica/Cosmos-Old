@@ -38,29 +38,24 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		
 		// Setup Buildings
 		
-		let reactor = Reactor()
-		reactor.color = .red
-		buildings.append(reactor)
-		
-		let node = Node()
-		node.color = .orange
-		buildings.append(node)
-		
-		let miner = Miner()
-		miner.color = .green
-		buildings.append(miner)
-		
-		let missile = MissileCannon()
-		missile.color = .blue
-		buildings.append(missile)
-		
-		let pulseLaser = PulseLaser()
-		pulseLaser.color = .purple
-		buildings.append(pulseLaser)
-		
-		let reactor5 = Reactor()
-		reactor5.color = .brown
-		buildings.append(reactor5)
+        let reactor = Reactor(texture: Structures.reactorLevel1)
+        buildings.append(reactor)
+        
+        let node = Node(texture: Structures.node)
+        buildings.append(node)
+
+        let miner = Miner(texture: Structures.miner)
+        buildings.append(miner)
+
+        let missile = MissileCannon(texture: Structures.missileCannon)
+        buildings.append(missile)
+
+        let pulseLaser = PulseLaser(texture: Structures.pulseLaserLevel1)
+        buildings.append(pulseLaser)
+//
+//        let reactor5 = Reactor()
+//        reactor5.color = .brown
+//        buildings.append(reactor5)
 		
 		
         // setup other game handlers and all their glorious things, add them to the camera
@@ -68,14 +63,12 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		
 		let hudContainer = UIView(frame: CGRect(x: 0, y: sceneHeight - 76, width: sceneWidth, height: 76))
 		hudContainer.backgroundColor = .clear
-//		sceneView.addSubview(hudContainer)
-//		sceneView.sendSubview(toBack: hudContainer)
 		sceneView.insertSubview(hudContainer, at: 0)
 		
 		collectionNode = CollectionNode(at: hudContainer)
 		
-		collectionNode.dataSource = self
-		collectionNode.delegate = self
+//        collectionNode.dataSource = self
+//        collectionNode.delegate = self
 		
 		// TODO: - Fix Magic Numbers
 		collectionNode.position = CGPoint(x:  -sceneWidth / 2 + 30, y: -(sceneHeight / 2) + 30)

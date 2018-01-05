@@ -24,7 +24,7 @@ public class CollectionNode: SKNode {
     /** returns all the children of this node that are CollectionNodeItems  */
     public var items: [CollectionNodeItem] {
         var nodes: [CollectionNodeItem] = []
-        children.forEach{
+        children.forEach {
             if let item = $0 as? CollectionNodeItem {
                 nodes.append(item)
             }

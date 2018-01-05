@@ -11,13 +11,11 @@ import SpriteKit
 
 class Miner : Structure {
     
-    
     override func build() {
         super.build()
         
         if !isBuilding {
-            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "MinerPwr"))
-            texture = normalTexture
+            texture = Structures.miner
         }
     }
     
@@ -33,18 +31,15 @@ class Miner : Structure {
         powerToUse = 1
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "LowPwrOverlay"))
-        lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
+        lowPowerOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
         
     }
     
-    init() {
+    init(texture: SKTexture) {
         let xy = sceneWidth * 0.08
         let rSize = CGSize(width: xy, height: xy)
         
-        let minerTexture = SKTexture(image: #imageLiteral(resourceName: "MinerNoPwr"))
-        
-        super.init(texture: minerTexture, color: .blue, size: rSize)
+        super.init(texture: texture, color: .blue, size: rSize)
 		self.name = "Miner"
         
         setupStructure()

@@ -55,7 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
-        let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 2000)
+        let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 10000)
         addChild(cluster)
         
 		
