@@ -11,6 +11,9 @@ import SpriteKit
 
 class Entity : SKSpriteNode {
     
+    var health_max : Int = 0
+    var health : Int = 0
+    
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         

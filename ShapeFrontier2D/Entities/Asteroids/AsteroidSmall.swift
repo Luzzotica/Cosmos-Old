@@ -12,7 +12,7 @@ import SpriteKit
 class AsteroidSmall : Asteroid {
     
     init(minerals: Int) {
-        let xy = sceneWidth * 0.02
+        let xy = sceneWidth * 0.08
         let aSize = CGSize(width: xy, height: xy)
         
         super.init(texture: nil, color: .green, size: aSize, minerals: minerals)

@@ -52,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var buildings:[String] = []
     
-    
+    private var dragStartPoint : CGPoint!
     
     // MARK: - Setup
     
@@ -68,7 +68,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 2000)
         addChild(cluster)
 		
+        // Pinch to zoom gesture recognizer
+        let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
+        view.addGestureRecognizer(pinch)
 		
+        
+        // Your awesome code
 		addChild(moveableNode)
 		
 		
@@ -136,10 +141,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        for t in touches {
+            dragStartPoint = t.location(in: self)
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
         
+        let translationInScene = touch!.location(in: self) - touch!.previousLocation(in: self)
+        
+        PlayerHUDHandler.shared.cameraMoved(dx: translationInScene.x, dy: translationInScene.y)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -211,8 +223,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func setupGame() {
+        // Add and create the map
+        
         let camera = PlayerHUDHandler.shared.setupHUD()
         addChild(camera)
         self.camera = camera
     }
+    
+    @objc func zoom(_ sender: UIPinchGestureRecognizer) {
+        
+        // Don't let the map get too small or too big:
+        
+        PlayerHUDHandler.shared.zoom(scale: sender.scale)
+        sender.scale = 1.0
+        
+    }
+    
 }

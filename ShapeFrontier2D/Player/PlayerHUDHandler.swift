@@ -34,6 +34,34 @@ class PlayerHUDHandler : NSObject {
         
     }
     
+    func cameraMoved(dx: CGFloat, dy: CGFloat) {
+        playerCamera.position.x -= dx
+        playerCamera.position.y -= dy
+    }
+    
+    func zoom(scale: CGFloat) {
+        
+        
+        // If the scale of the camera is already <= the threshold, abort pinch
+        if (scale > 1) {
+            if (playerCamera.xScale <= 0.1) {
+                return
+            }
+        }
+        
+        // If the scale of the camera is already >= the threshold, abort zoom
+        if (scale < 1) {
+            if (playerCamera.xScale >= 10.0) {
+                return;
+            }
+        }
+        
+        
+        playerCamera.run(SKAction.scale(by: 1.0 / scale, duration: 0))
+        
+        print(playerCamera.xScale)
+    }
+    
     //
     
     func buttonPressed(touchedNodes: [SKNode]) {
