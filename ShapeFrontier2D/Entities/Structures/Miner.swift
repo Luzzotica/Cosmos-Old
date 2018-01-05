@@ -39,7 +39,7 @@ class Miner : Structure {
     }
     
     init() {
-        let xy = sceneWidth * 0.12
+        let xy = sceneWidth * 0.08
         let rSize = CGSize(width: xy, height: xy)
         
         let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "MinerNoPwr"))

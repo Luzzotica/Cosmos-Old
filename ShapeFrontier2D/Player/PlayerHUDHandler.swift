@@ -185,6 +185,10 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		}
 		
 		let location = panGesture.location(in: gameScene.view)
-		selectedNode.position = CGPoint(x:location.x * playerCamera.xScale, y:-(location.y * playerCamera.yScale) + sceneHeight * playerCamera.yScale)
+        
+        let createXLoc = location.x * playerCamera.xScale + playerCamera.position.x - sceneWidth * 0.5 * playerCamera.xScale
+        let createYLoc = sceneHeight * 0.5 * playerCamera.yScale - (location.y * playerCamera.yScale) + playerCamera.position.y
+        
+		selectedNode.position = CGPoint(x: createXLoc, y: createYLoc)
 	}
 }
