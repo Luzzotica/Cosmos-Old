@@ -46,15 +46,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-	
-	private var scrollView: SwiftySKScrollView?
-	private let moveableNode = SKNode()
-	
-	private var buildings:[String] = []
-	
-	
-	
-	// MARK: - Setup
+    
+    private var scrollView: SwiftySKScrollView?
+    private let moveableNode = SKNode()
+    
+    private var buildings:[String] = []
+    
+    
+    
+    // MARK: - Setup
     
     let asteroidManager = AsteroidManager()
     
@@ -62,65 +62,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
-
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Set up game and all it's goodness
+        setupGame()
         
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        for t in touches {
-            let touchedNodes = nodes(at: t.location(in: self))
-            
-            PlayerHUDHandler.shared.buttonPressed(touchedNodes: touchedNodes)
-        }
-        
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-	
-	
-	override func didMove(to view: SKView) {
+        let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 2000)
+        addChild(cluster)
+		
+		
 		addChild(moveableNode)
 		
+		
+		/*
 		// The bottom 76 points of the screen
 		let nodeSideSize = 60
 		scrollView = SwiftySKScrollView(frame: CGRect(x: 0, y: size.height - 76, width: size.width, height: 76), moveableNode: moveableNode, direction: .horizontal)
 		
-//		scrollView?.contentSize = CGSize(width: CGFloat(buildings.count * (nodeSideSize + 8)), height: scrollView!.frame.height)
+		//        scrollView?.contentSize = CGSize(width: CGFloat(buildings.count * (nodeSideSize + 8)), height: scrollView!.frame.height)
 		scrollView?.contentSize = CGSize(width: scrollView!.frame.size.width * 3, height: scrollView!.frame.height)
 		
 		self.view?.addSubview(scrollView!)
 		scrollView?.setContentOffset(CGPoint(x: 0 + scrollView!.frame.width * 2, y: 0), animated: true)
 		
 		
-//		Step 4: - Add sprites for each page in the scrollView to make positioning your actual stuff later on much easier
+		//        Step 4: - Add sprites for each page in the scrollView to make positioning your actual stuff later on much easier
 		
 		guard let scrollView = scrollView else { return } // unwrap  optional
 		
@@ -138,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		moveableNode.addChild(page3ScrollView)
 		
 		
-//		Step 5: Add your sprites, labels etc. Because you will add them to the above sprites you can position them as usual which is why its much easier to do Step 4 first.
+		//        Step 5: Add your sprites, labels etc. Because you will add them to the above sprites you can position them as usual which is why its much easier to do Step 4 first.
 		
 		/// Test sprites page 1
 		let sprite1Page1 = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
@@ -166,7 +130,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let sprite2Page3 = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
 		sprite2Page3.position = CGPoint(x: sprite1Page3.position.x + (sprite2Page3.size.width * 1.5), y: sprite1Page3.position.y)
 		sprite1Page3.addChild(sprite2Page3)
-	}
+*/
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for t in touches {
+            let touchedNodes = nodes(at: t.location(in: self))
+            
+            PlayerHUDHandler.shared.buttonPressed(touchedNodes: touchedNodes)
+        }
+        
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
     
     
     override func update(_ currentTime: TimeInterval) {
