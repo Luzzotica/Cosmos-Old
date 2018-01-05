@@ -1,41 +1,38 @@
 //
-//  Reactor.swift
+//  Node.swift
 //  ShapeFrontier2D
 //
-//  Created by Sterling Long on 1/4/18.
+//  Created by Sterling Long on 1/5/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class Reactor : Structure {
-    
-    
-    
-    var powerProvided : Int = 10
+class Node : Structure {
     
     override func build() {
         super.build()
         
-//        if !isBuilding {
-//            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
-//        }
+        if !isBuilding {
+            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "NodePwr"))
+            texture = normalTexture
+        }
     }
     
     override func setupStructure() {
         super.setupStructure()
         
         // setup health variables
-        health_max = 10
-
+        health_max = 8
+        
         // Reactor power priority is low, doesn't need power...
-        powerPriority = 0
-        powerToBuild = 2
+        powerPriority = 1
+        powerToBuild = 1
         powerToUse = 0
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "LowPwrOverlay"))
+        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "NodeNoPwr"))
         lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
         
     }
@@ -44,9 +41,9 @@ class Reactor : Structure {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
+        let nodeTexture = SKTexture(image: #imageLiteral(resourceName: "NodeNoPwr"))
         
-        super.init(texture: reactorTexture, color: .blue, size: rSize)
+        super.init(texture: nodeTexture, color: .blue, size: rSize)
         
         setupStructure()
         
