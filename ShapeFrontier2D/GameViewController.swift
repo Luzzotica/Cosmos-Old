@@ -10,36 +10,57 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+var gameScene : GameScene!
+
+// game scene variables
+var sceneWidth : CGFloat!
+var sceneHeight : CGFloat!
+var sceneView : SKView!
+
+// Font size for in game text
+var fontSizeN : CGFloat! // Normal Font Size
+var fontSizeT : CGFloat! // Title Font Size
+let fontStyleN = "Menlo-Regular" // Normal font type
+let fontStyleT = "Menlo-Bold" // Title font type
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
-        // including entities and graphs.
-        if let scene = GKScene(fileNamed: "GameScene") {
-            
-            // Get the SKScene from the loaded GKScene
-            if let sceneNode = scene.rootNode as! GameScene? {
-                
-                // Copy gameplay related content over to the scene
-                sceneNode.entities = scene.entities
-                sceneNode.graphs = scene.graphs
-                
-                // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
-                
-                // Present the scene
-                if let view = self.view as! SKView? {
-                    view.presentScene(sceneNode)
-                    
-                    view.ignoresSiblingOrder = true
-                    
-                    view.showsFPS = true
-                    view.showsNodeCount = true
-                }
-            }
-        }
+        // Set up screen size
+        sceneWidth = view.bounds.size.width
+        sceneHeight = view.bounds.size.height
+        
+        
+        // Set up game scene
+        setupSceneView()
+        
+        // Set up fonts
+        setupFonts()
+        
+    }
+    
+    // Setup all the things
+    func setupFonts() {
+        fontSizeN = sceneHeight * 0.04
+        fontSizeT = sceneHeight * 0.08
+    }
+    
+    func setupSceneView() {
+        let vSize = CGRect(x: 0.0,
+                           y: 0.0,
+                           width: sceneWidth,
+                           height: sceneHeight)
+        sceneView = SKView(frame: vSize)
+        
+        gameScene = GameScene(size: CGSize(width: view.bounds.size.width, height: sceneHeight))
+        sceneView.presentScene(gameScene)
+        
+        sceneView.ignoresSiblingOrder = true
+        
+        sceneView.showsFPS = true
+        sceneView.showsNodeCount = true
     }
 
     override var shouldAutorotate: Bool {

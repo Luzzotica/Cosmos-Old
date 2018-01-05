@@ -9,6 +9,32 @@
 import SpriteKit
 import GameplayKit
 
+struct Layer {
+    static let Background1: CGFloat = -5
+    static let Background2: CGFloat = -4
+    static let Background3: CGFloat = -3
+    static let Overlay: CGFloat = 11
+    static let UI: CGFloat = 10
+    static let Powerup: CGFloat = 8
+    static let Player: CGFloat = 9
+    static let PlayerBullets: CGFloat = 6
+    static let Enemies: CGFloat = 5
+    static let Blocks: CGFloat = 4
+    static let EnemyBullets: CGFloat = 7
+}
+
+struct CollisionType {
+    static let Nothing: UInt32 = 1
+    static let Player: UInt32 = 2
+    static let PlayerBullet: UInt32 = 4
+    static let Enemy: UInt32 = 8
+    static let Blocks: UInt32 = 16
+    static let Decoration: UInt32 = 32
+    static let Ground: UInt32 = 64
+    static let Powerup: UInt32 = 128
+    static let AllObjects: UInt32 = PlayerBullet | Enemy | Blocks | Powerup
+}
+
 class GameScene: SKScene {
     
     var entities = [GKEntity]()
@@ -81,7 +107,13 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        
+        for t in touches {
+            let touchedNodes = nodes(at: t.location(in: self))
+            
+            PlayerHUDHandler.shared.buttonPressed(touchedNodes: touchedNodes)
+        }
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -106,5 +138,30 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
+    }
+    
+    /*
+     
+     UI ACTIONS!
+     Pause Game
+     Restart Game
+     Clear Game
+     
+     */
+    
+    func pauseUnpause() -> Bool {
+        self.isPaused = !self.isPaused
+        return self.isPaused
+    }
+    
+    func restartGame() {
+        clearGame()
+        PlayerHUDHandler.shared.resetHUD()
+        
+        let _ = pauseUnpause()
+    }
+    
+    func clearGame() {
+        
     }
 }
