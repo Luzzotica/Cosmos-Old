@@ -13,9 +13,8 @@ import SpriteKit
 class PlayerEnergyBarHandler: NSObject {
 	var maxEnergy: Int = 1
 	var currentEnergy: Int = 0
-	var currentMinerals: Int = 0
 	var HUDWidth: CGFloat!
-	//	var currentEnergyLevelNode: SKSpriteNode
+
 	var energyLevelNode: SKSpriteNode!
 	var energyLevelLabel: SKLabelNode!
 	
@@ -26,7 +25,7 @@ class PlayerEnergyBarHandler: NSObject {
 	func setupEnergyBar(width: CGFloat) -> SKSpriteNode {
 		
 		HUDWidth = width
-		let height = sceneHeight * 0.05
+		let height = sceneHeight * 0.03
 		energyLevelNode = SKSpriteNode(color: .cyan, size: CGSize(width: HUDWidth, height: height))
 		energyLevelNode.zPosition = Layer.UI
 		
@@ -45,12 +44,12 @@ class PlayerEnergyBarHandler: NSObject {
 		maxEnergy = baseValue
 		
 		energyLevelLabel = SKLabelNode(text: "\(currentEnergy) energy (\(100 * currentEnergy / maxEnergy)%)")
-		energyLevelLabel.fontSize = fontSizeN
+		energyLevelLabel.fontSize = fontSizeS
 		energyLevelLabel.fontName = fontStyleN
 		energyLevelLabel.fontColor = .cyan
 		
 		// Set position to bottom-right of screen
-		energyLevelLabel.position.y = energyLevelNode.size.height + sceneHeight * 0.02
+		energyLevelLabel.position.y = energyLevelNode.size.height + sceneHeight * 0.015
 		energyLevelLabel.position.x = -HUDWidth - (sceneWidth * 0.01)
 		energyLevelLabel.horizontalAlignmentMode = .left
 		

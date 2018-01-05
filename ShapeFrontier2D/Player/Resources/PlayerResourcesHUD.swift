@@ -13,6 +13,7 @@ class PlayerResourcesHUD: SKNode {
 	var HUDWidth: CGFloat
 	
 	let playerEnergyBarHandler = PlayerEnergyBarHandler()
+	var playerMiningHandler: PlayerMiningHandler!
 	
 	override init() {
 		self.HUDWidth = sceneWidth * 0.2
@@ -30,8 +31,13 @@ class PlayerResourcesHUD: SKNode {
 		self.position.x = sceneWidth / 2
 		self.position.y = -sceneHeight / 2
 		
+		// Setup Energy HUD
 		self.addChild(playerEnergyBarHandler.setupEnergyBar(width: HUDWidth))
-		
 		self.addChild(playerEnergyBarHandler.setupEnergyLabel(baseValue: 4))
+		
+		// Setup Mining HUD
+		playerMiningHandler = PlayerMiningHandler(width: HUDWidth)
+		self.addChild(playerMiningHandler.setupMiningRateLabel(baseValue: 10, labelBelow: playerEnergyBarHandler.energyLevelLabel))
+		self.addChild(playerMiningHandler.setupMineralLevelLabel(baseValue: 1000))
 	}
 }

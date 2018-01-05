@@ -20,6 +20,7 @@ var sceneView : SKView!
 // Font size for in game text
 var fontSizeN : CGFloat! // Normal Font Size
 var fontSizeT : CGFloat! // Title Font Size
+var fontSizeS : CGFloat! // Small Font Size
 let fontStyleN = "Menlo-Regular" // Normal font type
 let fontStyleT = "Menlo-Bold" // Title font type
 
@@ -42,6 +43,7 @@ class GameViewController: UIViewController {
     
     // Setup all the things
     func setupFonts() {
+		fontSizeS = sceneHeight * 0.03
         fontSizeN = sceneHeight * 0.04
         fontSizeT = sceneHeight * 0.08
     }
