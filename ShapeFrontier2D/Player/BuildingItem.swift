@@ -16,14 +16,12 @@ class BuildingItem: CollectionNodeItem {
 	private var nameLabel : SKLabelNode = SKLabelNode()
 	private var imageNode : SKSpriteNode!
 	
-	var building : String! {
+	var building : Structure! {
 		didSet{
-			nameLabel.text = building
+			nameLabel.text = building.name
 			
-			imageNode = SKSpriteNode()
-			imageNode.size = CGSize(width: 60, height: 60)
-			imageNode.color = .cyan
-			//				imageNode = SKSpriteNode(texture: SKTexture(image: emoji.image))
+			imageNode = SKSpriteNode(texture: building.texture)
+			imageNode.size = CGSize(width: building.size.width, height: building.size.height)
 			
 			nameLabel.position.y = 0
 			
