@@ -36,12 +36,12 @@ class MissileCannon : Turret {
         
     }
     
-    init(texture: SKTexture) {
+    init() {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, color: .blue, size: rSize)
-		self.name = "Missle Cannon"
+        super.init(texture: Structures.missileCannon, color: .blue, size: rSize)
+		self.name = "MissileCannon"
         
         setupStructure()
         

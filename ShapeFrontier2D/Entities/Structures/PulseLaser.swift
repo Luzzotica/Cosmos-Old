@@ -35,12 +35,13 @@ class PulseLaser : Turret {
         
     }
     
-    init(texture: SKTexture) {
+    init() {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, color: .blue, size: rSize)
-		self.name = "Pulse Laser"
+        super.init(texture: Structures.pulseLaserLevel1, color: .blue, size: rSize)
+        
+		self.name = "PulseLaser"
         
         setupStructure()
         

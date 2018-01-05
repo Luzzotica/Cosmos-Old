@@ -35,11 +35,11 @@ class Miner : Structure {
         
     }
     
-    init(texture: SKTexture) {
+    init() {
         let xy = sceneWidth * 0.08
         let rSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, color: .blue, size: rSize)
+        super.init(texture: Structures.miner, color: .blue, size: rSize)
 		self.name = "Miner"
         
         setupStructure()

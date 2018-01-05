@@ -12,22 +12,26 @@ import SpriteKit
 import CollectionNode
 
 
-class BuildingItem: CollectionNodeItem {
+class BuildingItem: NSObject {
+    
 	private var nameLabel : SKLabelNode = SKLabelNode()
-	private var imageNode : SKSpriteNode!
 	
 	var building : Structure! {
 		didSet {
-			nameLabel.text = building.name
-			
-			imageNode = SKSpriteNode(texture: building.texture)
-			imageNode.size = CGSize(width: 60, height: 60)
-			imageNode.color = building.color
-			nameLabel.position.y = 0
-			
-			
-			addChild(nameLabel)
-			addChild(imageNode)
+            nameLabel.text = building.name
+            nameLabel.fontName = fontStyleN
+            nameLabel.fontSize = fontSizeN
+            
+            nameLabel.position.y = fontSizeN * 0.5
+            
+            building.addChild(nameLabel)
 		}
 	}
+    
+    init(_ structure: Structure) {
+        super.init()
+        
+        building = structure
+        building.name?.append("Constructor")
+    }
 }

@@ -11,9 +11,26 @@ import SpriteKit
 
 class PlayerButtonHandler : NSObject {
     
-    func buttonPressed(_ touchedNodes: [SKNode]) {
+    func buttonPressedDown(_ touchedNodes: [SKNode], location: CGPoint) {
         for node in touchedNodes {
-            //print(node.name)
+            print(node.name)
+            if node.name == nil {
+                break
+            }
+            
+            if (node.name?.contains("Constructor"))! {
+                startStructureCreation(name: node.name!, location: location)
+            }
+        }
+    }
+    
+    func buttonPressedUp(_ touchedNodes: [SKNode], location: CGPoint) {
+        for node in touchedNodes {
+            print(node.name)
+            if node.name == nil {
+                break
+            }
+            
             if node.name == "button_pause" {
                 pauseGame(node)
                 return

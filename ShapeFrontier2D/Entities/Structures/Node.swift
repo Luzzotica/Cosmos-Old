@@ -36,11 +36,11 @@ class Node : Structure {
         
     }
     
-    init(texture: SKTexture) {
+    init() {
         let xy = sceneWidth * 0.04
         let rSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, color: .blue, size: rSize)
+        super.init(texture: Structures.node, color: .blue, size: rSize)
 		self.name = "Node"
         
         setupStructure()

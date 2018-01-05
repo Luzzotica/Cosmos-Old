@@ -39,11 +39,11 @@ class Reactor : Structure {
         
     }
     
-    init(texture: SKTexture) {
+    init() {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        super.init(texture: texture, color: .blue, size: rSize)
+        super.init(texture: Structures.reactorLevel1, color: .blue, size: rSize)
 		self.name = "Reactor"
         
         setupStructure()

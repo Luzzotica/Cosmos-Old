@@ -12,19 +12,13 @@ import SpriteKit
 import CollectionNode
 
 
-class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSource {
+class PlayerHUDHandler : NSObject {
     static let shared = PlayerHUDHandler()
     
     let playerButtonHandler = PlayerButtonHandler()
+    let constructionManager = ConstructionManager()
     
     var playerCamera : SKCameraNode!
-	
-	// Bottom HUD
-	private var collectionNode: CollectionNode!
-	private var buildings:[Structure] = []
-	private let colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.green, UIColor.blue, UIColor.purple, UIColor.brown]
-	
-	private var offset: CGPoint = CGPoint(x: 0, y: 0)
 	
     
     func setupHUD() -> SKCameraNode {
@@ -36,84 +30,8 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
         playerCamera.zPosition = Layer.UI
         playerCamera.name = "mainCamera"
 		
-		// Setup Buildings
-		
-        let reactor = Reactor(texture: Structures.reactorLevel1)
-        buildings.append(reactor)
-        
-        let node = Node(texture: Structures.node)
-        buildings.append(node)
-
-        let miner = Miner(texture: Structures.miner)
-        buildings.append(miner)
-
-        let missile = MissileCannon(texture: Structures.missileCannon)
-        buildings.append(missile)
-
-        let pulseLaser = PulseLaser(texture: Structures.pulseLaserLevel1)
-        buildings.append(pulseLaser)
-//
-//        let reactor5 = Reactor()
-//        reactor5.color = .brown
-//        buildings.append(reactor5)
-		
-		
-        // setup other game handlers and all their glorious things, add them to the camera
-		
-		
-		let hudContainer = UIView(frame: CGRect(x: 0, y: sceneHeight - 76, width: sceneWidth, height: 76))
-		hudContainer.backgroundColor = .clear
-		sceneView.insertSubview(hudContainer, at: 0)
-		
-		collectionNode = CollectionNode(at: hudContainer)
-		
-//        collectionNode.dataSource = self
-//        collectionNode.delegate = self
-		
-		// TODO: - Fix Magic Numbers
-		collectionNode.position = CGPoint(x:  -sceneWidth / 2 + 30, y: -(sceneHeight / 2) + 30)
-		playerCamera.addChild(collectionNode)
-		
-		// The bottom 76 points of the screen
-//		let nodeSideSize = 60
-//		scrollView = SwiftySKScrollView(frame: CGRect(x: 0, y: gameScene.size.height - 76, width: gameScene.size.width, height: 76), moveableNode: moveableNode, direction: .horizontal)
-//
-//		//        scrollView?.contentSize = CGSize(width: CGFloat(buildings.count * (nodeSideSize + 8)), height: scrollView!.frame.height)
-//		scrollView?.contentSize = CGSize(width: scrollView!.frame.size.width * 5, height: scrollView!.frame.height)
-//
-//		gameScene.view?.addSubview(scrollView!)
-//		scrollView?.setContentOffset(CGPoint(x: 0 + scrollView!.frame.width * 4, y: 0), animated: true)
-//
-//
-//		//        Step 4: - Add sprites for each page in the scrollView to make positioning your actual stuff later on much easier
-//
-//		guard let scrollView = scrollView else { return playerCamera } // unwrap  optional
-//
-//
-//		var xPos: CGFloat = 0.0
-//		let width = scrollView.frame.width / 2
-//		let height = scrollView.frame.size.height
-//		let yPos = scrollView.frame.size.height / 2
-//
-//		let colors = [UIColor.orange, UIColor.green, UIColor.blue]
-//		for i in 0...10 {
-//			let color = colors[i % 3]
-//
-//			let pageScrollView = SKSpriteNode(color: color, size: CGSize(width: width, height: height))
-//			pageScrollView.position = CGPoint(x: xPos - (width / 2), y: yPos)
-//			moveableNode.addChild(pageScrollView)
-//
-//			// Add sprites / labels
-//			let sprite1 = SKSpriteNode(color: .red, size: CGSize(width: nodeSideSize, height: nodeSideSize))
-//			sprite1.position = CGPoint(x: 0, y: 0)
-//			pageScrollView.addChild(sprite1)
-//
-//			let sprite2 = SKSpriteNode(color: .red, size: CGSize(width: nodeSideSize, height: nodeSideSize))
-//			sprite2.position = CGPoint(x: sprite1.position.x + (sprite2.size.width * 1.5), y: sprite1.position.y)
-//			sprite1.addChild(sprite2)
-//
-//			xPos += width
-//		}
+		// Setup Building Constructor
+        playerCamera.addChild(constructionManager)
 		
         return playerCamera
     }
@@ -121,22 +39,14 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
     func resetHUD() {
         
     }
-	
-	
-	func update(_ currentTime: TimeInterval) {
-		collectionNode.update(currentTime)
-	}
     
-    func cameraMoved(dx: CGFloat, dy: CGFloat) {
-        playerCamera.position.x -= dx
-        playerCamera.position.y -= dy
-		
-		offset.x -= dx
-		offset.y -= dy
+    // Move the camera function
+    func cameraMoved(dPoint: CGPoint) {
+        playerCamera.position = playerCamera.position - dPoint
+
     }
     
     func zoom(scale: CGFloat) {
-        
         
         // If the scale of the camera is already <= the threshold, abort pinch
         if (scale > 1) {
@@ -158,10 +68,14 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
         print(playerCamera.xScale)
     }
     
-    //
+    // Button Handler stuff
     
-    func buttonPressed(touchedNodes: [SKNode]) {
-        playerButtonHandler.buttonPressed(touchedNodes)
+    func buttonPressedDown(touchedNodes: [SKNode], touchedLocation: CGPoint) {
+        playerButtonHandler.buttonPressedDown(touchedNodes, location: touchedLocation)
+    }
+    
+    func buttonPressedUp(touchedNodes: [SKNode], touchedLocation: CGPoint) {
+        playerButtonHandler.buttonPressedUp(touchedNodes, location: touchedLocation)
     }
     
     // Score handler stuff
@@ -169,49 +83,4 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 //        playerLeftHUD.handleScore(name: name)
 //    }
 	
-	
-	// MARK: - CollectionNodeDataSource
-	
-	func numberOfItems() -> Int {
-		return buildings.count
-	}
-	
-	func collectionNode(_ collection: CollectionNode, itemFor index: Index) -> CollectionNodeItem {
-		//create and configure items
-		let item = BuildingItem()
-		item.building = self.buildings[index]
-		
-		return item
-	}
-	
-	
-	// MARK: - CollectionNodeDelegate
-	func collectionNode(_ collectionNode: CollectionNode, didShowItemAt index: Index) {
-		let growAction = SKAction.scale(to: 1.3, duration: 0.15)
-		let shrinkAction = SKAction.scale(to: 1, duration: 0.15)
-		
-//		collectionNode.item(at: index).run(growAction)
-//		collectionNode.children.filter{ emojiCollection.children.index(of: $0) != index }.forEach{ $0.run(shrinkAction) }
-	}
-	
-	func collectionNode(_ collectionNode: CollectionNode, didSelectItem item: CollectionNodeItem, at index: Index) {
-		print("selected \(item.name ?? "noNameItem") at index \(index)")
-	}
-	
-	
-	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index: Int, panGesture: UIPanGestureRecognizer) {
-		if selectedNode.parent == nil {
-			selectedNode.color = colors[index]
-			gameScene.addChild(selectedNode)
-			
-//			selectedNode.texture = selectedNode.texture
-		}
-		
-		let location = panGesture.location(in: gameScene.view)
-        
-        let createXLoc = location.x * playerCamera.xScale + playerCamera.position.x - sceneWidth * 0.5 * playerCamera.xScale
-        let createYLoc = sceneHeight * 0.5 * playerCamera.yScale - (location.y * playerCamera.yScale) + playerCamera.position.y
-        
-		selectedNode.position = CGPoint(x: createXLoc, y: createYLoc)
-	}
 }
