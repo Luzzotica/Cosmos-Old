@@ -7,7 +7,7 @@ target 'ShapeFrontier2D' do
 
   # Pods for ShapeFrontier2D
 
-  pod 'SwiftySKScrollView'
+  pod 'CollectionNode'
 
   target 'ShapeFrontier2DTests' do
     inherit! :search_paths
