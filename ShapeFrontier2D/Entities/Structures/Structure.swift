@@ -22,6 +22,8 @@ class Structure : Entity {
     var powerCurrent : Int!
     var lowPower = false
     
+    var lowPowerOverlay : SKSpriteNode!
+    
     func build() {
         // Current way is to add to health the powerToBuild
         health += powerToBuild
@@ -30,10 +32,20 @@ class Structure : Entity {
         if health >= health_max {
             health = health_max
             isBuilding = false
+            
         }
     }
     
-    func power_low() {
+    func power_update() {
+        if powerCurrent < powerToUse {
+            self.addChild(lowPowerOverlay)
+        }
+        else {
+            lowPowerOverlay.removeFromParent()
+        }
+    }
+    
+    func power_use() {
         
     }
     

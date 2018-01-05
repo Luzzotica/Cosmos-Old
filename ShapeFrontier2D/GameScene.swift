@@ -57,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let cluster = asteroidManager.createAsteroidCluster(atPoint: PlayerHUDHandler.shared.playerCamera.position, mineralCap: 2000)
         addChild(cluster)
+        
 		
 		// Pinch to zoom gesture recognizer
 		let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))

@@ -39,6 +39,11 @@
 		B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501CC1FFF4612009C2F65 /* Structure.swift */; };
 		B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501CE1FFF4F6C009C2F65 /* Reactor.swift */; };
 		B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D01FFF62E2009C2F65 /* AsteroidMedium.swift */; };
+		B58501D31FFF6932009C2F65 /* Miner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D21FFF6932009C2F65 /* Miner.swift */; };
+		B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D41FFF6CE0009C2F65 /* Node.swift */; };
+		B58501D71FFF79BD009C2F65 /* MissileCannon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D61FFF79BD009C2F65 /* MissileCannon.swift */; };
+		B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D81FFF7A44009C2F65 /* PulseLaser.swift */; };
+		B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DA1FFF7A5F009C2F65 /* Turret.swift */; };
 		ED9182E23A44DACA0E4F769C /* Pods_ShapeFrontier2D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */; };
 		F5D04B474599FB60BF3BB1FA /* Pods_ShapeFrontier2DTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */; };
 /* End PBXBuildFile section */
@@ -95,6 +100,11 @@
 		B58501CC1FFF4612009C2F65 /* Structure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structure.swift; sourceTree = "<group>"; };
 		B58501CE1FFF4F6C009C2F65 /* Reactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactor.swift; sourceTree = "<group>"; };
 		B58501D01FFF62E2009C2F65 /* AsteroidMedium.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidMedium.swift; sourceTree = "<group>"; };
+		B58501D21FFF6932009C2F65 /* Miner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Miner.swift; sourceTree = "<group>"; };
+		B58501D41FFF6CE0009C2F65 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		B58501D61FFF79BD009C2F65 /* MissileCannon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissileCannon.swift; sourceTree = "<group>"; };
+		B58501D81FFF7A44009C2F65 /* PulseLaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseLaser.swift; sourceTree = "<group>"; };
+		B58501DA1FFF7A5F009C2F65 /* Turret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turret.swift; sourceTree = "<group>"; };
 		CA5A2AECA7A7BA6BA00E1F16 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
 		FE1F563E7BE2189287ECCB76 /* Pods-ShapeFrontier2DTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -253,6 +263,11 @@
 			children = (
 				B58501CC1FFF4612009C2F65 /* Structure.swift */,
 				B58501CE1FFF4F6C009C2F65 /* Reactor.swift */,
+				B58501D21FFF6932009C2F65 /* Miner.swift */,
+				B58501D41FFF6CE0009C2F65 /* Node.swift */,
+				B58501DA1FFF7A5F009C2F65 /* Turret.swift */,
+				B58501D61FFF79BD009C2F65 /* MissileCannon.swift */,
+				B58501D81FFF7A44009C2F65 /* PulseLaser.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -553,12 +568,17 @@
 				07D9DE031FFF621300D973BA /* BuildingItem.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
+				B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */,
+				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501B31FFF1C2F009C2F65 /* Entity.swift in Sources */,
 				B58501BC1FFF1CE8009C2F65 /* AsteroidSmall.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,
+				B58501D71FFF79BD009C2F65 /* MissileCannon.swift in Sources */,
+				B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */,
+				B58501D31FFF6932009C2F65 /* Miner.swift in Sources */,
 				B58501B71FFF1C9A009C2F65 /* Asteroid.swift in Sources */,
 				B58501AF1FFF1435009C2F65 /* PlayerHUDHandler.swift in Sources */,
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,

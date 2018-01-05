@@ -1,38 +1,35 @@
 //
-//  Reactor.swift
+//  Missile Cannon.swift
 //  ShapeFrontier2D
 //
-//  Created by Sterling Long on 1/4/18.
+//  Created by Sterling Long on 1/5/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class Reactor : Structure {
+class MissileCannon : Turret {
     
-    
-    
-    var powerProvided : Int = 10
+    var projectile : Entity!
     
     override func build() {
         super.build()
         
-//        if !isBuilding {
-//            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
-//        }
+        if !isBuilding {
+        }
     }
     
     override func setupStructure() {
         super.setupStructure()
         
         // setup health variables
-        health_max = 10
-
+        health_max = 8
+        
         // Reactor power priority is low, doesn't need power...
         powerPriority = 0
-        powerToBuild = 2
-        powerToUse = 0
+        powerToBuild = 1
+        powerToUse = 1
         
         // Set up low power overlay
         let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "LowPwrOverlay"))
@@ -44,9 +41,9 @@ class Reactor : Structure {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
+        let texture = SKTexture(image: #imageLiteral(resourceName: "HeatMissileCannon"))
         
-        super.init(texture: reactorTexture, color: .blue, size: rSize)
+        super.init(texture: texture, color: .blue, size: rSize)
         
         setupStructure()
         
