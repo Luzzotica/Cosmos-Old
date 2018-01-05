@@ -18,6 +18,7 @@ class PlayerHUDHandler : NSObject {
     
     let playerButtonHandler = PlayerButtonHandler()
     let constructionManager = ConstructionManager()
+	let playerResourceHUD = PlayerResourcesHUD()
     
     var playerCamera : SKCameraNode!
     
@@ -30,6 +31,9 @@ class PlayerHUDHandler : NSObject {
         playerCamera.position.y = sceneHeight * 0.5
         playerCamera.zPosition = Layer.UI
         playerCamera.name = "mainCamera"
+        
+        playerResourceHUD.setup()
+        playerCamera.addChild(playerResourceHUD)
         
         // Setup Building Constructor
         playerCamera.addChild(constructionManager)

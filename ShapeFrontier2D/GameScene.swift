@@ -41,6 +41,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
+	
+	var toBuild: Structure?
+	var isBuilding = false
     
     // Construction Mode
     var toBuild : Structure!
@@ -193,9 +196,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
+        toBuild!.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
         
-        addChild(toBuild)
+        addChild(toBuild!)
         
         isBuilding = true
         

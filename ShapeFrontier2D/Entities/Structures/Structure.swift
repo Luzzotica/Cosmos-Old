@@ -25,7 +25,7 @@ class Structure : Entity {
     var lowPowerOverlay : SKSpriteNode!
     
     // If we want to disable it, we can. This make it unable to connect or do anything. Mostly used for the building objects
-    var isDisable = false
+    var isDisabled = false
     
     func build() {
         // Current way is to add to health the powerToBuild

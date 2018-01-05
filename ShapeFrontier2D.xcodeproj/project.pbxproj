@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07C2CC4C1FFFEE6E0015EFD3 /* PlayerResourcesHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4B1FFFEE6E0015EFD3 /* PlayerResourcesHUD.swift */; };
+		07C2CC4E1FFFFEC60015EFD3 /* PlayerEnergyBarHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4D1FFFFEC60015EFD3 /* PlayerEnergyBarHandler.swift */; };
+		07C2CC51200013C50015EFD3 /* PlayerMiningHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC50200013C50015EFD3 /* PlayerMiningHandler.swift */; };
 		07D9DE031FFF621300D973BA /* BuildingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D9DE021FFF621200D973BA /* BuildingItem.swift */; };
 		3E51B8552BCA4D0D27DC1FB5 /* Pods_ShapeFrontier2DUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
@@ -68,6 +71,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07C2CC4B1FFFEE6E0015EFD3 /* PlayerResourcesHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerResourcesHUD.swift; sourceTree = "<group>"; };
+		07C2CC4D1FFFFEC60015EFD3 /* PlayerEnergyBarHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEnergyBarHandler.swift; sourceTree = "<group>"; };
+		07C2CC50200013C50015EFD3 /* PlayerMiningHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMiningHandler.swift; sourceTree = "<group>"; };
 		07D9DE021FFF621200D973BA /* BuildingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingItem.swift; sourceTree = "<group>"; };
 		35F15813B3CD4E6D834DF659 /* Pods-ShapeFrontier2DTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.release.xcconfig"; sourceTree = "<group>"; };
 		43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +147,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07C2CC4F200013840015EFD3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				07C2CC4B1FFFEE6E0015EFD3 /* PlayerResourcesHUD.swift */,
+				07C2CC4D1FFFFEC60015EFD3 /* PlayerEnergyBarHandler.swift */,
+				07C2CC50200013C50015EFD3 /* PlayerMiningHandler.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		124E5B6409BB2497B70FDF7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +245,7 @@
 				B58501AC1FFF1435009C2F65 /* PlayerButtonHandler.swift */,
 				B58501DE1FFFE7A0009C2F65 /* ConstructionManager.swift */,
 				07D9DE021FFF621200D973BA /* BuildingItem.swift */,
+				07C2CC4F200013840015EFD3 /* Resources */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -578,6 +595,7 @@
 				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
 				B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
+				07C2CC51200013C50015EFD3 /* PlayerMiningHandler.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501B31FFF1C2F009C2F65 /* Entity.swift in Sources */,
@@ -589,10 +607,12 @@
 				B58501D31FFF6932009C2F65 /* Miner.swift in Sources */,
 				B58501B71FFF1C9A009C2F65 /* Asteroid.swift in Sources */,
 				B58501AF1FFF1435009C2F65 /* PlayerHUDHandler.swift in Sources */,
+				07C2CC4E1FFFFEC60015EFD3 /* PlayerEnergyBarHandler.swift in Sources */,
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,
 				B58501C51FFF1DCF009C2F65 /* AsteroidManager.swift in Sources */,
 				B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */,
 				B58501AE1FFF1435009C2F65 /* PlayerButtonHandler.swift in Sources */,
+				07C2CC4C1FFFEE6E0015EFD3 /* PlayerResourcesHUD.swift in Sources */,
 				B58501C01FFF1D05009C2F65 /* AsteroidBig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -771,7 +791,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74874V9Z5H;
+				DEVELOPMENT_TEAM = A5JHWHDAMA;
 				INFOPLIST_FILE = ShapeFrontier2D/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -788,7 +808,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74874V9Z5H;
+				DEVELOPMENT_TEAM = A5JHWHDAMA;
 				INFOPLIST_FILE = ShapeFrontier2D/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -66,10 +66,10 @@ extension PlayerButtonHandler {
         case "NodeConstructor": structure = Node()
         case "MissileCannonConstructor": structure = MissileCannon()
         case "PulseLaserConstructor": structure = PulseLaser()
-        default: structure = Reactor()
+        default: structure = Structure()
         }
         
-        structure.isDisable = true
+        structure.isDisabled = true
         structure.position = location
         structure.name?.append("UnderConstruction")
         
