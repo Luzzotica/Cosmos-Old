@@ -1,18 +1,18 @@
 //
-//  AsteroidBig.swift
+//  AsteroidMedium.swift
 //  ShapeFrontier2D
 //
-//  Created by Sterling Long on 1/4/18.
+//  Created by Sterling Long on 1/5/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class AsteroidBig : Asteroid {
+class AsteroidMedium : Asteroid {
     
     init(minerals: Int) {
-        let xy = sceneWidth * 0.16
+        let xy = sceneWidth * 0.12
         let aSize = CGSize(width: xy, height: xy)
         
         super.init(texture: nil, color: .green, size: aSize, minerals: minerals)
