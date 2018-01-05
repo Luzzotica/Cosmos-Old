@@ -11,12 +11,13 @@ import SpriteKit
 
 
 class PlayerEnergyBarHandler: NSObject {
-	var maxEnergy = 100.0
-	var currentEnergy = 100.0
-	var currentMinerals = 0
+	var maxEnergy: Int = 1
+	var currentEnergy: Int = 0
+	var currentMinerals: Int = 0
 	var HUDWidth: CGFloat!
 	//	var currentEnergyLevelNode: SKSpriteNode
 	var energyLevelNode: SKSpriteNode!
+	var energyLevelLabel: SKLabelNode!
 	
 	
 	var lastEnergyUpdate : TimeInterval = 0.0
@@ -29,7 +30,7 @@ class PlayerEnergyBarHandler: NSObject {
 		energyLevelNode = SKSpriteNode(color: .cyan, size: CGSize(width: HUDWidth, height: height))
 		energyLevelNode.zPosition = Layer.UI
 		
-		// Set his position to left side of gamescreen
+		// Set position to bottom-right of screen
 		energyLevelNode.position.y = sceneHeight * 0.01
 		energyLevelNode.position.x = -HUDWidth - (sceneWidth * 0.01)
 		energyLevelNode.anchorPoint.y = 0.0
@@ -38,13 +39,35 @@ class PlayerEnergyBarHandler: NSObject {
 		return energyLevelNode
 	}
 	
-	func energyUsed(amount: Double) {
+	func setupEnergyLabel(baseValue : Int) -> SKLabelNode {
+		// Start with full energy
+		currentEnergy = baseValue
+		maxEnergy = baseValue
+		
+		energyLevelLabel = SKLabelNode(text: "\(currentEnergy) energy (\(100 * currentEnergy / maxEnergy)%)")
+		energyLevelLabel.fontSize = fontSizeN
+		energyLevelLabel.fontName = fontStyleN
+		energyLevelLabel.fontColor = .cyan
+		
+		// Set position to bottom-right of screen
+		energyLevelLabel.position.y = energyLevelNode.size.height + sceneHeight * 0.02
+		energyLevelLabel.position.x = -HUDWidth - (sceneWidth * 0.01)
+		energyLevelLabel.horizontalAlignmentMode = .left
+		
+		return energyLevelLabel
+	}
+	
+	func energyUsed(amount: Int) {
 		currentEnergy -= amount
 		
 		updateEnergyMeter()
 	}
 	
-	func energyGained(amount: Double) {
+	func updateMaxEnergy(amount: Int) {
+		maxEnergy = amount
+	}
+	
+	func energyGained(amount: Int) {
 		currentEnergy += amount
 		
 		if currentEnergy > maxEnergy {
@@ -54,7 +77,7 @@ class PlayerEnergyBarHandler: NSObject {
 		updateEnergyMeter()
 	}
 	
-	func hasEnergy(amount: Double) -> Bool {
+	func hasEnergy(amount: Int) -> Bool {
 		if currentEnergy >= amount {
 			energyUsed(amount: amount)
 			return true
@@ -65,14 +88,15 @@ class PlayerEnergyBarHandler: NSObject {
 	}
 	
 	func updateEnergyMeter() {
-		energyLevelNode.size.width = HUDWidth * CGFloat(currentEnergy * 0.01)
+		energyLevelNode.size.width = HUDWidth * CGFloat(currentEnergy / maxEnergy)
+		energyLevelLabel.text = "\(currentEnergy) energy (\(currentEnergy / maxEnergy * 100)%)"
 	}
 	
 	func energyOverTime(time: TimeInterval) {
 		var elapsed = time - lastEnergyUpdate
 		//print(elapsed)
 		elapsed *= timeModifier
-		energyGained(amount: elapsed)
+		energyGained(amount: Int(elapsed))
 	}
 	
 	func reset() {

@@ -32,13 +32,12 @@ class GameViewController: UIViewController {
         sceneWidth = view.bounds.size.width
         sceneHeight = view.bounds.size.height
         
-        
+		
+		// Set up fonts
+		setupFonts()
+		
         // Set up game scene
         setupSceneView()
-        
-        // Set up fonts
-        setupFonts()
-        
     }
     
     // Setup all the things

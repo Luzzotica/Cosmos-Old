@@ -31,5 +31,7 @@ class PlayerResourcesHUD: SKNode {
 		self.position.y = -sceneHeight / 2
 		
 		self.addChild(playerEnergyBarHandler.setupEnergyBar(width: HUDWidth))
+		
+		self.addChild(playerEnergyBarHandler.setupEnergyLabel(baseValue: 4))
 	}
 }
