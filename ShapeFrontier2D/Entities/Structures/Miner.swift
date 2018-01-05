@@ -33,7 +33,7 @@ class Miner : Structure {
         powerToUse = 1
         
         // Set up low power overlay
-        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "LowPwrOverlay"))
+        let overlayTexture = SKTexture(image: #imageLiteral(resourceName: "test_reactor"))
         lowPowerOverlay = SKSpriteNode(texture: overlayTexture, size: self.size)
         
     }

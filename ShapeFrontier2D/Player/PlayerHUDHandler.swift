@@ -14,6 +14,7 @@ import CollectionNode
 
 class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSource {
     static let shared = PlayerHUDHandler()
+	private override init() {}
     
     let playerButtonHandler = PlayerButtonHandler()
     
@@ -22,7 +23,6 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 	// Bottom HUD
 	private var collectionNode: CollectionNode!
 	private var buildings:[Structure] = []
-	private let colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.green, UIColor.blue, UIColor.purple, UIColor.brown]
 	
 	private var offset: CGPoint = CGPoint(x: 0, y: 0)
 	
@@ -39,27 +39,21 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		// Setup Buildings
 		
 		let reactor = Reactor()
-		reactor.color = .red
 		buildings.append(reactor)
-		
+
 		let node = Node()
-		node.color = .orange
 		buildings.append(node)
 		
 		let miner = Miner()
-		miner.color = .green
 		buildings.append(miner)
 		
 		let missile = MissileCannon()
-		missile.color = .blue
 		buildings.append(missile)
 		
 		let pulseLaser = PulseLaser()
-		pulseLaser.color = .purple
 		buildings.append(pulseLaser)
 		
 		let reactor5 = Reactor()
-		reactor5.color = .brown
 		buildings.append(reactor5)
 		
 		
@@ -208,10 +202,8 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 	
 	func updatePositionForSelectedNode(selectedNode: SKSpriteNode, index: Int, panGesture: UIPanGestureRecognizer) {
 		if selectedNode.parent == nil {
-			selectedNode.color = colors[index]
 			gameScene.addChild(selectedNode)
-			
-//			selectedNode.texture = selectedNode.texture
+			selectedNode.color = .red
 		}
 		
 		let location = panGesture.location(in: gameScene.view)

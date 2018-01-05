@@ -44,7 +44,7 @@ class Reactor : Structure {
         let xy = sceneWidth * 0.12
         let rSize = CGSize(width: xy, height: xy)
         
-        let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
+        let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "test_reactor"))
         
         super.init(texture: reactorTexture, color: .blue, size: rSize)
 		self.name = "Reactor"
