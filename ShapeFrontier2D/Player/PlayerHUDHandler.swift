@@ -21,7 +21,7 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 	
 	// Bottom HUD
 	private var collectionNode: CollectionNode!
-	private var buildings:[String] = ["one", "two", "three"]
+	private var buildings:[Structure] = []
 	
     
     func setupHUD() -> SKCameraNode {
@@ -32,7 +32,13 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
         playerCamera.position.y = sceneHeight * 0.5
         playerCamera.zPosition = Layer.UI
         playerCamera.name = "mainCamera"
-        
+		
+		// Setup Buildings
+		
+		let reactor = Reactor()
+		buildings.append(reactor)
+		
+		
         // setup other game handlers and all their glorious things, add them to the camera
 		
 		
@@ -179,6 +185,6 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		}
 		
 		let location = panGesture.location(in: gameScene.view)
-		selectedNode.position = CGPoint(x: location.x, y: -location.y + sceneHeight)
+		selectedNode.position = CGPoint(x:location.x * playerCamera.xScale, y:-(location.y * playerCamera.yScale) + sceneHeight * playerCamera.yScale)
 	}
 }

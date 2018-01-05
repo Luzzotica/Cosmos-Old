@@ -16,7 +16,7 @@ class Asteroid : Entity {
     init(texture: SKTexture?, color: UIColor, size: CGSize, minerals: Int) {
         let asteroidTexture = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
         
-        super.init(texture: asteroidTexture, color: color, size: size)
+		super.init(texture: asteroidTexture, color: color, size: size)
         
         
         
