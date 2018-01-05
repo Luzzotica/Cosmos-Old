@@ -54,13 +54,15 @@ class GameViewController: UIViewController {
                            height: sceneHeight)
         sceneView = SKView(frame: vSize)
         
-        gameScene = GameScene(size: CGSize(width: view.bounds.size.width, height: sceneHeight))
+        gameScene = GameScene(size: CGSize(width: sceneWidth, height: sceneHeight))
         sceneView.presentScene(gameScene)
         
         sceneView.ignoresSiblingOrder = true
         
         sceneView.showsFPS = true
         sceneView.showsNodeCount = true
+        
+        self.view.addSubview(sceneView)
     }
 
     override var shouldAutorotate: Bool {

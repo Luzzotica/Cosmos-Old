@@ -38,7 +38,7 @@ struct CollisionType {
     static let AllObjects: UInt32 = PlayerBullet | Enemy | Blocks | Powerup
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
@@ -56,9 +56,11 @@ class GameScene: SKScene {
 	
 	// MARK: - Setup
     
-    override func sceneDidLoad() {
-
-        self.lastUpdateTime = 0
+    let asteroidManager = AsteroidManager()
+    
+    override func didMove(to view: SKView) {
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
 
     }
@@ -80,24 +82,13 @@ class GameScene: SKScene {
         }
     }
     
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -111,7 +102,7 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        
     }
 	
 	
@@ -200,6 +191,7 @@ class GameScene: SKScene {
     /*
      
      UI ACTIONS!
+     
      Pause Game
      Restart Game
      Clear Game
@@ -220,5 +212,19 @@ class GameScene: SKScene {
     
     func clearGame() {
         
+    }
+    
+    /*
+ 
+     Game Setup Stuff
+     
+     Set Up Game
+ 
+    */
+    
+    func setupGame() {
+        let camera = PlayerHUDHandler.shared.setupHUD()
+        addChild(camera)
+        self.camera = camera
     }
 }
