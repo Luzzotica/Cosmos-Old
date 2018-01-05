@@ -41,15 +41,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
-	
-	var toBuild: Structure?
-	var isBuilding = false
     
     // Construction Mode
-    var toBuild : Structure!
+    var toBuild : Structure?
     var buildingImpedments : [Entity] = []
     var isBuilding = false
     var isValidSpot = false
+    
+    // MARK: - Setup
+    
+    let asteroidManager = AsteroidManager()
+    let playerResourcesManager = PlayerResourcesHUD()
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -58,9 +60,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
-		// Pinch to zoom gesture recognizer
-		let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
-		view.addGestureRecognizer(pinch)
+        // Pinch to zoom gesture recognizer
+        let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
+        view.addGestureRecognizer(pinch)
     }
     
     
@@ -145,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bodyB = contact.bodyB.node
         let nameA = bodyA?.name
         let nameB = bodyB?.name
-        print("Name A: \(nameA), name B: \(nameB)")
+        //print("Name A: \(nameA), name B: \(nameB)")
         
         if nameA == nil || nameB == nil {
             return
@@ -171,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bodyB = contact.bodyB.node
         let nameA = bodyA?.name
         let nameB = bodyB?.name
-        print("Name A: \(nameA), name B: \(nameB)")
+        //print("Name A: \(nameA), name B: \(nameB)")
         
         if nameA == nil || nameB == nil {
             return
@@ -205,15 +207,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updateConstructionMode(translation: CGPoint) {
-        toBuild.position = toBuild.position + translation
+        toBuild?.position = (toBuild?.position)! + translation
         
         if isValidSpot {
             let color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild.run(color)
+            toBuild?.run(color)
         }
         else {
             let color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild.run(color)
+            toBuild?.run(color)
         }
         
         //let overlay = SKSpriteNode(texture: , size: toBuild.size)
@@ -223,18 +225,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func endConstructionMode() {
         if isValidSpot {
             let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild.run(color)
+            toBuild?.run(color)
             
             // Made it
             for _ in 0...16 {
-                toBuild.name?.removeLast()
+                toBuild?.name?.removeLast()
             }
-            toBuild.isDisable = false
+            toBuild?.isDisabled = false
             
             
         }
         else {
-            toBuild.removeFromParent()
+            toBuild?.removeFromParent()
         }
         
         isBuilding = false

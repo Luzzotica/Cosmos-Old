@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
     
     // Setup all the things
     func setupFonts() {
-		fontSizeS = sceneHeight * 0.03
+        fontSizeS = sceneHeight * 0.03
         fontSizeN = sceneHeight * 0.04
         fontSizeT = sceneHeight * 0.08
     }

@@ -18,7 +18,7 @@ class PlayerHUDHandler : NSObject {
     
     let playerButtonHandler = PlayerButtonHandler()
     let constructionManager = ConstructionManager()
-	let playerResourceHUD = PlayerResourcesHUD()
+    let playerResourceHUD = PlayerResourcesHUD()
     
     var playerCamera : SKCameraNode!
     

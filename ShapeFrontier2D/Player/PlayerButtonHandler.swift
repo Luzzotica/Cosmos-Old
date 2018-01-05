@@ -13,7 +13,7 @@ class PlayerButtonHandler : NSObject {
     
     func buttonPressedDown(_ touchedNodes: [SKNode], location: CGPoint) {
         for node in touchedNodes {
-            print(node.name)
+            //print(node.name)
             if node.name == nil {
                 break
             }
@@ -27,7 +27,7 @@ class PlayerButtonHandler : NSObject {
     
     func buttonPressedUp(_ touchedNodes: [SKNode], location: CGPoint) {
         for node in touchedNodes {
-            print(node.name)
+            //print(node.name)
             if node.name == nil {
                 break
             }
