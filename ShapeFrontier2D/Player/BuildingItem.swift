@@ -21,7 +21,7 @@ class BuildingItem: CollectionNodeItem {
 			nameLabel.text = building.name
 			
 			imageNode = SKSpriteNode(texture: building.texture)
-			imageNode.size = CGSize(width: building.size.width, height: building.size.height)
+			imageNode.size = CGSize(width: 60, height: 60)
 			imageNode.color = building.color
 			nameLabel.position.y = 0
 			

@@ -44,6 +44,7 @@ class MissileCannon : Turret {
         let texture = SKTexture(image: #imageLiteral(resourceName: "HeatMissileCannon"))
         
         super.init(texture: texture, color: .blue, size: rSize)
+		self.name = "Missle Cannon"
         
         setupStructure()
         

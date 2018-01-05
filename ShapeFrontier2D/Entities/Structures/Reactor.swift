@@ -47,6 +47,7 @@ class Reactor : Structure {
         let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
         
         super.init(texture: reactorTexture, color: .blue, size: rSize)
+		self.name = "Reactor"
         
         setupStructure()
         

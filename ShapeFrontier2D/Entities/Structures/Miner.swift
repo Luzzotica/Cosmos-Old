@@ -42,9 +42,10 @@ class Miner : Structure {
         let xy = sceneWidth * 0.08
         let rSize = CGSize(width: xy, height: xy)
         
-        let reactorTexture = SKTexture(image: #imageLiteral(resourceName: "MinerNoPwr"))
+        let minerTexture = SKTexture(image: #imageLiteral(resourceName: "MinerNoPwr"))
         
-        super.init(texture: reactorTexture, color: .blue, size: rSize)
+        super.init(texture: minerTexture, color: .blue, size: rSize)
+		self.name = "Miner"
         
         setupStructure()
         

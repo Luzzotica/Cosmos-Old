@@ -43,6 +43,7 @@ class PulseLaser : Turret {
         let texture = SKTexture(image: #imageLiteral(resourceName: "HeatMissileCannon"))
         
         super.init(texture: texture, color: .blue, size: rSize)
+		self.name = "Pulse Laser"
         
         setupStructure()
         

@@ -44,6 +44,7 @@ class Node : Structure {
         let nodeTexture = SKTexture(image: #imageLiteral(resourceName: "NodeNoPwr"))
         
         super.init(texture: nodeTexture, color: .blue, size: rSize)
+		self.name = "Node"
         
         setupStructure()
         

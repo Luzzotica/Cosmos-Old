@@ -42,24 +42,24 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		reactor.color = .red
 		buildings.append(reactor)
 		
-		let reactor1 = Reactor()
-		reactor1.color = .orange
-		buildings.append(reactor1)
+		let node = Node()
+		node.color = .orange
+		buildings.append(node)
 		
-		let reactor2 = Reactor()
-		reactor1.color = .green
-		buildings.append(reactor2)
+		let miner = Miner()
+		miner.color = .green
+		buildings.append(miner)
 		
-		let reactor3 = Reactor()
-		reactor1.color = .blue
-		buildings.append(reactor3)
+		let missile = MissileCannon()
+		missile.color = .blue
+		buildings.append(missile)
 		
-		let reactor4 = Reactor()
-		reactor1.color = .purple
-		buildings.append(reactor4)
+		let pulseLaser = PulseLaser()
+		pulseLaser.color = .purple
+		buildings.append(pulseLaser)
 		
 		let reactor5 = Reactor()
-		reactor1.color = .brown
+		reactor5.color = .brown
 		buildings.append(reactor5)
 		
 		
@@ -210,6 +210,8 @@ class PlayerHUDHandler : NSObject, CollectionNodeDelegate, CollectionNodeDataSou
 		if selectedNode.parent == nil {
 			selectedNode.color = colors[index]
 			gameScene.addChild(selectedNode)
+			
+//			selectedNode.texture = selectedNode.texture
 		}
 		
 		let location = panGesture.location(in: gameScene.view)
