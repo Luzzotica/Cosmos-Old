@@ -11,6 +11,8 @@ import SpriteKit
 
 class Miner : Structure {
     
+    var miningRange : CGFloat = sceneWidth * 0.2
+    
     override func build() {
         super.build()
         
@@ -36,7 +38,7 @@ class Miner : Structure {
     }
     
     init() {
-        let xy = sceneWidth * 0.06
+        let xy = sceneWidth * 0.05
         let rSize = CGSize(width: xy, height: xy)
         
         super.init(texture: Structures.miner, color: .blue, size: rSize)

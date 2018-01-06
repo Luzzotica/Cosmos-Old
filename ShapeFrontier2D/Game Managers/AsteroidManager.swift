@@ -34,8 +34,7 @@ class AsteroidManager : NSObject {
             let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
             asteroid.zRotation = CGFloat(angle)
             
-            //asteroid.texture = asteroidTexture
-            
+            // Add it to the clusternode
             clusterNode.addChild(asteroid)
             
             // Subtract from mineralcap

@@ -14,6 +14,17 @@ class UIHandler : NSObject {
     static let shared = UIHandler()
 	private override init() {}
     
+    func createRangeIndicator(range: CGFloat, color: UIColor) -> SKSpriteNode {
+        let rangeSize = CGSize(width: range, height: range)
+        let rangeIndicator = SKSpriteNode(texture: Area.area, size: rangeSize)
+        rangeIndicator.name = "rangeIndicator"
+        
+        let color = SKAction.colorize(with: color, colorBlendFactor: 1.0, duration: 0.0)
+        rangeIndicator.run(color)
+        
+        return rangeIndicator
+    }
+    
     func createPauseGameUI() -> SKNode {
         let pauseLabel = SKLabelNode(text: "Game Paused!")
         pauseLabel.fontName = fontStyleT

@@ -42,15 +42,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var lastUpdateTime : TimeInterval = 0
     
-    // Construction Mode
+    // Player structures in game
+    var playerStructures : [Structure] = []
+    
+    // Construction Mode variables
     var toBuild : Structure?
     var buildingImpedments : [Entity] = []
     var isBuilding = false
     var isValidSpot = false
     
-    // MARK: - Setup
+    var connection_max : Int = 1
+    var connection_length : CGFloat = sceneWidth * 0.45
+    var connections : [PowerLine] = []
     
-    let asteroidManager = AsteroidManager()
+    // MARK: - Setup
     let playerResourcesManager = PlayerResourcesHUD()
     
     override func didMove(to view: SKView) {
@@ -80,10 +85,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let translationInScene = touch!.location(in: self) - touch!.previousLocation(in: self)
         
         if !isBuilding {
+            // If we aren't building, move camera
             PlayerHUDHandler.shared.cameraMoved(dPoint: translationInScene)
         }
         else {
-            updateConstructionMode(translation: translationInScene)
+            // Otherwise, update the construction
+            updateConstruction(translation: translationInScene)
         }
         
     }
@@ -91,9 +98,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if isBuilding {
+            // If building, end construction mode on touchup
             endConstructionMode()
         }
         else {
+            // Otherwise, handle button presses
             for t in touches {
                 let touchedNodes = nodes(at: t.location(in: self))
                 PlayerHUDHandler.shared.buttonPressedUp(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
@@ -111,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Called before each frame is rendered
         
         if isBuilding {
-            
+            // If building, update validity based on impeding objects
             if buildingImpedments.count == 0 {
                 isValidSpot = true
             }
@@ -153,6 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
+        // If something enters into collision with the UnderConstruction, add it to impeding objects
         if (nameA?.contains("UnderConstruction"))! {
             print("isNotValid")
             buildingImpedments.append(bodyA as! Entity)
@@ -179,6 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
+        // If something ends collision with the UnderConstruction, remove it from impeding objects
         if (nameA?.contains("UnderConstruction"))! {
             print("isValid")
             removeFromImpediments(entity: bodyA as! Entity)
@@ -200,15 +211,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         toBuild = structure
         toBuild!.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
         
+        // Add connection range
+        toBuild?.addChild(UIHandler.shared.createRangeIndicator(
+            range: connection_length,
+            color: .yellow))
+        
+        // Add to game scene
         addChild(toBuild!)
         
+        // Make sure the scene knows we are currently building
         isBuilding = true
         
     }
     
-    func updateConstructionMode(translation: CGPoint) {
+    func updateConstruction(translation: CGPoint) {
+        // Move the structure
         toBuild?.position = (toBuild?.position)! + translation
         
+        // Change color based on current location validity
         if isValidSpot {
             let color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
             toBuild?.run(color)
@@ -218,27 +238,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuild?.run(color)
         }
         
-        //let overlay = SKSpriteNode(texture: , size: toBuild.size)
+        // Get structures we can draw to
+        let drawTo = searchStructuresInRange(suppliers: (toBuild?.isSupplier)!)
+        
+        for structures in drawTo {
+            if toBuild?.connectedTo == nil {
+                toBuild?.connectedTo = PowerLine(to: structures, from: toBuild!)
+            }
+        }
+        
+        toBuild?.connectedTo?.updateSelf()
         
     }
     
     func endConstructionMode() {
         if isValidSpot {
+            // Turn him to normal color
             let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
             toBuild?.run(color)
             
-            // Made it
+            // Made it, remove the name identifier
             for _ in 0...16 {
                 toBuild?.name?.removeLast()
             }
+            
+            // Make him enabled
             toBuild?.isDisabled = false
             
+            // Remove his range indicator
+            toBuild?.removeAllChildren()
             
+            playerStructures.append((toBuild)!)
         }
         else {
             toBuild?.removeFromParent()
         }
         
+        // Reset the building, connecting, and validity
+        connection_max = 1
+        buildingImpedments.removeAll()
         isBuilding = false
         toBuild = nil
         isValidSpot = true
@@ -253,6 +291,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
         }
+    }
+    
+    func searchStructuresInRange(suppliers: Bool) -> [Structure] {
+        var inRange : [Structure] = []
+        
+        for structure in playerStructures {
+            // If he is a supplier, he can link to all people in range
+            if suppliers {
+                if withinDistance(point1: structure.position,
+                                  point2: (toBuild?.position)!,
+                                  distance: connection_length) {
+                    
+                    inRange.append(structure)
+                }
+            }
+                // Otherwise, get the closest supplier
+            else if structure.isSupplier {
+                if withinDistance(point1: structure.position,
+                                  point2: (toBuild?.position)!,
+                                  distance: connection_length) {
+                    
+                    inRange.append(structure)
+                }
+            }
+        }
+        
+        return inRange
     }
     
     /*
@@ -278,7 +343,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func clearGame() {
-        
+        playerStructures.removeAll()
     }
     
     /*
@@ -296,7 +361,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = camera
         
         // Setup asteroids
-        let cluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 10000)
+        let cluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 5000)
         addChild(cluster)
 //        for asteroid in cluster.children {
 //            asteroids.append(asteroid as! Asteroid)

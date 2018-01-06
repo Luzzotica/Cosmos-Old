@@ -32,12 +32,15 @@ struct Structures {
     static let powerLine = SKTexture(imageNamed: "LinePwr")
     static let powerLineFlowing = SKTexture(imageNamed: "LinePwrFlowing")
     
-    static let missileCannon = SKTexture(imageNamed: "HeatMissileCannon")
+    static let missileCannonLevel1 = SKTexture(imageNamed: "HeatMissileCannon1")
+    static let missileCannonLevel2 = SKTexture(imageNamed: "HeatMissileCannon2")
+    static let missileCannonLevel3 = SKTexture(imageNamed: "HeatMissileCannon3")
     
-    static let pulseLaserLevel1 = SKTexture(imageNamed: "PulseLaser1")
-    static let pulseLaserLevel2 = SKTexture(imageNamed: "PulseLaser2")
-    static let pulseLaserLevel3 = SKTexture(imageNamed: "PulseLaser3")
-    static let pulseLaser = SKTexture(imageNamed: "")
+    static let pulseLaser = SKTexture(imageNamed: "Pulser")
+    static let pulseLevel1 = SKTexture(imageNamed: "PulseLevel1")
+    static let pulseLevel2 = SKTexture(imageNamed: "PulseLevel2")
+    static let thuleLevel1 = SKTexture(imageNamed: "ThuleLevel1")
+    static let thuleLevel2 = SKTexture(imageNamed: "ThuleLevel2")
     
     static let outOfPowerOverlay = SKTexture(imageNamed: "LowPwrOverlay")
 }
@@ -48,4 +51,12 @@ struct Weapons {
     
     // Missile Cannon weapon
     static let missileCannonMissile = SKTexture(imageNamed: "HeatMissile")
+    
+    static let pulseLaser = SKTexture(imageNamed: "PulseLaser")
+    static let thuleLaser1 = SKTexture(imageNamed: "ThuleLaser1")
+    static let thuleLaser2 = SKTexture(imageNamed: "ThuleLaser2")
+}
+
+struct Area {
+    static let area = SKTexture(imageNamed: "ConnectRange")
 }

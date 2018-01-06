@@ -11,15 +11,15 @@ import SpriteKit
 
 class ConstructionManager : SKNode {
     
-    var structures : [BuildingItem] = []
+    var structures : [ConstructionItem] = []
     
     func setupConstructionView() {
         // Add all buildings you can make, in the order you want them
-        structures.append(BuildingItem(Reactor()))
-        structures.append(BuildingItem(Miner()))
-        structures.append(BuildingItem(Node()))
-        structures.append(BuildingItem(MissileCannon()))
-        structures.append(BuildingItem(PulseLaser()))
+        structures.append(ConstructionItem(Reactor()))
+        structures.append(ConstructionItem(Miner()))
+        structures.append(ConstructionItem(Node()))
+        structures.append(ConstructionItem(MissileCannon()))
+        structures.append(ConstructionItem(PulseLaser()))
         
         let anchorPoint = CGPoint(x: 0.0, y: 0.0)
         let iconSize = CGSize(width: sceneWidth * 0.1, height: sceneWidth * 0.1)
@@ -62,10 +62,19 @@ extension PlayerButtonHandler {
         
         switch name {
         case "ReactorConstructor": structure = Reactor()
-        case "MinerConstructor": structure = Miner()
+        case "MinerConstructor":
+            let miner = Miner()
+            miner.addChild(UIHandler.shared.createRangeIndicator(range: miner.miningRange, color: .green))
+            structure = miner
         case "NodeConstructor": structure = Node()
-        case "MissileCannonConstructor": structure = MissileCannon()
-        case "PulseLaserConstructor": structure = PulseLaser()
+        case "MissileCannonConstructor":
+            let turret = MissileCannon()
+            turret.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
+            structure = turret
+        case "PulseLaserConstructor":
+            let turret = PulseLaser()
+            turret.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
+            structure = turret
         default: structure = Structure()
         }
         
@@ -74,10 +83,6 @@ extension PlayerButtonHandler {
         structure.name?.append("UnderConstruction")
         
         gameScene.startConstructionMode(structure: structure)
-    }
-    
-    func endStructureCreation() {
-        gameScene.endConstructionMode()
     }
     
 }

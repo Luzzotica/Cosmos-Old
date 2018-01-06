@@ -21,6 +21,9 @@ class Structure : Entity {
     var powerToUse : Int!
     var powerCurrent : Int!
     var lowPower = false
+    var isSupplier = false
+    
+    var connectedTo : PowerLine?
     
     var lowPowerOverlay : SKSpriteNode!
     
