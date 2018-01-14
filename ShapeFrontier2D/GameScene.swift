@@ -125,7 +125,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else {
                 isValidSpot = false
             }
-            
         }
         
         // Initialize _lastUpdateTime if it has not already been
@@ -240,6 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
         
         if toBuild!.isSupplier {
+            print(drawTo)
             let toBuildSupplier = toBuild as! Supplier
             for structures in drawTo {
                 toBuildSupplier.connection_addTo(structure: structures)
@@ -247,6 +247,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             toBuildSupplier.connection_updateLines()
         }
+        else {
+            print(drawTo)
+            if drawTo.count > 0 {
+                toBuild?.connection_addTo(structure: drawTo[0])
+            }
+            toBuild?.connection_updateLines()
+        }
+        
+        
     }
     
     func endConstructionMode() {
@@ -301,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetStructure.position,
-                                  point2: (toBuild?.position)!,
+                                  point2: toBuild!.position,
                                   distance: connection_length) {
                     
                     inRange.append(targetStructure)
@@ -310,7 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // Otherwise, get the closest supplier
             else if targetStructure.isSupplier {
                 if withinDistance(point1: targetStructure.position,
-                                  point2: (toBuild?.position)!,
+                                  point2: toBuild!.position,
                                   distance: connection_length) {
                     
                     inRange.append(targetStructure)

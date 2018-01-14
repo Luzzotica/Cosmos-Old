@@ -17,7 +17,7 @@ class Supplier : Structure {
         
     }
     
-    func alreadyConnected(toCheck: Structure) -> Bool {
+    override func alreadyConnected(toCheck: Structure) -> Bool {
         for structure in connection_toStructures {
             if toCheck.isEqual(structure) {
                 return true
@@ -26,7 +26,7 @@ class Supplier : Structure {
         return false
     }
     
-    func connection_addTo(structure: Structure) {
+    override func connection_addTo(structure: Structure) {
         if !alreadyConnected(toCheck: structure) {
             connection_toStructures.append(structure)
             connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
@@ -34,7 +34,7 @@ class Supplier : Structure {
         
     }
     
-    func connection_updateLines() {
+    override func connection_updateLines() {
         for i in stride(from: connection_powerLine.count - 1, through: 0, by: -1) {
             if connection_powerLine[i].toDestroy {
                 connection_powerLine.remove(at: i)

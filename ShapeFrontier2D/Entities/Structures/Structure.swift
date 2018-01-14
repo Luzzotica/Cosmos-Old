@@ -84,6 +84,34 @@ class Structure : Entity {
         
     }
     
+    func alreadyConnected(toCheck: Structure) -> Bool {
+        if connection_master == nil {
+            return false
+        }
+        if toCheck.isEqual(connection_master!) {
+            return true
+        }
+        return false
+    }
+    
+    func connection_addTo(structure: Structure) {
+        if connection_master == nil {
+            connection_master = structure as? Supplier
+            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
+        }
+    }
+    
+    func connection_updateLines() {
+        if connection_powerLine.count > 0 {
+            if connection_powerLine[0].toDestroy {
+                connection_powerLine.remove(at: 0)
+            }
+            else {
+                connection_powerLine[0].update()
+            }
+        }
+    }
+    
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         
