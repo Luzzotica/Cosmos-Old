@@ -247,8 +247,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             toBuildSupplier.connection_updateLines()
         }
-        
-        
     }
     
     func endConstructionMode() {
@@ -266,9 +264,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuild?.isDisabled = false
             
             // Remove his range indicator
-            toBuild?.removeAllChildren()
+            for i in stride(from: toBuild!.children.count - 1, through: 0, by: -1) {
+                if toBuild?.children[i].name == "rangeIndicator" {
+                    toBuild?.children[i].removeFromParent()
+                }
+            }
             
-            playerStructures.append((toBuild)!)
+            playerStructures.append(toBuild!)
         }
         else {
             toBuild?.removeFromParent()
