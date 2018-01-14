@@ -16,7 +16,7 @@ class MissileCannon : Turret {
     override func build() {
         super.build()
         
-        if !isBuilding {
+        if !underConstruction {
         }
     }
     
@@ -27,9 +27,9 @@ class MissileCannon : Turret {
         health_max = 8
         
         // Reactor power priority is low, doesn't need power...
-        powerPriority = 0
-        powerToBuild = 1
-        powerToUse = 1
+        power_priority = 0
+        power_toBuild = 1
+        power_toUse = 1
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)

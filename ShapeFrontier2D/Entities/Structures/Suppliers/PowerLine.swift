@@ -11,22 +11,29 @@ import SpriteKit
 
 class PowerLine : NSObject {
     
-    var fromStructure : Structure?
-    var toStructure : Structure?
+    var structureOne : Structure?
+    var structureTwo : Structure?
     var powerLine : SKShapeNode?
     
     let lineWidth = sceneWidth * 0.02
     
     var range_max : CGFloat = sceneWidth * 0.225
     
-    func updateSelf() {
-        if withinDistance(point1: (toStructure?.position)!,
-                          point2: (fromStructure?.position)!,
+    var toDestroy = false
+    
+    func update() {
+        if structureOne == nil || structureTwo == nil {
+            destroySelf()
+            return
+        }
+        
+        if withinDistance(point1: structureOne!.position,
+                          point2: structureTwo!.position,
                           distance: range_max)
         {
             let path: CGMutablePath = CGMutablePath()
-            path.move(to: (toStructure?.position)!)
-            path.addLine(to: (fromStructure?.position)!)
+            path.move(to: CGPoint.zero)
+            path.addLine(to: structureTwo!.position - structureOne!.position)
             
             powerLine?.path = path
         }
@@ -36,32 +43,47 @@ class PowerLine : NSObject {
     }
     
     func destroySelf() {
+        // Remove themselves from the connected lists
+        if structureOne != nil && structureTwo != nil {
+            let supplier = structureOne as! Supplier
+            let _ = supplier.connection_remove(toRemove: structureTwo!)
+            
+            if structureTwo!.isSupplier {
+                let supplierTwo = structureTwo as! Supplier
+                let _ = supplierTwo.connection_remove(toRemove: structureOne!)
+            }
+            else {
+                structureTwo?.connection_master = nil
+            }
+        }
+        
         powerLine?.removeFromParent()
-        toStructure = nil
-        fromStructure = nil
+        toDestroy = true
+        structureTwo = nil
+        structureOne = nil
     }
     
-    init(to: Structure, from: Structure) {
+    init(structOne: Structure, structTwo: Structure) {
         super.init()
         
-        toStructure = to
-        fromStructure = from
+        structureOne = structOne
+        structureTwo = structTwo
         
         // Create a path
         let path: CGMutablePath = CGMutablePath()
+        
         path.move(to: CGPoint.zero)
         
-        let toP = (toStructure?.position)!
-        let fromP = (fromStructure?.position)!
-        let nextPoint = fromP - toP
-        path.addLine(to: nextPoint)
+        let pointOne = structureOne!.position
+        let pointTwo = structureTwo!.position
+        path.addLine(to: pointTwo - pointOne)
         
         // Create a line out of it
         powerLine = SKShapeNode(path: path)
         powerLine?.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         
         // Add the line to the target structure
-        toStructure?.addChild(powerLine!)
+        structureOne?.addChild(powerLine!)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -16,7 +16,7 @@ class Miner : Structure {
     override func build() {
         super.build()
         
-        if !isBuilding {
+        if !underConstruction {
             texture = Structures.miner
         }
     }
@@ -28,9 +28,9 @@ class Miner : Structure {
         health_max = 8
         
         // Reactor power priority is low, doesn't need power...
-        powerPriority = 0
-        powerToBuild = 1
-        powerToUse = 1
+        power_priority = 0
+        power_toBuild = 1
+        power_toUse = 1
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)

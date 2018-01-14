@@ -68,7 +68,7 @@ class PlayerHUDHandler : NSObject {
         
         playerCamera.run(SKAction.scale(by: 1.0 / scale, duration: 0))
         
-        print(playerCamera.xScale)
+        //print(playerCamera.xScale)
     }
     
     // Button Handler stuff

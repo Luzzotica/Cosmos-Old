@@ -30,9 +30,9 @@ class Reactor : Supplier {
         health_max = 10
 
         // Reactor power priority is low, doesn't need power...
-        powerPriority = 0
-        powerToBuild = 2
-        powerToUse = 0
+        power_priority = 0
+        power_toBuild = 2
+        power_toUse = 0
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)

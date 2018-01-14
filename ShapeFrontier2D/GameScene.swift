@@ -51,9 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isBuilding = false
     var isValidSpot = false
     
-    var connection_max : Int = 1
     var connection_length : CGFloat = sceneWidth * 0.45
-    var connections : [PowerLine] = []
     
     // MARK: - Setup
     let playerResourcesManager = PlayerResourcesHUD()
@@ -239,15 +237,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Get structures we can draw to
-        let drawTo = searchStructuresInRange(suppliers: (toBuild?.isSupplier)!)
+        let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
         
-        for structures in drawTo {
-            if toBuild?.connectedTo == nil {
-                toBuild?.connectedTo = PowerLine(to: structures, from: toBuild!)
+        if toBuild!.isSupplier {
+            let toBuildSupplier = toBuild as! Supplier
+            for structures in drawTo {
+                toBuildSupplier.connection_addTo(structure: structures)
             }
+            
+            toBuildSupplier.connection_updateLines()
         }
         
-        toBuild?.connectedTo?.updateSelf()
         
     }
     
@@ -275,7 +275,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Reset the building, connecting, and validity
-        connection_max = 1
         buildingImpedments.removeAll()
         isBuilding = false
         toBuild = nil
@@ -293,26 +292,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func searchStructuresInRange(suppliers: Bool) -> [Structure] {
+    func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
         var inRange : [Structure] = []
         
-        for structure in playerStructures {
+        for targetStructure in playerStructures {
             // If he is a supplier, he can link to all people in range
-            if suppliers {
-                if withinDistance(point1: structure.position,
+            if isSupplier {
+                if withinDistance(point1: targetStructure.position,
                                   point2: (toBuild?.position)!,
                                   distance: connection_length) {
                     
-                    inRange.append(structure)
+                    inRange.append(targetStructure)
                 }
             }
                 // Otherwise, get the closest supplier
-            else if structure.isSupplier {
-                if withinDistance(point1: structure.position,
+            else if targetStructure.isSupplier {
+                if withinDistance(point1: targetStructure.position,
                                   point2: (toBuild?.position)!,
                                   distance: connection_length) {
                     
-                    inRange.append(structure)
+                    inRange.append(targetStructure)
                 }
             }
         }

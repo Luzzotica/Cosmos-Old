@@ -13,17 +13,27 @@ class Structure : Entity {
     
     var level : Int = 1
     
-    var isBuilding = true
+    var underConstruction = true
+    
+    // Clustering variables
+    var isRootNode : Bool = false
+    var rootNode : Structure?
     
     // higher the number the higher the priority
-    var powerPriority : Int!
-    var powerToBuild : Int!
-    var powerToUse : Int!
-    var powerCurrent : Int!
-    var lowPower = false
+    var connection_master : Supplier?
+    var connection_distance : Int = -1
+    var connection_powerLine : [PowerLine] = []
+    
+    // Power variables
+    var power_priority : Int!
+    var power_toBuild : Int!
+    var power_toUse : Int!
+    var power_current : Int!
+    var power_low = false
+    
     var isSupplier = false
     
-    var connectedTo : PowerLine?
+    
     
     var lowPowerOverlay : SKSpriteNode!
     
@@ -32,18 +42,18 @@ class Structure : Entity {
     
     func build() {
         // Current way is to add to health the powerToBuild
-        health += powerToBuild
+        health += power_toBuild
         
         // Once health is full, cap it, and make it done building
         if health >= health_max {
             health = health_max
-            isBuilding = false
+            underConstruction = false
             
         }
     }
     
     func power_update() {
-        if powerCurrent < powerToUse {
+        if power_current < power_toUse {
             self.addChild(lowPowerOverlay)
         }
         else {
@@ -68,6 +78,10 @@ class Structure : Entity {
         if health > health_max {
             health = health_max
         }
+    }
+    
+    func tick() {
+        
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

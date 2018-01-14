@@ -14,7 +14,7 @@ class Node : Supplier {
     override func build() {
         super.build()
         
-        if !isBuilding {
+        if !underConstruction {
             let normalTexture = SKTexture(image: #imageLiteral(resourceName: "NodePwr"))
             texture = normalTexture
         }
@@ -27,9 +27,9 @@ class Node : Supplier {
         health_max = 8
         
         // Reactor power priority is low, doesn't need power...
-        powerPriority = 1
-        powerToBuild = 1
-        powerToUse = 0
+        power_priority = 1
+        power_toBuild = 1
+        power_toUse = 0
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: self.size)
