@@ -82,13 +82,14 @@ class PowerLine : NSObject {
         let pointOne = structureOne!.position
         let pointTwo = structureTwo!.position
         path.addLine(to: pointTwo - pointOne)
+        path.addLine(to: pointOne - pointTwo)
         
         // Create a line out of it
         powerLine = SKShapeNode(path: path)
         powerLine?.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         powerLine?.lineWidth = lineWidth
         
-        powerLine?.physicsBody = SKPhysicsBody(polygonFrom: path)
+       // powerLine?.physicsBody = SKPhysicsBody(
         powerLine?.physicsBody?.categoryBitMask = CollisionType.PowerLine
         powerLine?.physicsBody?.contactTestBitMask = CollisionType.Construction
         
