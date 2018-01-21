@@ -15,7 +15,7 @@ class UIHandler : NSObject {
 	private override init() {}
     
     func createRangeIndicator(range: CGFloat, color: UIColor) -> SKSpriteNode {
-        let rangeSize = CGSize(width: range * 0.5, height: range * 0.5)
+        let rangeSize = CGSize(width: range * 2.0, height: range * 2.0)
         let rangeIndicator = SKSpriteNode(texture: Area.area, size: rangeSize)
         rangeIndicator.name = "rangeIndicator"
         

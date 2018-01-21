@@ -22,7 +22,9 @@ func += ( left: inout CGPoint, right: CGPoint) {
 }
 
 func withinDistance(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> Bool {
-    let actual = hypot(point1.x - point2.x, point1.y - point2.y)
+    let x = point1.x - point2.x
+    let y = point1.y - point1.y
+    let actual = sqrt((x * x) + (y * y))
     if actual > distance {
         return false
     }

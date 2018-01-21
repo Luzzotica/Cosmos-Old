@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isBuilding = false
     var isValidSpot = false
     
-    var connection_length : CGFloat = sceneWidth * 0.45
+    var connection_length : CGFloat = sceneWidth * 0.225
     
     // MARK: - Setup
     let playerResourcesManager = PlayerResourcesHUD()
@@ -239,7 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
         
         if toBuild!.isSupplier {
-            print(drawTo)
+//            print(drawTo)
             let toBuildSupplier = toBuild as! Supplier
             for structures in drawTo {
                 toBuildSupplier.connection_addTo(structure: structures)
@@ -248,7 +248,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuildSupplier.connection_updateLines()
         }
         else {
-            print(drawTo)
+            //print(drawTo)
             if drawTo.count > 0 {
                 toBuild?.connection_addTo(structure: drawTo[0])
             }
