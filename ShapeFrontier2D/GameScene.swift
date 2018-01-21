@@ -48,7 +48,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Construction Mode variables
     var toBuild : Structure?
-    var buildingImpedments : [Entity] = []
     var isBuilding = false
     var isValidSpot = false
     
@@ -118,14 +117,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
-        if isBuilding {
+        if isBuilding && toBuild != nil {
             // If building, update validity based on impeding objects
-            if buildingImpedments.count == 0 {
-                isValidSpot = true
-            }
-            else {
+            // And change color based on current location validity
+            var color: SKAction
+            if toBuild!.physicsBody!.allContactedBodies().count > 0
+            {
                 isValidSpot = false
+                color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
+            else
+            {
+                isValidSpot = true
+                color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
+            }
+            toBuild?.run(color)
         }
         
         // Initialize _lastUpdateTime if it has not already been
@@ -159,44 +165,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if nameA == nil || nameB == nil {
             return
         }
-        
-        // If something enters into collision with the UnderConstruction, add it to impeding objects
-        if (nameA?.contains("UnderConstruction"))! {
-            //print("isNotValid")
-            buildingImpedments.append(bodyA as! Entity)
-        }
-        else if (nameB?.contains("UnderConstruction"))! {
-            //print("isNotValid")
-            buildingImpedments.append(bodyB as! Entity)
-        }
-        
-    }
-    
-    func didEnd(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node == nil || contact.bodyB.node == nil {
-            return
-        }
-        
-        let bodyA = contact.bodyA.node
-        let bodyB = contact.bodyB.node
-        let nameA = bodyA?.name
-        let nameB = bodyB?.name
-        //print("Name A: \(nameA), name B: \(nameB)")
-        
-        if nameA == nil || nameB == nil {
-            return
-        }
-        
-        // If something ends collision with the UnderConstruction, remove it from impeding objects
-        if (nameA?.contains("UnderConstruction"))! {
-            print("isValid")
-            removeFromImpediments(entity: bodyA as! Entity)
-        }
-        else if (nameB?.contains("UnderConstruction"))! {
-            print("isValid")
-            removeFromImpediments(entity: bodyB as! Entity)
-        }
-        
     }
     
     /*
@@ -226,21 +194,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Move the structure
         toBuild?.position = (toBuild?.position)! + translation
         
-        // Change color based on current location validity
-        if isValidSpot {
-            let color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild?.run(color)
-        }
-        else {
-            let color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild?.run(color)
-        }
-        
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
         
         if toBuild!.isSupplier {
-//            print(drawTo)
             let toBuildSupplier = toBuild as! Supplier
             for structures in drawTo {
                 toBuildSupplier.connection_addTo(structure: structures)
@@ -255,8 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             toBuild?.connection_updateLines()
         }
-        
-        
     }
     
     func endConstructionMode() {
@@ -287,21 +242,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Reset the building, connecting, and validity
-        buildingImpedments.removeAll()
-        isBuilding = false
         toBuild = nil
         isValidSpot = true
-        
-    }
-    
-    func removeFromImpediments(entity: Entity) {
-        for i in 0..<buildingImpedments.count {
-            if buildingImpedments[i].isEqual(entity) {
-                buildingImpedments.remove(at: i)
-                print("removed")
-                return
-            }
-        }
+        isBuilding = false
     }
     
     func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
