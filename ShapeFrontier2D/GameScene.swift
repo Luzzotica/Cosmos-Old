@@ -146,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == nil || contact.bodyB.node == nil {
-            print("test1")
+            //print("test1")
             return
         }
         
@@ -162,11 +162,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // If something enters into collision with the UnderConstruction, add it to impeding objects
         if (nameA?.contains("UnderConstruction"))! {
-            print("isNotValid")
+            //print("isNotValid")
             buildingImpedments.append(bodyA as! Entity)
         }
         else if (nameB?.contains("UnderConstruction"))! {
-            print("isNotValid")
+            //print("isNotValid")
             buildingImpedments.append(bodyB as! Entity)
         }
         
