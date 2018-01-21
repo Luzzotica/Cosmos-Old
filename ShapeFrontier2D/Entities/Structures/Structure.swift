@@ -95,8 +95,16 @@ class Structure : Entity {
     }
     
     func connection_addTo(structure: Structure) {
-        if connection_master == nil {
+//        if connection_master == nil {
+//            connection_master = structure as? Supplier
+//            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
+//        }
+        if connection_master != structure {
             connection_master = structure as? Supplier
+            if connection_powerLine.count > 0 {
+                connection_powerLine[0].destroySelf()
+                connection_powerLine.remove(at: 0)
+            }
             connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
         }
     }
