@@ -273,10 +273,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if withinDistance(point1: targetStructure.position,
                                   point2: toBuild!.position,
                                   distance: connection_length).0 {
-                    if !targetStructure.isSupplier && targetStructure.connection_master == nil {
+                    if !targetStructure.isSupplier && targetStructure.connection_powerLine.count == 0 {
                         inRange.append(targetStructure)
                     }
-                    else {
+                    else if targetStructure.isSupplier {
                         inRange.append(targetStructure)
                     }
                     
