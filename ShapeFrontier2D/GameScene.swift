@@ -165,17 +165,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if nameA == nil || nameB == nil {
             return
         }
-        
-        // If something enters into collision with the UnderConstruction, add it to impeding objects
-        if (nameA?.contains("UnderConstruction"))! {
-            //print("isNotValid")
-            buildingImpedments.append(bodyA as! Entity)
-        }
-        else if (nameB?.contains("UnderConstruction"))! {
-            //print("isNotValid")
-            buildingImpedments.append(bodyB as! Entity)
-        }
-        
     }
     
     /*
@@ -209,7 +198,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
         
         if toBuild!.isSupplier {
-//            print(drawTo)
             let toBuildSupplier = toBuild as! Supplier
             for structures in drawTo {
                 toBuildSupplier.connection_addTo(structure: structures)
@@ -224,8 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             toBuild?.connection_updateLines()
         }
-        
-        
     }
     
     func endConstructionMode() {
@@ -256,11 +242,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Reset the building, connecting, and validity
-        buildingImpedments.removeAll()
-        isBuilding = false
         toBuild = nil
         isValidSpot = true
-        
+        isBuilding = false
     }
     
     func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
