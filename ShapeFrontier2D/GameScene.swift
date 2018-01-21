@@ -188,11 +188,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // If something ends collision with the UnderConstruction, remove it from impeding objects
         if (nameA?.contains("UnderConstruction"))! {
-            print("isValid")
+            //print("isValid")
             removeFromImpediments(entity: bodyA as! Entity)
         }
         else if (nameB?.contains("UnderConstruction"))! {
-            print("isValid")
+            //print("isValid")
             removeFromImpediments(entity: bodyB as! Entity)
         }
         
