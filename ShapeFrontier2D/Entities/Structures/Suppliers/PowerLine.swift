@@ -29,7 +29,7 @@ class PowerLine : NSObject {
         
         if withinDistance(point1: structureOne!.position,
                           point2: structureTwo!.position,
-                          distance: range_max)
+                          distance: range_max).0
         {
             let path: CGMutablePath = CGMutablePath()
             path.move(to: CGPoint.zero)
@@ -87,6 +87,10 @@ class PowerLine : NSObject {
         powerLine = SKShapeNode(path: path)
         powerLine?.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         powerLine?.lineWidth = lineWidth
+        
+        powerLine?.physicsBody = SKPhysicsBody(polygonFrom: path)
+        powerLine?.physicsBody?.categoryBitMask = CollisionType.PowerLine
+        powerLine?.physicsBody?.contactTestBitMask = CollisionType.Construction
         
         // Add the line to the target structure
         structureOne?.addChild(powerLine!)

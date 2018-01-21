@@ -29,10 +29,11 @@ struct CollisionType {
     static let Structure: UInt32 = 2
     static let StructureMissile: UInt32 = 4
     static let Construction: UInt32 = 8
-    static let Enemy: UInt32 = 16
-    static let EnemyMissile: UInt32 = 32
-    static let Asteroid: UInt32 = 64
-    static let Ground: UInt32 = 128
+    static let PowerLine: UInt32 = 16
+    static let Enemy: UInt32 = 32
+    static let EnemyMissile: UInt32 = 64
+    static let Asteroid: UInt32 = 128
+    static let Ground: UInt32 = 256
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -305,24 +306,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
         var inRange : [Structure] = []
+        var currentRange : CGFloat = sceneWidth
         
         for targetStructure in playerStructures {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetStructure.position,
                                   point2: toBuild!.position,
-                                  distance: connection_length) {
+                                  distance: connection_length).0 {
+                    if !targetStructure.isSupplier && targetStructure.connection_master == nil {
+                        inRange.append(targetStructure)
+                    }
+                    else {
+                        inRange.append(targetStructure)
+                    }
                     
-                    inRange.append(targetStructure)
                 }
             }
                 // Otherwise, get the closest supplier
             else if targetStructure.isSupplier {
-                if withinDistance(point1: targetStructure.position,
-                                  point2: toBuild!.position,
-                                  distance: connection_length) {
-                    
-                    inRange.append(targetStructure)
+                let values = withinDistance(point1: targetStructure.position,
+                                            point2: toBuild!.position,
+                                            distance: connection_length)
+                if values.0 {
+                    if currentRange > values.1! {
+                        currentRange = values.1!
+                        inRange.removeAll()
+                        inRange.append(targetStructure)
+                    }
                 }
             }
         }
