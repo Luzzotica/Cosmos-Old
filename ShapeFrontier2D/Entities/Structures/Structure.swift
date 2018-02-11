@@ -31,7 +31,7 @@ class Structure : Entity {
     var power_toBuild : Int!
     var power_toUse : Int!
     var power_current : Int!
-    var power_low = false
+    var power_on = false
     
     var isSupplier = false
     
@@ -86,6 +86,14 @@ class Structure : Entity {
     
     func tick(_ currentTime: TimeInterval) {
 //        print("Got to structure tick")
+    }
+    
+    func connection_findMasters() {
+        
+    }
+    
+    func connection_masterDied() {
+        connection_master = nil
     }
     
     func alreadyConnected(toCheck: Structure) -> Bool {

@@ -265,6 +265,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Mineral Cost
             PlayerHUDHandler.shared.minerals_Used(amount: toBuild!.constructionCost)
             
+            // Update his masters, and the people he is connected to
+            toBuild!.connection_findMasters()
+            
         }
         else {
             toBuild?.removeFromParent()
