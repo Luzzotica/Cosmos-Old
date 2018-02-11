@@ -12,31 +12,84 @@ import SpriteKit
 class Supplier : Structure {
     
     var connection_toStructures : [Structure] = []
-    var connection_masters : [Supplier] = []
+    var connection_masters : [(Supplier, Int)] = []
+    var connection_distance: Int = -1
     
-    func drawPower(amount: Int) {
+    var power_capacity : Int = 0
+    
+    // Traces to a power source with power
+    override func power_use(amount: Int, distance: Int) -> Int {
         
+        // Base case: If our current power is greater than 0, we've arrived
+        if power_current > 0 {
+            // Subtract the power from the source
+//            power_current -= amount
+            // If the power is less than 0, subtract power from another power source
+            if power_current < 0 {
+                // Need a function to do that
+            }
+            
+            // Return the distance traveled to power
+            return distance
+        }
+        
+        // If not the base case, loop through all masters
+        // This is sorted, lowest distance on left
+        for master in connection_masters {
+            // Get the distance found to power
+            let distanceFound = master.0.power_use(amount: amount, distance: distance + 1)
+            if distanceFound != -1 {
+                return distanceFound
+            }
+            // Need to add consistency check between distanceFound and expected
+            
+        }
+        
+        return -1
     }
     
-    func connection_updateMasters(dontLookAt: Supplier) {
-        print("Updating masters: ")
+    func connection_containsMaster(supplier: Supplier) -> Bool {
+        // Loop through and check the supplier in the tuple
+        for i in 0..<connection_masters.count {
+            if connection_masters[i].0.isEqual(supplier) {
+                return true
+            }
+        }
+        
+        // If it wasn't in the list, we return false
+        return false
+    }
+    
+    func connection_updateMasters(dontLookAt: Supplier, distance: Int) {
+        print("Updating masters for: \(self.name)")
+        
         // If the updated master is already in my masters, stop the recursion
-        if connection_masters.contains(dontLookAt) {
+        if connection_containsMaster(supplier: dontLookAt) {
             return
         }
         
         // Otherwise, add the node to not look at into masters
-        connection_masters.append(dontLookAt)
+        connection_masters.append((dontLookAt, distance))
+        connection_masters.sort(by: {$0.1 < $1.1})
+        
+        //if distance passed is less than current distance, update it
+        if (distance < connection_distance || connection_distance == -1)
+        {
+            print("Updating Distance: \(distance) for \(self.name)")
+            connection_distance = distance
+        }
         
         // And loop through all other suppliers, telling them to update themselves with myself
         for structure in connection_toStructures {
             if structure.isSupplier && !structure.isEqual(dontLookAt) {
-                connection_updateMasters(dontLookAt: self)
+                let supplier = structure as! Supplier
+                supplier.connection_updateMasters(dontLookAt: self, distance: distance + 1)
             }
         }
     }
     
     override func connection_findMasters() {
+        print("Finding Masters for \(self.name)")
         // if the target structure has no master, make his master this supplier
         for structure in connection_toStructures {
             if !structure.isSupplier && structure.connection_master == nil  {
@@ -47,22 +100,33 @@ class Supplier : Structure {
                 let supplier = structure as! Supplier
                 supplier.connection_toStructures.append(self)
                 
-                // If he is a supplier, check to see if he has a master
+                // If he is a supplier, check to see if he is a master or a reactor
                 // Make him one of our masters
-                if supplier.connection_masters.count > 0 {
-                    connection_masters.append(supplier)
+                if supplier.connection_masters.count > 0 || supplier is Reactor {
+                    if supplier.connection_distance < connection_distance || connection_distance == -1 {
+                        connection_distance = supplier.connection_distance + 1
+                    }
+                    print("Distance to Power Supply: \(connection_distance)")
+                    connection_masters.append((supplier, supplier.connection_distance))
                 }
             }
         }
         
+        // Sort the masters based on distance
+        connection_masters.sort(by: {$0.1 < $1.1})
+        
         // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
-        if connection_masters.count > 1 {
+        if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
+                print("connected to: \(structure.name)")
                 if structure.isSupplier {
-                    connection_updateMasters(dontLookAt: self)
+                    let supplier = structure as! Supplier
+                    supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
                 }
             }
         }
+        
+        print("DONE")
     }
     
     override func connection_masterDied() {
@@ -88,7 +152,6 @@ class Supplier : Structure {
     override func connection_addTo(structure: Structure) {
         // If the target structure isn't already connected to us, we do cool things
         if !alreadyConnected(toCheck: structure) {
-            
             // Add it to the connected structures, add myself to the target structures
             connection_toStructures.append(structure)
             // Add a new powerline to the structure

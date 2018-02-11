@@ -12,7 +12,7 @@ import SpriteKit
 
 class PlayerEnergyBarHandler: NSObject {
 	var maxEnergy: Int = 1
-	var currentEnergy: Int = 0
+	var currentEnergy: Int = 10
 	var HUDWidth: CGFloat!
 
 	var energyLevelNode: SKSpriteNode!

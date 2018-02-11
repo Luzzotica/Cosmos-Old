@@ -38,6 +38,6 @@ class PlayerResourcesHUD: SKNode {
 		// Setup Mining HUD
 		playerMiningHandler = PlayerMiningHandler(width: HUDWidth)
 		self.addChild(playerMiningHandler.setupMiningRateLabel(baseValue: 10, labelBelow: playerEnergyBarHandler.energyLevelLabel))
-		self.addChild(playerMiningHandler.setupMineralLevelLabel(baseValue: 1000))
+		self.addChild(playerMiningHandler.setupMineralLevelLabel(baseValue: 10000))
 	}
 }

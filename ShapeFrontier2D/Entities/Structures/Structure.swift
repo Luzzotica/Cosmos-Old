@@ -23,14 +23,13 @@ class Structure : Entity {
     
     // Connection variables
     var connection_master : Supplier?
-    var connection_distance : Int = -1
     var connection_powerLine : [PowerLine] = []
     
     // Power variables
-    var power_priority : Int!
-    var power_toBuild : Int!
-    var power_toUse : Int!
-    var power_current : Int!
+    var power_priority : Int = 0
+    var power_toBuild : Int = 0
+    var power_toUse : Int = 0
+    var power_current : Int = 0
     var power_on = false
     
     var isSupplier = false
@@ -65,7 +64,17 @@ class Structure : Entity {
         }
     }
     
-    func power_use() {
+    // Traces to a power source with power
+    func power_use(amount: Int, distance: Int) -> Int {
+        // If we have energy globaly, use it
+        if PlayerHUDHandler.shared.energy_current() >= amount {
+            return connection_master!.power_use(amount: amount, distance: distance + 1)
+        }
+            // If we have no energy, overlay the out of power
+        else {
+            
+            return -1
+        }
         
     }
     

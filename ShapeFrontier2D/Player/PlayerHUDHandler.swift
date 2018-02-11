@@ -60,6 +60,11 @@ class PlayerHUDHandler : NSObject {
     func minerals_getCurrent() -> Int {
         return playerResourceHUD.playerMiningHandler.currentMinerals
     }
+    
+    func energy_current() -> Int {
+        return playerResourceHUD.playerEnergyBarHandler.currentEnergy
+    }
+    
     // Move the camera function
     func cameraMoved(dPoint: CGPoint) {
         playerCamera.position = playerCamera.position - dPoint

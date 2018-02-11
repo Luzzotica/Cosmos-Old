@@ -11,8 +11,6 @@ import SpriteKit
 
 class Reactor : Supplier {
     
-    
-    
     var powerProvided : Int = 10
     
     override func build() {
@@ -34,6 +32,9 @@ class Reactor : Supplier {
         power_toBuild = 2
         power_toUse = 0
         
+        power_capacity = 100
+        power_current = 100
+        
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
         
@@ -45,6 +46,8 @@ class Reactor : Supplier {
         self.name = "Reactor"
         
         setupStructure()
+        
+        connection_distance = 0
         
     }
     

@@ -12,7 +12,7 @@ import SpriteKit
 class Miner : Structure {
     
     var miningRange : CGFloat = sceneWidth * 0.2
-    var miningAmount = 50
+    var miningAmount = 1
     
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
@@ -25,8 +25,19 @@ class Miner : Structure {
         
         // Mine the astroid, update HUD with it
         if asteroid_current != nil {
-            PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
-            let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
+            
+            if connection_master != nil
+            {
+                if power_use(amount: power_toUse, distance: 0) == -1 {
+                    print("WHAT THE FLIP")
+                }
+                
+                PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
+                let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
+            }
+            else {
+                print(connection_master)
+            }
         }
         
         // If the asteroid is at 0 minerals
@@ -41,12 +52,6 @@ class Miner : Structure {
             // Otherwise, we keep mining cuz we found a cute asteroid!
             print("Got an asteroid!")
         }
-    }
-    
-    func mineAsteroid() {
-        // Create a laser between the miner and the asteroid
-        // Reduce mineral count of the asteroid
-        
     }
     
     func getAsteroid() -> Bool {
