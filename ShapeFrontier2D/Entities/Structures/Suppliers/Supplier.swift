@@ -30,6 +30,9 @@ class Supplier : Structure {
             }
             
             // Return the distance traveled to power
+            for powerLine in connection_powerLine {
+                powerLine.powerUp()
+            }
             return distance
         }
         
@@ -39,6 +42,9 @@ class Supplier : Structure {
             // Get the distance found to power
             let distanceFound = master.0.power_use(amount: amount, distance: distance + 1)
             if distanceFound != -1 {
+                for powerLine in connection_powerLine {
+                    powerLine.powerUp()
+                }
                 return distanceFound
             }
             // Need to add consistency check between distanceFound and expected

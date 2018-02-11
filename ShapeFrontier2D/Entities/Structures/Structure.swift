@@ -68,7 +68,11 @@ class Structure : Entity {
     func power_use(amount: Int, distance: Int) -> Int {
         // If we have energy globaly, use it
         if PlayerHUDHandler.shared.energy_current() >= amount {
-            return connection_master!.power_use(amount: amount, distance: distance + 1)
+            let distance = connection_master!.power_use(amount: amount, distance: distance + 1)
+            for powerLine in connection_powerLine {
+                powerLine.powerUp()
+            }
+            return distance
         }
             // If we have no energy, overlay the out of power
         else {

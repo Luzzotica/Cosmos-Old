@@ -22,10 +22,20 @@ class PowerLine : NSObject {
     var toDestroy = false
     
     func powerUp() {
-        let lightUp = SKAction.colorize(with: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
-        let toNormal = SKAction.colorize(with: #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
-        let sequence = SKAction.sequence([lightUp, toNormal])
+//        let lightUp = SKAction.colorize(with: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
+//        let toNormal = SKAction.colorize(with: #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
+//        let sequence = SKAction.sequence([lightUp, toNormal])
+//        powerLine?.run(sequence)
+        let lightUp = SKAction.run {
+            self.powerLine?.strokeColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        }
+        let wait = SKAction.wait(forDuration: 0.15)
+        let toNormal = SKAction.run {
+            self.powerLine?.strokeColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        }
+        let sequence = SKAction.sequence([lightUp, wait, toNormal])
         powerLine?.run(sequence)
+        
     }
     
     func update() {
