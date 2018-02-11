@@ -8,8 +8,8 @@
 
 import SpriteKit
 
-
 class PlayerMiningHandler: NSObject {
+    
 	var currentMinerals: Int = 0
 	var baseMinerals: Int = 0
 	var mineralRatePerMin: Int = 0

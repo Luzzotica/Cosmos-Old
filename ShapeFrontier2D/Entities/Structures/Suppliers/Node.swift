@@ -11,6 +11,8 @@ import SpriteKit
 
 class Node : Supplier {
     
+    
+    
     override func build() {
         super.build()
         
@@ -36,16 +38,19 @@ class Node : Supplier {
         
     }
     
-    init() {
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+        self.name = "Node"
+        
+        setupStructure()
+    }
+    
+    convenience init(texture: SKTexture) {
         let x = sceneWidth * 0.015
         let y = sceneWidth * 0.03
         let rSize = CGSize(width: x, height: y)
         
-        super.init(texture: Structures.node, color: .blue, size: rSize)
-        self.name = "Node"
-        
-        setupStructure()
-        
+        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

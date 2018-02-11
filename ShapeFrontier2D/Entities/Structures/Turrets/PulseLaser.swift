@@ -35,17 +35,21 @@ class PulseLaser : Turret {
         
     }
     
-    init() {
-        let xy = sceneWidth * 0.10
-        let rSize = CGSize(width: xy, height: xy)
-        
-        super.init(texture: Structures.pulseLaser, color: .blue, size: rSize)
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
         
         self.name = "PulseLaser"
         
         range = sceneWidth * 0.5
         
         setupStructure()
+    }
+    
+    convenience init(texture: SKTexture) {
+        let xy = sceneWidth * 0.10
+        let rSize = CGSize(width: xy, height: xy)
+        
+        self.init(texture: texture, color: .clear, size: rSize)
         
     }
     

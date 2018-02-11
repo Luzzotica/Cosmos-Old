@@ -13,6 +13,20 @@ class Asteroid : Entity {
     
     var minerals_current : Int = 0
     
+    func getMineAmount(amount: Int) -> Int {
+        var amountMined = 0
+        if amount > minerals_current {
+            amountMined = minerals_current
+            minerals_current = 0
+        }
+        else {
+            amountMined = amount
+            minerals_current -= amount
+        }
+        
+        return amountMined
+    }
+    
     init(texture: SKTexture?, size: CGSize, minerals: Int) {
 		super.init(texture: texture, color: .blue, size: size)
         

@@ -39,15 +39,20 @@ class Reactor : Supplier {
         
     }
     
-    init() {
-        let xy = sceneWidth * 0.10
-        let rSize = CGSize(width: xy, height: xy)
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: .blue, size: size)
         
-        super.init(texture: Structures.reactorLevel1, color: .blue, size: rSize)
         self.name = "Reactor"
         
         setupStructure()
         
+    }
+    
+    convenience init(texture: SKTexture) {
+        let xy = sceneWidth * 0.10
+        let rSize = CGSize(width: xy, height: xy)
+        
+        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

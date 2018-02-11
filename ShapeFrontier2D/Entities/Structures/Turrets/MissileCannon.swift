@@ -36,17 +36,21 @@ class MissileCannon : Turret {
         
     }
     
-    init() {
-        let xy = sceneWidth * 0.10
-        let rSize = CGSize(width: xy, height: xy)
-        
-        super.init(texture: Structures.missileCannonLevel1, color: .blue, size: rSize)
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: .blue, size: size)
         self.name = "MissileCannon"
         
         range = sceneWidth * 0.8
         
         setupStructure()
         
+    }
+    
+    convenience init(texture: SKTexture) {
+        let xy = sceneWidth * 0.10
+        let rSize = CGSize(width: xy, height: xy)
+        
+        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

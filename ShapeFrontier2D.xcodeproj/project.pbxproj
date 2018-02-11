@@ -12,6 +12,8 @@
 		07C2CC51200013C50015EFD3 /* PlayerMiningHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC50200013C50015EFD3 /* PlayerMiningHandler.swift */; };
 		07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D9DE021FFF621200D973BA /* ConstructionItem.swift */; };
 		3E51B8552BCA4D0D27DC1FB5 /* Pods_ShapeFrontier2DUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */; };
+		B56DC728202F7476002F21E2 /* PlayerHUDDecor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC727202F7476002F21E2 /* PlayerHUDDecor.swift */; };
+		B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC729202FB37C002F21E2 /* Laser.swift */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
 		B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585017D1FFF1018009C2F65 /* GameScene.swift */; };
 		B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585017F1FFF1018009C2F65 /* GameViewController.swift */; };
@@ -84,6 +86,8 @@
 		7E51DAEF21EC438F1B90F833 /* Pods-ShapeFrontier2DUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DUITests/Pods-ShapeFrontier2DUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8574490085407833AE3396D8 /* Pods-ShapeFrontier2D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.release.xcconfig"; sourceTree = "<group>"; };
 		935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B56DC727202F7476002F21E2 /* PlayerHUDDecor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDDecor.swift; sourceTree = "<group>"; };
+		B56DC729202FB37C002F21E2 /* Laser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laser.swift; sourceTree = "<group>"; };
 		B58501741FFF1018009C2F65 /* ShapeFrontier2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeFrontier2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58501771FFF1018009C2F65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B585017D1FFF1018009C2F65 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 			children = (
 				B58501B01FFF1440009C2F65 /* UIHandler.swift */,
 				B58501AD1FFF1435009C2F65 /* PlayerHUDHandler.swift */,
+				B56DC727202F7476002F21E2 /* PlayerHUDDecor.swift */,
 				B58501AC1FFF1435009C2F65 /* PlayerButtonHandler.swift */,
 				B58501DE1FFFE7A0009C2F65 /* ConstructionManager.swift */,
 				07D9DE021FFF621200D973BA /* ConstructionItem.swift */,
@@ -267,6 +272,7 @@
 		B58501C31FFF1D5E009C2F65 /* Asteroids */ = {
 			isa = PBXGroup;
 			children = (
+				B58501C41FFF1DCF009C2F65 /* AsteroidManager.swift */,
 				B58501B61FFF1C9A009C2F65 /* Asteroid.swift */,
 				B58501BB1FFF1CE8009C2F65 /* AsteroidSmall.swift */,
 				B58501D01FFF62E2009C2F65 /* AsteroidMedium.swift */,
@@ -278,7 +284,6 @@
 		B58501C81FFF4516009C2F65 /* Game Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B58501C41FFF1DCF009C2F65 /* AsteroidManager.swift */,
 				B58501DC1FFFD1FA009C2F65 /* TextureManager.swift */,
 				B58501C91FFF453B009C2F65 /* UsefulFunctions.swift */,
 			);
@@ -302,6 +307,7 @@
 				B58501E0200033FB009C2F65 /* Supplier.swift */,
 				B58501CE1FFF4F6C009C2F65 /* Reactor.swift */,
 				B58501D41FFF6CE0009C2F65 /* Node.swift */,
+				B56DC729202FB37C002F21E2 /* Laser.swift */,
 				B58501E22000397A009C2F65 /* PowerLine.swift */,
 			);
 			path = Suppliers;
@@ -616,12 +622,14 @@
 				B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */,
 				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
 				B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */,
+				B56DC728202F7476002F21E2 /* PlayerHUDDecor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
 				07C2CC51200013C50015EFD3 /* PlayerMiningHandler.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501E1200033FB009C2F65 /* Supplier.swift in Sources */,
 				B58501B31FFF1C2F009C2F65 /* Entity.swift in Sources */,
+				B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */,
 				B58501BC1FFF1CE8009C2F65 /* AsteroidSmall.swift in Sources */,
 				B58501DF1FFFE7A0009C2F65 /* ConstructionManager.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,

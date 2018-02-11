@@ -13,13 +13,15 @@ class Structure : Entity {
     
     var level : Int = 1
     
+    // Construction variables
+    var constructionCost = 0
     var underConstruction = true
     
     // Clustering variables
     var isRootNode : Bool = false
     var rootNode : Structure?
     
-    // higher the number the higher the priority
+    // Connection variables
     var connection_master : Supplier?
     var connection_distance : Int = -1
     var connection_powerLine : [PowerLine] = []
@@ -33,7 +35,9 @@ class Structure : Entity {
     
     var isSupplier = false
     
-    
+    // Tick variables
+    var tick_count = 0
+    var tick_action = 5
     
     var lowPowerOverlay : SKSpriteNode!
     
@@ -80,8 +84,8 @@ class Structure : Entity {
         }
     }
     
-    func tick() {
-        
+    func tick(_ currentTime: TimeInterval) {
+//        print("Got to structure tick")
     }
     
     func alreadyConnected(toCheck: Structure) -> Bool {
@@ -95,25 +99,32 @@ class Structure : Entity {
     }
     
     func connection_addTo(structure: Structure) {
-//        if connection_master == nil {
-//            connection_master = structure as? Supplier
-//            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
-//        }
+        // For non supplier structures...
+        // If the passed structure is not equal to current master, update it. The construction manager only passes the closest structure
         if connection_master != structure {
+            
+            // Connect to the new supplier
             connection_master = structure as? Supplier
+            
+            // If we have a connection already, destroy it.
             if connection_powerLine.count > 0 {
                 connection_powerLine[0].destroySelf()
                 connection_powerLine.remove(at: 0)
             }
+            
+            // Create the new power line
             connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
         }
     }
     
     func connection_updateLines() {
+        // If connections are greater than 0
         if connection_powerLine.count > 0 {
+            // We check if the powerline wants to be destroyed
             if connection_powerLine[0].toDestroy {
                 connection_powerLine.remove(at: 0)
             }
+                // Otherwise we update it. This checks if the range is too long
             else {
                 connection_powerLine[0].update()
             }

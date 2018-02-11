@@ -20,6 +20,7 @@ class PlayerHUDHandler : NSObject {
     let constructionManager = ConstructionManager()
     let playerResourceHUD = PlayerResourcesHUD()
     
+    
     var playerCamera : SKCameraNode!
     
     
@@ -38,6 +39,9 @@ class PlayerHUDHandler : NSObject {
         // Setup Building Constructor
         playerCamera.addChild(constructionManager)
         
+        // Add background UI for the bottom area
+        playerCamera.addChild(PlayerHUDDecor.shared.createConstructionViewBackground())
+        
         return playerCamera
     }
     
@@ -45,6 +49,17 @@ class PlayerHUDHandler : NSObject {
         
     }
     
+    func minerals_Mined(amount: Int) {
+        playerResourceHUD.playerMiningHandler.mineralsGained(amount: amount)
+    }
+    
+    func minerals_Used(amount: Int) {
+        playerResourceHUD.playerMiningHandler.mineralsUsed(amount: amount)
+    }
+    
+    func minerals_getCurrent() -> Int {
+        return playerResourceHUD.playerMiningHandler.currentMinerals
+    }
     // Move the camera function
     func cameraMoved(dPoint: CGPoint) {
         playerCamera.position = playerCamera.position - dPoint
@@ -67,8 +82,6 @@ class PlayerHUDHandler : NSObject {
         }
         
         playerCamera.run(SKAction.scale(by: 1.0 / scale, duration: 0))
-        
-        //print(playerCamera.xScale)
     }
     
     // Button Handler stuff

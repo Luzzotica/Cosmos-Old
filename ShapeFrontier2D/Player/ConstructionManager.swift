@@ -15,11 +15,11 @@ class ConstructionManager : SKNode {
     
     func setupConstructionView() {
         // Add all buildings you can make, in the order you want them
-        structures.append(ConstructionItem(Reactor()))
-        structures.append(ConstructionItem(Miner()))
-        structures.append(ConstructionItem(Node()))
-        structures.append(ConstructionItem(MissileCannon()))
-        structures.append(ConstructionItem(PulseLaser()))
+        structures.append(ConstructionItem(Reactor(texture: Structures.reactorLevel1)))
+        structures.append(ConstructionItem(Miner(texture: Structures.miner)))
+        structures.append(ConstructionItem(Node(texture: Structures.node)))
+        structures.append(ConstructionItem(MissileCannon(texture: Structures.missileCannonLevel1)))
+        structures.append(ConstructionItem(PulseLaser(texture: Structures.pulseLaser)))
         
         let anchorPoint = CGPoint(x: 0.0, y: 0.0)
         let iconSize = CGSize(width: sceneWidth * 0.1, height: sceneWidth * 0.1)
@@ -37,7 +37,6 @@ class ConstructionManager : SKNode {
             
             addChild(structures[i].building)
         }
-        
     }
     
     override init() {
@@ -61,21 +60,29 @@ extension PlayerButtonHandler {
         var structure : Structure!
         
         switch name {
-        case "ReactorConstructor": structure = Reactor()
+        case "ReactorConstructor":
+            let reactor = Reactor(texture: Structures.reactorLevel1)
+            structure = reactor
+            structure.constructionCost = StructureCost.Reactor
         case "MinerConstructor":
-            let miner = Miner()
+            let miner = Miner(texture: Structures.miner)
             miner.addChild(UIHandler.shared.createRangeIndicator(range: miner.miningRange, color: .green))
             structure = miner
-        case "NodeConstructor": structure = Node()
+            structure.constructionCost = StructureCost.Miner
+        case "NodeConstructor":
+            structure = Node(texture: Structures.node)
+            structure.constructionCost = StructureCost.Node
         case "MissileCannonConstructor":
-            let turret = MissileCannon()
+            let turret = MissileCannon(texture: Structures.missileCannonLevel1)
             turret.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
             structure = turret
+            structure.constructionCost = StructureCost.MissileTurret
         case "PulseLaserConstructor":
-            let turret = PulseLaser()
+            let turret = PulseLaser(texture: Structures.pulseLaser)
             turret.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
             structure = turret
-        default: structure = Structure()
+            structure.constructionCost = StructureCost.PulseLaser
+        default: structure = Structure(texture: Structures.reactorLevel1)
         }
         
         structure.isDisabled = true
@@ -84,5 +91,14 @@ extension PlayerButtonHandler {
         
         gameScene.startConstructionMode(structure: structure)
     }
+    
+}
+
+struct StructureCost {
+    static let Miner = 100
+    static let Reactor = 300
+    static let Node = 50
+    static let PulseLaser = 250
+    static let MissileTurret = 250
     
 }

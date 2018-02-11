@@ -39,6 +39,9 @@ class GameViewController: UIViewController {
         // Set up game scene
         setupSceneView()
         
+        // Preload SKActions
+        Laser.prepareLaserAnimation()
+        
     }
     
     // Setup all the things

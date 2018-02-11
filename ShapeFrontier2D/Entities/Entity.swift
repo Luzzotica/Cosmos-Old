@@ -25,3 +25,10 @@ class Entity : SKSpriteNode {
     }
     
 }
+
+struct EntityType {
+    static let Miner = 0
+    static let MissileTurret = 1
+    static let PulseLaser = 2
+    static let MaxType = 2
+}

@@ -9,6 +9,10 @@
 import Foundation
 import SpriteKit
 
+struct Enemies {
+    static let fighter = SKTexture(image: #imageLiteral(resourceName: "Fighter"))
+}
+
 struct Asteroids {
     static let asteroid1 = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
 

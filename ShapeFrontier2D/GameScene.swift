@@ -44,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var lastUpdateTime : TimeInterval = 0
     
     // Player structures in game
+    var playerClusters : [Structure] = []
     var playerStructures : [Structure] = []
     
     // Construction Mode variables
@@ -53,8 +54,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var connection_length : CGFloat = sceneWidth * 0.225
     
+    // Asteroids
+    var asteroidCluster = SKNode()
+    
     // MARK: - Setup
     let playerResourcesManager = PlayerResourcesHUD()
+    
+    // MARK: - Tick Variables
+    let tick_speed : TimeInterval = 0.5
+    var tick_last : TimeInterval = 0.0
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -106,7 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 PlayerHUDHandler.shared.buttonPressedUp(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
             }
         }
-        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -115,14 +122,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
+        if currentTime - tick_last > tick_speed {
+            tick_last = currentTime
+            tick(currentTime)
+        }
+        
         // Called before each frame is rendered
         
         if isBuilding && toBuild != nil {
-            // If building, update validity based on impeding objects
+            // If building, update validity based on impeding objects and mineral count
             // And change color based on current location validity
             var color: SKAction
+            // Check impediments
             if toBuild!.physicsBody!.allContactedBodies().count > 0
             {
+                isValidSpot = false
+                color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
+            }
+                // Check minerals
+            else if toBuild!.constructionCost > PlayerHUDHandler.shared.minerals_getCurrent() {
                 isValidSpot = false
                 color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
@@ -131,6 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 isValidSpot = true
                 color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
             }
+            
             toBuild?.run(color)
         }
         
@@ -148,6 +167,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         self.lastUpdateTime = currentTime
+    }
+    
+    func tick(_ currentTime: TimeInterval) {
+        for structure in playerStructures {
+            structure.tick(currentTime)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -236,6 +261,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             playerStructures.append(toBuild!)
+            
+            // Mineral Cost
+            PlayerHUDHandler.shared.minerals_Used(amount: toBuild!.constructionCost)
+            
         }
         else {
             toBuild?.removeFromParent()
@@ -325,11 +354,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = camera
         
         // Setup asteroids
-        let cluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 5000)
-        addChild(cluster)
-//        for asteroid in cluster.children {
-//            asteroids.append(asteroid as! Asteroid)
-//        }
+        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 5000)
+        addChild(asteroidCluster)
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {
