@@ -27,7 +27,6 @@ struct Structures {
     static let miner = SKTexture(imageNamed: "MinerPwr")
     static let minerMining = SKTexture(imageNamed: "MinerMining")
     
-    
     static let nodeLowPower = SKTexture(imageNamed: "NodeNoPwr")
     static let node = SKTexture(imageNamed: "NodePwr")
     static let nodePowerFlowing = SKTexture(imageNamed: "NodePwrFlowing")

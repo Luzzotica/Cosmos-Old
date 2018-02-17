@@ -46,18 +46,14 @@ class PowerLine : NSObject {
             return
         }
         
-        // Create the points offset to the left and right of the structures, should be the same for both buildings
-//        let leftOffset = CGPoint(x: cos(angleBetweenStructures - .pi/2.0) * PowerLine.lineWidth * 0.5, y: sin(angleBetweenStructures - .pi/2.0) * PowerLine.lineWidth * 0.5)
-//        let rightOffset = CGPoint(x: cos(angleBetweenStructures + .pi/2.0) * PowerLine.lineWidth * 0.5, y: sin(angleBetweenStructures + .pi/2.0) * PowerLine.lineWidth * 0.5)
-        
         // Otherwise, create the physics body for later collisions
-        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureOne!.position.y - structureTwo!.position.y)
-        print("Angle between the two: \(angleBetweenStructures)")
+        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
         
-        
+        // Create the points offset to the left and right of the structures, should be the same for both buildings
+        let offset = CGPoint(x: PowerLine.lineWidth * -0.5, y: 0.0)
         
         let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
-        let rect = CGRect(origin: structureOne!.position, size: size)
+        let rect = CGRect(origin: offset, size: size)
         powerLine = SKShapeNode(rect: rect)
         powerLine.zRotation = angleBetweenStructures
         structureOne?.addChild(powerLine)
@@ -65,6 +61,7 @@ class PowerLine : NSObject {
         powerLine.physicsBody = SKPhysicsBody(rectangleOf: size)
         powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
         powerLine.physicsBody?.contactTestBitMask = CollisionType.Construction
+        powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
     }
     
     // Checks for collisions on the line of the powerline
@@ -78,10 +75,8 @@ class PowerLine : NSObject {
             if body.node != self.structureOne && body.node != self.structureTwo {
                 if body.categoryBitMask != CollisionType.PowerLine {
                     // If we found an object that isn't a powerline, we stop, and say we aren't in a valid spot
-                    print(body.categoryBitMask)
                     stop.pointee = true
                     self.isValidSpot = false
-                    print(self.isValidSpot)
                 }
             }
         })
