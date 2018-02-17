@@ -50,17 +50,17 @@ class AsteroidManager : NSObject {
         let mediumThreshold = 600
         
         if minerals < smallThreshold {
-            let asteroid = AsteroidSmall(texture: Asteroids.asteroid1, minerals: minerals)
+            let asteroid = AsteroidSmall(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }
         else if minerals < mediumThreshold {
-            let asteroid = AsteroidMedium(texture: Asteroids.asteroid1, minerals: minerals)
+            let asteroid = AsteroidMedium(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }
         else {
-            let asteroid = AsteroidBig(texture: Asteroids.asteroid1, minerals: minerals)
+            let asteroid = AsteroidBig(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }

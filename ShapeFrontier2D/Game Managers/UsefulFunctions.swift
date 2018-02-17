@@ -21,10 +21,14 @@ func += ( left: inout CGPoint, right: CGPoint) {
     left = left + right
 }
 
-func withinDistance(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> (Bool, CGFloat?) {
+func getDistance(point1: CGPoint, point2: CGPoint) -> CGFloat {
     let x = point1.x - point2.x
     let y = point1.y - point2.y
-    let actual = sqrt((x * x) + (y * y))
+    return sqrt((x * x) + (y * y))
+}
+
+func withinDistance(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> (Bool, CGFloat?) {
+    let actual = getDistance(point1: point1, point2: point2)
     if actual > distance {
         return (false, nil)
     }

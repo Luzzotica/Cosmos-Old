@@ -15,7 +15,7 @@ struct Enemies {
 
 struct Asteroids {
     static let asteroid1 = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
-
+    static let asteroidGas1 = SKTexture(image: #imageLiteral(resourceName: "AsteroidGas1"))
 }
 
 struct Structures {

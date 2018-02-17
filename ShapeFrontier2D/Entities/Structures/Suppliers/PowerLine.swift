@@ -11,31 +11,88 @@ import SpriteKit
 
 class PowerLine : NSObject {
     
+    static let colorLit = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+    static let colorNormal = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+    
+    static let lineWidth = sceneWidth * 0.01
+    static let range_max : CGFloat = sceneWidth * 0.225
+    
     var structureOne : Structure?
     var structureTwo : Structure?
-    var powerLine : SKShapeNode?
-    
-    let lineWidth = sceneWidth * 0.01
-    
-    var range_max : CGFloat = sceneWidth * 0.225
+    var powerLine : SKShapeNode
     
     var toDestroy = false
+    var isValidSpot = true
     
     func powerUp() {
-//        let lightUp = SKAction.colorize(with: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
-//        let toNormal = SKAction.colorize(with: #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), colorBlendFactor: 1.0, duration: 0.2)
-//        let sequence = SKAction.sequence([lightUp, toNormal])
-//        powerLine?.run(sequence)
-        let lightUp = SKAction.run {
-            self.powerLine?.strokeColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
-        }
+//        let lightUp = SKAction.run {
+//            self.powerLine.strokeColor = PowerLine.colorLit
+//        }
+        let lightUp = SKAction.colorize(with: PowerLine.colorLit, colorBlendFactor: 1.0, duration: 0.0)
         let wait = SKAction.wait(forDuration: 0.15)
-        let toNormal = SKAction.run {
-            self.powerLine?.strokeColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-        }
+//        let toNormal = SKAction.run {
+//            self.powerLine.strokeColor = PowerLine.colorNormal
+//        }
+        let toNormal = SKAction.colorize(with: PowerLine.colorNormal, colorBlendFactor: 1.0, duration: 0.0)
         let sequence = SKAction.sequence([lightUp, wait, toNormal])
-        powerLine?.run(sequence)
+        powerLine.run(sequence)
+    }
+    
+    // Creates the powerline's physics body so people can't build on top of it
+    func constructPowerLine() {
+        // If it isn't valid spot, destroy it
+        if !isValidSpot {
+            destroySelf()
+            return
+        }
         
+        // Create the points offset to the left and right of the structures, should be the same for both buildings
+//        let leftOffset = CGPoint(x: cos(angleBetweenStructures - .pi/2.0) * PowerLine.lineWidth * 0.5, y: sin(angleBetweenStructures - .pi/2.0) * PowerLine.lineWidth * 0.5)
+//        let rightOffset = CGPoint(x: cos(angleBetweenStructures + .pi/2.0) * PowerLine.lineWidth * 0.5, y: sin(angleBetweenStructures + .pi/2.0) * PowerLine.lineWidth * 0.5)
+        
+        // Otherwise, create the physics body for later collisions
+        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureOne!.position.y - structureTwo!.position.y)
+        print("Angle between the two: \(angleBetweenStructures)")
+        
+        
+        
+        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
+        let rect = CGRect(origin: structureOne!.position, size: size)
+        powerLine = SKShapeNode(rect: rect)
+        powerLine.zRotation = angleBetweenStructures
+        structureOne?.addChild(powerLine)
+        
+        powerLine.physicsBody = SKPhysicsBody(rectangleOf: size)
+        powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
+        powerLine.physicsBody?.contactTestBitMask = CollisionType.Construction
+    }
+    
+    // Checks for collisions on the line of the powerline
+    func collisionCheck() {
+        // It's a valid spot until proven otherwise
+        isValidSpot = true
+        
+        // Ray cast between the structures
+        // Checks all physics bodies between the two points
+        gameScene.physicsWorld.enumerateBodies(alongRayStart: structureOne!.position, end: structureTwo!.position, using: {(body: SKPhysicsBody, point: CGPoint, normal: CGVector, stop: UnsafeMutablePointer<ObjCBool>) in
+            if body.node != self.structureOne && body.node != self.structureTwo {
+                if body.categoryBitMask != CollisionType.PowerLine {
+                    // If we found an object that isn't a powerline, we stop, and say we aren't in a valid spot
+                    print(body.categoryBitMask)
+                    stop.pointee = true
+                    self.isValidSpot = false
+                    print(self.isValidSpot)
+                }
+            }
+        })
+        
+        
+        if !isValidSpot {
+            powerLine.strokeColor = .red
+        }
+        else {
+            powerLine.strokeColor = PowerLine.colorNormal
+        }
     }
     
     func update() {
@@ -44,15 +101,18 @@ class PowerLine : NSObject {
             return
         }
         
+        // Searches along the powerline. Turns it red if it's invalid
+        collisionCheck()
+        
         if withinDistance(point1: structureOne!.position,
                           point2: structureTwo!.position,
-                          distance: range_max).0
+                          distance: PowerLine.range_max).0
         {
             let path: CGMutablePath = CGMutablePath()
             path.move(to: CGPoint.zero)
             path.addLine(to: structureTwo!.position - structureOne!.position)
             
-            powerLine?.path = path
+            powerLine.path = path
         }
         else {
             destroySelf()
@@ -60,6 +120,11 @@ class PowerLine : NSObject {
     }
     
     func destroySelf() {
+        if toDestroy {
+            return
+        }
+        print("Destroying self")
+        
         // Remove themselves from the connected lists
         if structureOne != nil && structureTwo != nil {
             if structureTwo!.isSupplier {
@@ -67,7 +132,10 @@ class PowerLine : NSObject {
                 let _ = supplierTwo.connection_remove(toRemove: structureOne!)
             }
             else {
-                structureTwo?.connection_master = nil
+                if structureTwo?.connection_master == structureOne {
+                    structureTwo?.connection_masterDied()
+                }
+                
             }
             
             if structureOne!.isSupplier {
@@ -75,19 +143,19 @@ class PowerLine : NSObject {
                 let _ = supplierOne.connection_remove(toRemove: structureTwo!)
             }
             else {
-                structureOne?.connection_master = nil
+                if structureOne?.connection_master == structureTwo {
+                    structureOne?.connection_masterDied()
+                }
             }
         }
         
-        powerLine?.removeFromParent()
+        powerLine.removeFromParent()
         toDestroy = true
         structureTwo = nil
         structureOne = nil
     }
     
     init(structOne: Structure, structTwo: Structure) {
-        super.init()
-        
         structureOne = structOne
         structureTwo = structTwo
         
@@ -103,15 +171,13 @@ class PowerLine : NSObject {
         
         // Create a line out of it
         powerLine = SKShapeNode(path: path)
-        powerLine?.strokeColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-        powerLine?.lineWidth = lineWidth
-        
-       // powerLine?.physicsBody = SKPhysicsBody(
-        powerLine?.physicsBody?.categoryBitMask = CollisionType.PowerLine
-        powerLine?.physicsBody?.contactTestBitMask = CollisionType.Construction
+        powerLine.strokeColor = PowerLine.colorNormal
+        powerLine.lineWidth = PowerLine.lineWidth
         
         // Add the line to the target structure
-        structureOne?.addChild(powerLine!)
+        structureOne?.addChild(powerLine)
+        
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {

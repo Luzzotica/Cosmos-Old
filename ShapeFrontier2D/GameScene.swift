@@ -217,7 +217,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateConstruction(translation: CGPoint) {
         // Move the structure
-        toBuild?.position = (toBuild?.position)! + translation
+        toBuild?.position = toBuild!.position + translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
@@ -267,6 +267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Update his masters, and the people he is connected to
             toBuild!.connection_findMasters()
+            toBuild!.connection_didFinishConstruction()
             
         }
         else {
@@ -289,7 +290,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if withinDistance(point1: targetStructure.position,
                                   point2: toBuild!.position,
                                   distance: connection_length).0 {
-                    if !targetStructure.isSupplier && targetStructure.connection_powerLine.count == 0 {
+                    if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
                         inRange.append(targetStructure)
                     }
                     else if targetStructure.isSupplier {

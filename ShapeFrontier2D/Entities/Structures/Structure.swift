@@ -23,7 +23,7 @@ class Structure : Entity {
     
     // Connection variables
     var connection_master : Supplier?
-    var connection_powerLine : [PowerLine] = []
+    var connection_powerLine : PowerLine?
     
     // Power variables
     var power_priority : Int = 0
@@ -69,9 +69,12 @@ class Structure : Entity {
         // If we have energy globaly, use it
         if PlayerHUDHandler.shared.energy_current() >= amount {
             let distance = connection_master!.power_use(amount: amount, distance: distance + 1)
-            for powerLine in connection_powerLine {
-                powerLine.powerUp()
+            
+            // If the distance wasn't negative 1, then we light up our powerline to out master!
+            if distance != -1 {
+                connection_powerLine?.powerUp()
             }
+            
             return distance
         }
             // If we have no energy, overlay the out of power
@@ -106,7 +109,9 @@ class Structure : Entity {
     }
     
     func connection_masterDied() {
+        print("got here")
         connection_master = nil
+        connection_powerLine = nil
     }
     
     func alreadyConnected(toCheck: Structure) -> Bool {
@@ -125,31 +130,36 @@ class Structure : Entity {
         if connection_master != structure {
             
             // Connect to the new supplier
-            connection_master = structure as? Supplier
+            connection_master = structure as! Supplier
+            print(connection_master?.name)
             
             // If we have a connection already, destroy it.
-            if connection_powerLine.count > 0 {
-                connection_powerLine[0].destroySelf()
-                connection_powerLine.remove(at: 0)
+            if connection_powerLine != nil {
+                connection_powerLine?.destroySelf()
+                connection_powerLine = nil
             }
             
             // Create the new power line
-            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
+            connection_powerLine = PowerLine(structOne: self, structTwo: structure)
         }
     }
     
     func connection_updateLines() {
-        // If connections are greater than 0
-        if connection_powerLine.count > 0 {
+        // If our master/powerline isn't nil
+        if connection_powerLine != nil {
             // We check if the powerline wants to be destroyed
-            if connection_powerLine[0].toDestroy {
-                connection_powerLine.remove(at: 0)
+            if connection_powerLine!.toDestroy {
+                connection_powerLine = nil
             }
                 // Otherwise we update it. This checks if the range is too long
             else {
-                connection_powerLine[0].update()
+                connection_powerLine?.update()
             }
         }
+    }
+    
+    func connection_didFinishConstruction() {
+        connection_powerLine?.constructPowerLine()
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

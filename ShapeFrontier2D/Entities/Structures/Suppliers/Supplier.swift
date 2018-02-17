@@ -11,7 +11,7 @@ import SpriteKit
 
 class Supplier : Structure {
     
-    var connection_toStructures : [Structure] = []
+    var connection_toStructures : [(Structure, PowerLine)] = []
     var connection_masters : [(Supplier, Int)] = []
     var connection_distance: Int = -1
     
@@ -30,9 +30,6 @@ class Supplier : Structure {
             }
             
             // Return the distance traveled to power
-            for powerLine in connection_powerLine {
-                powerLine.powerUp()
-            }
             return distance
         }
         
@@ -42,9 +39,14 @@ class Supplier : Structure {
             // Get the distance found to power
             let distanceFound = master.0.power_use(amount: amount, distance: distance + 1)
             if distanceFound != -1 {
-                for powerLine in connection_powerLine {
-                    powerLine.powerUp()
+                
+                // Find the structure's powerline and light it up!
+                for (structure, powerline) in connection_toStructures {
+                    if structure == master.0 {
+                        powerline.powerUp()
+                    }
                 }
+                
                 return distanceFound
             }
             // Need to add consistency check between distanceFound and expected
@@ -87,8 +89,8 @@ class Supplier : Structure {
         
         // And loop through all other suppliers, telling them to update themselves with myself
         for structure in connection_toStructures {
-            if structure.isSupplier && !structure.isEqual(dontLookAt) {
-                let supplier = structure as! Supplier
+            if structure.0.isSupplier && !structure.0.isEqual(dontLookAt) {
+                let supplier = structure.0 as! Supplier
                 supplier.connection_updateMasters(dontLookAt: self, distance: distance + 1)
             }
         }
@@ -98,13 +100,14 @@ class Supplier : Structure {
         print("Finding Masters for \(self.name)")
         // if the target structure has no master, make his master this supplier
         for structure in connection_toStructures {
-            if !structure.isSupplier && structure.connection_master == nil  {
-                structure.connection_master = self
+            if !structure.0.isSupplier && structure.0.connection_master == nil  {
+                structure.0.connection_master = self
+                structure.0.connection_powerLine = structure.1
             }
-            else if structure.isSupplier {
+            else if structure.0.isSupplier {
                 // Add myself to their connections, this might cause their list to have lots of me...
-                let supplier = structure as! Supplier
-                supplier.connection_toStructures.append(self)
+                let supplier = structure.0 as! Supplier
+                supplier.connection_toStructures.append((self, structure.1))
                 
                 // If he is a supplier, check to see if he is a master or a reactor
                 // Make him one of our masters
@@ -124,9 +127,9 @@ class Supplier : Structure {
         // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
         if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
-                print("connected to: \(structure.name)")
-                if structure.isSupplier {
-                    let supplier = structure as! Supplier
+                print("connected to: \(structure.0.name)")
+                if structure.0.isSupplier {
+                    let supplier = structure.0 as! Supplier
                     supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
                 }
             }
@@ -147,7 +150,7 @@ class Supplier : Structure {
         
         // Next, checks if we are already connected to the target structure
         // Can probably add a check here for the number of connected structures later
-        for structure in connection_toStructures {
+        for (structure, _) in connection_toStructures {
             if toCheck.isEqual(structure) {
                 return true
             }
@@ -158,27 +161,39 @@ class Supplier : Structure {
     override func connection_addTo(structure: Structure) {
         // If the target structure isn't already connected to us, we do cool things
         if !alreadyConnected(toCheck: structure) {
+            print("How many times?")
             // Add it to the connected structures, add myself to the target structures
-            connection_toStructures.append(structure)
+            // Attach to it a powerline. Tuple makes it nice for accessing powerlines later
+            connection_toStructures.append((structure, PowerLine(structOne: self, structTwo: structure)))
+            
             // Add a new powerline to the structure
-            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
+//            connection_powerLine.append(PowerLine(structOne: self, structTwo: structure))
         }
     }
     
+    // This function is called during creation
     override func connection_updateLines() {
-        for i in stride(from: connection_powerLine.count - 1, through: 0, by: -1) {
-            if connection_powerLine[i].toDestroy {
-                connection_powerLine.remove(at: i)
+        for i in stride(from: connection_toStructures.count - 1, through: 0, by: -1) {
+            if connection_toStructures[i].1.toDestroy {
+                connection_toStructures.remove(at: i)
             }
             else {
-                connection_powerLine[i].update()
+                connection_toStructures[i].1.update()
             }
         }
     }
     
+    override func connection_didFinishConstruction() {
+        for (_, line) in connection_toStructures {
+            line.constructPowerLine()
+        }
+    }
+    
+    // This function is called by the powerline
     func connection_remove(toRemove: Structure) -> Bool {
         for i in 0..<connection_toStructures.count {
-            if connection_toStructures[i].isEqual(toRemove) {
+            if connection_toStructures[i].0.isEqual(toRemove) {
+                
                 connection_toStructures.remove(at: i)
                 return true
             }
