@@ -35,17 +35,15 @@ class Miner : Structure {
             }
         }
         
-        // If the asteroid is at 0 minerals
+        // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
         if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
             // And we can't find another asteroid
             if !getAsteroid() {
-                print("Couldn't get an asteroid!")
+                print("Couldn't find an asteroid in range!")
                 // We disable ourselves. Nothing to mine =(
                 isDisabled = true
                 asteroid_current = nil
             }
-            // Otherwise, we keep mining cuz we found a cute asteroid!
-            print("Got an asteroid!")
         }
     }
     
