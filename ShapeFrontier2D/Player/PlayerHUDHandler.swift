@@ -65,6 +65,10 @@ class PlayerHUDHandler : NSObject {
         return playerResourceHUD.playerEnergyBarHandler.currentEnergy
     }
     
+    func energy_update() {
+        playerResourceHUD.playerEnergyBarHandler.updateEnergyMeter()
+    }
+    
     // Move the camera function
     func cameraMoved(dPoint: CGPoint) {
         playerCamera.position = playerCamera.position - dPoint

@@ -61,6 +61,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let tick_speed : TimeInterval = 0.5
     var tick_last : TimeInterval = 0.0
     
+    //Temporary Variables
+    var power_current : Int = 100
+    var power_capacity : Int = 100
+    
+    func add_power(toAdd: Int)
+    {
+        power_current += toAdd
+        if power_current > power_capacity
+        {
+            power_current = power_capacity
+        }
+    }
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
@@ -171,6 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for structure in playerStructures {
             structure.tick(currentTime)
         }
+        PlayerHUDHandler.shared.energy_update()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -267,9 +281,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Mineral Cost
             PlayerHUDHandler.shared.minerals_Used(amount: toBuild!.constructionCost)
             
-            // Update his masters, and the people he is connected to
-            toBuild!.connection_findMasters()
-            toBuild!.connection_didFinishConstruction()
+            // Finish Construction
+            toBuild!.didFinishConstruction()
             
         }
         else {

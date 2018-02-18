@@ -12,7 +12,7 @@ import SpriteKit
 class Miner : Structure {
     
     var miningRange : CGFloat = sceneWidth * 0.2
-    var miningAmount = 1
+    var miningAmount = 5
     
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
@@ -32,16 +32,16 @@ class Miner : Structure {
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                 }
             }
-        }
-        
-        // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
-        if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
-            // And we can't find another asteroid
-            if !getAsteroid() {
-                print("Couldn't find an asteroid in range!")
-                // We disable ourselves. Nothing to mine =(
-                isDisabled = true
-                asteroid_current = nil
+            
+            // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
+            if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
+                // And we can't find another asteroid
+                if !getAsteroid() {
+                    print("Couldn't find an asteroid in range!")
+                    // We disable ourselves. Nothing to mine =(
+                    isDisabled = true
+                    asteroid_current = nil
+                }
             }
         }
     }
@@ -92,7 +92,7 @@ class Miner : Structure {
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
         power_toBuild = 1
-        power_toUse = 1
+        power_toUse = 5
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
