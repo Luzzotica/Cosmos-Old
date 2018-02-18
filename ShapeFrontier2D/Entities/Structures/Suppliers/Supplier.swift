@@ -17,17 +17,25 @@ class Supplier : Structure {
     
     var power_capacity : Int = 0
     
+    func power_use(amount: Int) {
+        power_current -= amount
+        
+        var deficit = -1
+        if power_current < 0 {
+            deficit = abs(power_current)
+            power_current = 0
+        }
+        
+        gameScene.power_use(amount: amount, deficit: deficit)
+    }
+    
     // Traces to a power source with power
-    override func power_use(amount: Int, distance: Int) -> Int {
+    override func power_find(amount: Int, distance: Int) -> Int {
         
         // Base case: If our current power is greater than 0, we've arrived
         if power_current > 0 {
             // Subtract the power from the source
-            power_current -= amount
-            // If the power is less than 0, subtract power from another power source
-            if power_current < 0 {
-                // Need a function to do that
-            }
+            power_use(amount: amount)
             
             // Return the distance traveled to power
             return distance
@@ -37,7 +45,7 @@ class Supplier : Structure {
         // This is sorted, lowest distance on left
         for master in connection_masters {
             // Get the distance found to power
-            let distanceFound = master.0.power_use(amount: amount, distance: distance + 1)
+            let distanceFound = master.0.power_find(amount: amount, distance: distance + 1)
             if distanceFound != -1 {
                 // Find the structure's powerline and light it up!
                 for (structure, powerline) in connection_toStructures {

@@ -61,17 +61,62 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let tick_speed : TimeInterval = 0.5
     var tick_last : TimeInterval = 0.0
     
-    //Temporary Variables
+    // Power Variables
     var power_current : Int = 100
     var power_capacity : Int = 100
+    var power_suppliers : [Supplier] = []
     
-    func add_power(toAdd: Int)
+    func power_add(toAdd: Int)
     {
         power_current += toAdd
         if power_current > power_capacity
         {
             power_current = power_capacity
         }
+    }
+    
+    func power_use(amount: Int, deficit: Int) {
+        // Subtract energy from global power
+        power_current -= amount
+        
+        // If there was a deficit, we find other reactors
+        if deficit != -1 {
+            // Store the deficit
+            var deficit_curr = deficit
+
+            // While it's greater than 0, we want to keep looking for reactors with energy
+            while deficit_curr > 0 {
+                
+                let reactor = power_findPowerSourceWithPower()
+                
+                if reactor != nil {
+                    reactor!.power_current -= deficit_curr
+                    // Set the deficit to whatever the reactors power now is
+                    deficit_curr = reactor!.power_current
+                    
+                    // If the deficit is still less than 0, then we want to set the reactors power to 0
+                    // Continue with the while loop
+                    if deficit_curr < 0 {
+                        reactor!.power_current = 0
+                        deficit_curr *= -1
+                    }
+                }
+                else {
+                    print("This was impossible. Do something about it. Now.")
+                    deficit_curr = 0
+                }
+            }
+        }
+    }
+    
+    func power_findPowerSourceWithPower() -> Supplier? {
+        for reactor in power_suppliers {
+            if reactor.power_current > 0 {
+                return reactor
+            }
+        }
+        
+        return nil
     }
     
     override func didMove(to view: SKView) {
@@ -283,6 +328,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Finish Construction
             toBuild!.didFinishConstruction()
+            
+            // If this building was a reactor, add it to the players reactors
+            // We will add batteries later...
+            if toBuild! is Reactor {
+                power_suppliers.append(toBuild as! Supplier)
+            }
             
         }
         else {

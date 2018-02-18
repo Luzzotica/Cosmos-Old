@@ -13,6 +13,17 @@ class Reactor : Supplier {
     
     var powerProvided : Int = 10
     
+    override func tick(_ currentTime: TimeInterval) {
+        super.tick(currentTime)
+        if isDisabled {
+            return
+        }
+        if power_current < power_capacity
+        {
+            gameScene.power_add(toAdd: powerProvided)
+        }
+    }
+    
     override func build() {
         super.build()
 //        if !isBuilding {
@@ -36,17 +47,6 @@ class Reactor : Supplier {
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
-    }
-    
-    override func tick(_ currentTime: TimeInterval) {
-        super.tick(currentTime)
-        if isDisabled {
-            return
-        }
-        if power_current < power_capacity
-        {
-            gameScene.add_power(toAdd: powerProvided)
-        }
     }
     
     override func didFinishConstruction() {

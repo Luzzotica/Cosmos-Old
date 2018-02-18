@@ -35,7 +35,7 @@ class Structure : Entity {
     
     // Tick variables
     var tick_count = 0
-    var tick_action = 5
+    var tick_action = 1
     
     var lowPowerOverlay : SKSpriteNode!
     
@@ -64,10 +64,10 @@ class Structure : Entity {
     }
     
     // Traces to a power source with power
-    func power_use(amount: Int, distance: Int) -> Int {
+    func power_find(amount: Int, distance: Int) -> Int {
         // If we have energy globaly, use it
         if PlayerHUDHandler.shared.energy_current() >= amount {
-            let distance = connection_master!.power_use(amount: amount, distance: distance + 1)
+            let distance = connection_master!.power_find(amount: amount, distance: distance + 1)
             
             // If the distance wasn't negative 1, then we light up our powerline to out master!
             if distance != -1 {

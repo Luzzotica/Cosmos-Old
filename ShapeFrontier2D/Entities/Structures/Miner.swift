@@ -32,7 +32,7 @@ class Miner : Structure {
             if asteroid_current != nil {
                 if connection_master != nil
                 {
-                    if power_use(amount: power_toUse, distance: 0) != -1 {
+                    if power_find(amount: power_toUse, distance: 0) != -1 {
                         PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
                         let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                     }
