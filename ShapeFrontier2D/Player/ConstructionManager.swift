@@ -89,6 +89,9 @@ extension PlayerButtonHandler {
         structure.position = location
         structure.name?.append("UnderConstruction")
         
+        structure.physicsBody?.categoryBitMask = CollisionType.Construction
+        structure.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
+        
         gameScene.startConstructionMode(structure: structure)
     }
     

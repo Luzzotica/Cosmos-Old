@@ -25,7 +25,6 @@ class Miner : Structure {
         
         // Mine the astroid, update HUD with it
         if asteroid_current != nil {
-            
             if connection_master != nil
             {
                 if power_use(amount: power_toUse, distance: 0) != -1 {

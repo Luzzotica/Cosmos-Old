@@ -57,9 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Asteroids
     var asteroidCluster = SKNode()
     
-    // MARK: - Setup
-    let playerResourcesManager = PlayerResourcesHUD()
-    
     // MARK: - Tick Variables
     let tick_speed : TimeInterval = 0.5
     var tick_last : TimeInterval = 0.0
@@ -134,6 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // And change color based on current location validity
             var color: SKAction
             // Check impediments
+//            print(toBuild!.physicsBody!.allContactedBodies().count)
             if toBuild!.physicsBody!.allContactedBodies().count > 0
             {
                 isValidSpot = false
@@ -250,6 +248,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 toBuild?.name?.removeLast()
             }
             
+            // Make him be a structure
+            toBuild!.physicsBody?.categoryBitMask = CollisionType.Structure
+            
             // Make him enabled
             toBuild?.isDisabled = false
             
@@ -259,6 +260,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     toBuild?.children[i].removeFromParent()
                 }
             }
+            
             
             playerStructures.append(toBuild!)
             

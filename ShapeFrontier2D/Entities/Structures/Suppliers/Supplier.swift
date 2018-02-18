@@ -50,7 +50,6 @@ class Supplier : Structure {
                 return distanceFound
             }
             // Need to add consistency check between distanceFound and expected
-            
         }
         
         return -1
@@ -161,7 +160,6 @@ class Supplier : Structure {
     override func connection_addTo(structure: Structure) {
         // If the target structure isn't already connected to us, we do cool things
         if !alreadyConnected(toCheck: structure) {
-            print("How many times?")
             // Add it to the connected structures, add myself to the target structures
             // Attach to it a powerline. Tuple makes it nice for accessing powerlines later
             connection_toStructures.append((structure, PowerLine(structOne: self, structTwo: structure)))

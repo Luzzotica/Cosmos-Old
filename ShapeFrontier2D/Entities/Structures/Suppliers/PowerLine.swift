@@ -19,7 +19,7 @@ class PowerLine : NSObject {
     
     var structureOne : Structure?
     var structureTwo : Structure?
-    var powerLine : SKShapeNode
+    var powerLine : SKSpriteNode
     
     var toDestroy = false
     var isValidSpot = true
@@ -46,47 +46,39 @@ class PowerLine : NSObject {
             return
         }
         
-        // Otherwise, create the physics body for later collisions
-        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
         
-        // Create the points offset to the left and right of the structures, should be the same for both buildings
-        let offset = CGPoint(x: PowerLine.lineWidth * -0.5, y: 0.0)
-        
-        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
-        let rect = CGRect(origin: offset, size: size)
-        powerLine = SKShapeNode(rect: rect)
-        powerLine.zRotation = angleBetweenStructures
-        structureOne?.addChild(powerLine)
-        
-        powerLine.physicsBody = SKPhysicsBody(rectangleOf: size)
-        powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
-        powerLine.physicsBody?.contactTestBitMask = CollisionType.Construction
-        powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
     }
     
     // Checks for collisions on the line of the powerline
     func collisionCheck() {
         // It's a valid spot until proven otherwise
-        isValidSpot = true
+//        isValidSpot = true
         
         // Ray cast between the structures
         // Checks all physics bodies between the two points
-        gameScene.physicsWorld.enumerateBodies(alongRayStart: structureOne!.position, end: structureTwo!.position, using: {(body: SKPhysicsBody, point: CGPoint, normal: CGVector, stop: UnsafeMutablePointer<ObjCBool>) in
-            if body.node != self.structureOne && body.node != self.structureTwo {
-                if body.categoryBitMask != CollisionType.PowerLine {
-                    // If we found an object that isn't a powerline, we stop, and say we aren't in a valid spot
-                    stop.pointee = true
-                    self.isValidSpot = false
-                }
-            }
-        })
+//        gameScene.physicsWorld.enumerateBodies(alongRayStart: structureOne!.position, end: structureTwo!.position, using: {(body: SKPhysicsBody, point: CGPoint, normal: CGVector, stop: UnsafeMutablePointer<ObjCBool>) in
+//            if body.node != self.structureOne && body.node != self.structureTwo {
+//                if body.categoryBitMask != CollisionType.PowerLine {
+//                    // If we found an object that isn't a powerline, we stop, and say we aren't in a valid spot
+//                    stop.pointee = true
+//                    self.isValidSpot = false
+//                }
+//            }
+//        })
         
-        
-        if !isValidSpot {
-            powerLine.strokeColor = .red
+        print(powerLine.physicsBody?.allContactedBodies().count)
+        if powerLine.physicsBody!.allContactedBodies().count > 0 {
+            isValidSpot = false
         }
         else {
-            powerLine.strokeColor = PowerLine.colorNormal
+            isValidSpot = true
+        }
+        
+        if !isValidSpot {
+            powerLine.color = .red
+        }
+        else {
+            powerLine.color = PowerLine.colorNormal
         }
     }
     
@@ -96,18 +88,22 @@ class PowerLine : NSObject {
             return
         }
         
-        // Searches along the powerline. Turns it red if it's invalid
-        collisionCheck()
-        
         if withinDistance(point1: structureOne!.position,
                           point2: structureTwo!.position,
                           distance: PowerLine.range_max).0
         {
-            let path: CGMutablePath = CGMutablePath()
-            path.move(to: CGPoint.zero)
-            path.addLine(to: structureTwo!.position - structureOne!.position)
+            // update the size of the power line
+            let newSize = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureOne!.position))
+            let updateSize = SKAction.scale(to: newSize, duration: 0.0)
+            powerLine.run(updateSize)
             
-            powerLine.path = path
+            // Rotate powerline
+            let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
+            powerLine.zRotation = angleBetweenStructures
+            
+            // Move the power line to the center between the structures
+            let offset = CGPoint(x: PowerLine.lineWidth * -0.5, y: newSize.height * 0.5)
+            powerLine.position = offset
         }
         else {
             destroySelf()
@@ -118,7 +114,6 @@ class PowerLine : NSObject {
         if toDestroy {
             return
         }
-        print("Destroying self")
         
         // Remove themselves from the connected lists
         if structureOne != nil && structureTwo != nil {
@@ -130,7 +125,6 @@ class PowerLine : NSObject {
                 if structureTwo?.connection_master == structureOne {
                     structureTwo?.connection_masterDied()
                 }
-                
             }
             
             if structureOne!.isSupplier {
@@ -154,20 +148,25 @@ class PowerLine : NSObject {
         structureOne = structOne
         structureTwo = structTwo
         
-        // Create a path
-        let path: CGMutablePath = CGMutablePath()
+        // Set his size to the linewidth and the distance between the two structures
+        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
         
-        path.move(to: CGPoint.zero)
+        // Create the powerline based on the size and correct color
+        powerLine = SKSpriteNode(color: PowerLine.colorNormal, size: size)
         
-        let pointOne = structureOne!.position
-        let pointTwo = structureTwo!.position
-        path.addLine(to: pointTwo - pointOne)
-        path.addLine(to: pointOne - pointTwo)
+        // Rotate him to the proper angle
+        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
+        powerLine.zRotation = angleBetweenStructures
         
-        // Create a line out of it
-        powerLine = SKShapeNode(path: path)
-        powerLine.strokeColor = PowerLine.colorNormal
-        powerLine.lineWidth = PowerLine.lineWidth
+        // Offset him to the center between the two structures
+        // The angle handles the rotation
+        let offset = CGPoint(x: PowerLine.lineWidth * -0.5, y: size.height * 0.5)
+        powerLine.position = offset
+        
+        powerLine.physicsBody = SKPhysicsBody(rectangleOf: size)
+        powerLine.physicsBody?.categoryBitMask = CollisionType.Construction
+        powerLine.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.Asteroid
+        powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
         
         // Add the line to the target structure
         structureOne?.addChild(powerLine)

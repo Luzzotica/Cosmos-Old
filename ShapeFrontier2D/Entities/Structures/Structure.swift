@@ -30,7 +30,6 @@ class Structure : Entity {
     var power_toBuild : Int = 0
     var power_toUse : Int = 0
     var power_current : Int = 0
-    var power_on = false
     
     var isSupplier = false
     
