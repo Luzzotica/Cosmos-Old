@@ -28,12 +28,13 @@ class PowerLine : NSObject {
 //        let lightUp = SKAction.run {
 //            self.powerLine.strokeColor = PowerLine.colorLit
 //        }
-        let lightUp = SKAction.colorize(with: PowerLine.colorLit, colorBlendFactor: 1.0, duration: 0.0)
+        powerLine.removeAllActions()
+        let lightUp = SKAction.colorize(with: PowerLine.colorLit, colorBlendFactor: 1.0, duration: 0.05)
         let wait = SKAction.wait(forDuration: 0.15)
 //        let toNormal = SKAction.run {
 //            self.powerLine.strokeColor = PowerLine.colorNormal
 //        }
-        let toNormal = SKAction.colorize(with: PowerLine.colorNormal, colorBlendFactor: 1.0, duration: 0.0)
+        let toNormal = SKAction.colorize(with: PowerLine.colorNormal, colorBlendFactor: 1.0, duration: 0.1)
         let sequence = SKAction.sequence([lightUp, wait, toNormal])
         powerLine.run(sequence)
     }

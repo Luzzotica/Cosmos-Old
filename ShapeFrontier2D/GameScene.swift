@@ -43,6 +43,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var lastUpdateTime : TimeInterval = 0
     
+    // Player camera
+    var playerCamera: SKCameraNode?
+    
     // Player structures in game
     var playerClusters : [Structure] = []
     var playerStructures : [Structure] = []
@@ -65,6 +68,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var power_current : Int = 100
     var power_capacity : Int = 100
     var power_suppliers : [Supplier] = []
+    
+    // Mineral variables
+    var minerals_current : Int = 10000
     
     func power_add(toAdd: Int)
     {
@@ -138,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for t in touches {
             let touchedNodes = nodes(at: t.location(in: self))
             
-            PlayerHUDHandler.shared.buttonPressedDown(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
+            PlayerHUD.shared.buttonPressedDown(touchedNodes, location: t.location(in: self))
         }
     }
     
@@ -149,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if !isBuilding {
             // If we aren't building, move camera
-            PlayerHUDHandler.shared.cameraMoved(dPoint: translationInScene)
+            PlayerHUD.shared.cameraMoved(dPoint: translationInScene)
         }
         else {
             // Otherwise, update the construction
@@ -168,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Otherwise, handle button presses
             for t in touches {
                 let touchedNodes = nodes(at: t.location(in: self))
-                PlayerHUDHandler.shared.buttonPressedUp(touchedNodes: touchedNodes, touchedLocation: t.location(in: self))
+                PlayerHUD.shared.buttonPressedUp(touchedNodes, location: t.location(in: self))
             }
         }
     }
@@ -198,7 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
                 // Check minerals
-            else if toBuild!.constructionCost > PlayerHUDHandler.shared.minerals_getCurrent() {
+            else if toBuild!.constructionCost > minerals_current {
                 isValidSpot = false
                 color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
@@ -231,7 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for structure in playerStructures {
             structure.tick(currentTime)
         }
-        PlayerHUDHandler.shared.energy_update()
+        PlayerHUD.shared.update_resources()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -259,7 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild!.position.y += sceneHeight * 0.2 * PlayerHUDHandler.shared.playerCamera.yScale
+        toBuild!.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
         
         // Add connection range
         toBuild?.addChild(UIHandler.shared.createRangeIndicator(
@@ -322,11 +328,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            
             playerStructures.append(toBuild!)
             
             // Mineral Cost
-            PlayerHUDHandler.shared.minerals_Used(amount: toBuild!.constructionCost)
+            minerals_current -= toBuild!.constructionCost
+            PlayerHUD.shared.update_mineralsLabel()
             
             // Finish Construction
             toBuild!.didFinishConstruction()
@@ -402,7 +408,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func restartGame() {
         clearGame()
-        PlayerHUDHandler.shared.resetHUD()
+        PlayerHUD.shared.resetHUD()
         
         let _ = pauseUnpause()
     }
@@ -421,12 +427,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupGame() {
         // Add and create the camera
-        let camera = PlayerHUDHandler.shared.setupHUD()
-        addChild(camera)
-        self.camera = camera
+        playerCamera = PlayerHUD.shared
+        addChild(playerCamera!)
+        camera = playerCamera
         
         // Setup asteroids
-        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: camera.position, mineralCap: 5000)
+        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 30000)
         addChild(asteroidCluster)
     }
     
@@ -434,7 +440,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Don't let the map get too small or too big:
         
-        PlayerHUDHandler.shared.zoom(scale: sender.scale)
+        PlayerHUD.shared.zoom(scale: sender.scale)
         sender.scale = 1.0
         
     }

@@ -24,7 +24,7 @@ class AsteroidManager : NSObject {
             // Randomize radius, and, and minerals to give
             let radius = Int(arc4random_uniform(UInt32(clusterRadius))) + Int(sceneWidth * 0.2)
             let angle = Double(arc4random_uniform(361))
-            let minerals = Int(arc4random_uniform(801))
+            let minerals = Int(arc4random_uniform(6000))
             
             // Get the point based on radius and angle
             let x = atPoint.x + CGFloat((cos(angle) * Double(radius)))
@@ -46,8 +46,8 @@ class AsteroidManager : NSObject {
     
     func createAsteroid(minerals: Int, atPoint: CGPoint) -> Asteroid {
         
-        let smallThreshold = 250
-        let mediumThreshold = 600
+        let smallThreshold = 2000
+        let mediumThreshold = 4000
         
         if minerals < smallThreshold {
             let asteroid = AsteroidSmall(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)

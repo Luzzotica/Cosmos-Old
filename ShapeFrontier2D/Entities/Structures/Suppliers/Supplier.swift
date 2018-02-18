@@ -30,7 +30,7 @@ class Supplier : Structure {
     }
     
     // Traces to a power source with power
-    override func power_find(amount: Int, distance: Int) -> Int {
+    override func power_find(amount: Int, distance: Int, dontLookAt: [Supplier]) -> Int {
         
         // Base case: If our current power is greater than 0, we've arrived
         if power_current > 0 {
@@ -46,7 +46,14 @@ class Supplier : Structure {
         // This is sorted, lowest distance on left
         for master in connection_masters {
             // Get the distance found to power
-            let distanceFound = master.0.power_find(amount: amount, distance: distance + 1)
+            print(dontLookAt.count)
+            if let _ = dontLookAt.index(of: master.0) {
+                continue
+            }
+            
+            var dontLookAtPeeps = dontLookAt
+            dontLookAtPeeps.append(self)
+            let distanceFound = master.0.power_find(amount: amount, distance: distance + 1, dontLookAt: dontLookAtPeeps)
             if distanceFound != -1 {
                 // Find the structure's powerline and light it up!
                 for (structure, powerline) in connection_toStructures {
@@ -54,16 +61,16 @@ class Supplier : Structure {
                         powerline.powerUp()
                     }
                 }
-                print("Node found a master")
+//                print("Node found a master")
                 
                 return distanceFound
             }
             else {
-                print("Nodes master is: \(master.0.name)")
+//                print("Nodes master is: \(master.0.name)")
             }
             // Need to add consistency check between distanceFound and expected
         }
-        print("Node has no masters")
+//        print("Node has no masters")
         return -1
     }
     
@@ -194,10 +201,11 @@ class Supplier : Structure {
     }
     
     override func didFinishConstruction() {
-        connection_findMasters()
         for (_, line) in connection_toStructures {
             line.constructPowerLine()
         }
+        
+        connection_findMasters()
     }
     
     // This function is called by the powerline

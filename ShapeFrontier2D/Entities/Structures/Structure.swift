@@ -64,10 +64,10 @@ class Structure : Entity {
     }
     
     // Traces to a power source with power
-    func power_find(amount: Int, distance: Int) -> Int {
+    func power_find(amount: Int, distance: Int, dontLookAt: [Supplier]) -> Int {
         // If we have energy globaly, use it
-        if PlayerHUDHandler.shared.energy_current() >= amount {
-            let distance = connection_master!.power_find(amount: amount, distance: distance + 1)
+        if gameScene.power_current >= amount {
+            let distance = connection_master!.power_find(amount: amount, distance: distance + 1, dontLookAt: [])
             
             // If the distance wasn't negative 1, then we light up our powerline to out master!
             if distance != -1 {
@@ -102,7 +102,7 @@ class Structure : Entity {
     }
     
     func connection_findMasters() {
-        print("Finding wrong master")
+//        print("Finding wrong master")
     }
     
     func connection_masterDied() {
@@ -128,7 +128,7 @@ class Structure : Entity {
             
             // Connect to the new supplier
             connection_master = structure as! Supplier
-            print(connection_master?.name)
+            print(connection_master!.name!)
             
             // If we have a connection already, destroy it.
             if connection_powerLine != nil {

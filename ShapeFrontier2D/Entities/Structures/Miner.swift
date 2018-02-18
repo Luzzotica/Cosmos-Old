@@ -12,7 +12,7 @@ import SpriteKit
 class Miner : Structure {
     
     var miningRange : CGFloat = sceneWidth * 0.2
-    var miningAmount = 25
+    var miningAmount = 1
     
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
@@ -23,11 +23,13 @@ class Miner : Structure {
             return
         }
         
+        // Increase the tick
         tick_count += 1
         if tick_count <= tick_action {
             return
         }
         
+        // If we don't have enough power in the global power, show that we are out of power
         if gameScene.power_current < power_toUse {
             return
         }
@@ -39,12 +41,12 @@ class Miner : Structure {
         if asteroid_current != nil {
             if connection_master != nil
             {
-                if power_find(amount: power_toUse, distance: 0) != -1 {
-                    PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
+                if power_find(amount: power_toUse, distance: 0, dontLookAt: []) != -1 {
+                    gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: miningAmount))!
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                 }
                 else {
-                    print("Current master: \(connection_master!.name)")
+//                    print("Current master: \(connection_master!.name)")
                 }
             }
         }

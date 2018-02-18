@@ -6,10 +6,9 @@
 //  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
-class PlayerButtonHandler : NSObject {
+extension PlayerHUD {
     
     func buttonPressedDown(_ touchedNodes: [SKNode], location: CGPoint) {
         for node in touchedNodes {

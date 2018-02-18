@@ -9,11 +9,12 @@
 import Foundation
 import SpriteKit
 
-class ConstructionManager : SKNode {
-    
-    var structures : [ConstructionItem] = []
+extension PlayerHUD {
     
     func setupConstructionView() {
+        constructionNode.position.x = -sceneWidth * 0.5
+        constructionNode.position.y = -sceneHeight * 0.5
+        
         // Add all buildings you can make, in the order you want them
         structures.append(ConstructionItem(Reactor(texture: Structures.reactorLevel1)))
         structures.append(ConstructionItem(Miner(texture: Structures.miner)))
@@ -35,26 +36,9 @@ class ConstructionManager : SKNode {
             
             point.x += iconSize.width + xBuffer
             
-            addChild(structures[i].building)
+            constructionNode.addChild(structures[i].building)
         }
     }
-    
-    override init() {
-        super.init()
-        
-        position.x = -sceneWidth * 0.5
-        position.y = -sceneHeight * 0.5
-        
-        setupConstructionView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
-extension PlayerButtonHandler {
     
     func startStructureCreation(name: String, location: CGPoint) {
         var structure : Structure!

@@ -6,12 +6,9 @@
 //  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
-class PlayerHUDDecor : NSObject {
-    
-    static let shared = PlayerHUDDecor()
+extension PlayerHUD {
     
     func createConstructionViewBackground() -> SKSpriteNode {
         let nodeSize = CGSize(width: sceneWidth, height: sceneHeight * 0.275)

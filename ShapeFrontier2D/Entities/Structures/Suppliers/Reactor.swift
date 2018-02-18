@@ -11,7 +11,7 @@ import SpriteKit
 
 class Reactor : Supplier {
     
-    var powerProvided : Int = 10
+    var powerProvided : Int = 1
     
     override func tick(_ currentTime: TimeInterval) {
         super.tick(currentTime)
@@ -21,8 +21,17 @@ class Reactor : Supplier {
         if power_current < power_capacity
         {
             power_current += powerProvided
-            print("Local power is: \(power_current)")
-            gameScene.power_add(toAdd: powerProvided)
+            // If the power is greater than his capacity, then we cap it, and add to the game scene what was added
+            if power_current > power_capacity {
+                var powerOver = power_current - power_capacity
+                gameScene.power_add(toAdd: powerProvided - powerOver)
+                power_current = power_capacity
+            }
+            else {
+                gameScene.power_add(toAdd: powerProvided)
+            }
+//            print("Local power is: \(power_current)")
+            
         }
     }
     
