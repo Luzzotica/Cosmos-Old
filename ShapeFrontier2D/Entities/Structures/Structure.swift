@@ -102,7 +102,7 @@ class Structure : Entity {
     }
     
     func connection_findMasters() {
-        
+        print("Finding wrong master")
     }
     
     func connection_masterDied() {

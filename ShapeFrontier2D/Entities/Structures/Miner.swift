@@ -12,7 +12,7 @@ import SpriteKit
 class Miner : Structure {
     
     var miningRange : CGFloat = sceneWidth * 0.2
-    var miningAmount = 5
+    var miningAmount = 25
     
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
@@ -24,32 +24,42 @@ class Miner : Structure {
         }
         
         tick_count += 1
+        if tick_count <= tick_action {
+            return
+        }
+        
+        if gameScene.power_current < power_toUse {
+            return
+        }
+        
         //If it's time to take action..
-        if (tick_count == tick_action)
-        {
-            tick_count = 0
-            // Mine the astroid, update HUD with it
-            if asteroid_current != nil {
-                if connection_master != nil
-                {
-                    if power_find(amount: power_toUse, distance: 0) != -1 {
-                        PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
-                        let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
-                    }
+        // Reset tick count
+        tick_count = 0
+        // Mine the astroid, update HUD with it
+        if asteroid_current != nil {
+            if connection_master != nil
+            {
+                if power_find(amount: power_toUse, distance: 0) != -1 {
+                    PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
+                    let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                 }
-            }
-            
-            // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
-            if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
-                // And we can't find another asteroid
-                if !getAsteroid() {
-                    print("Couldn't find an asteroid in range!")
-                    // We disable ourselves. Nothing to mine =(
-                    isDisabled = true
-                    asteroid_current = nil
+                else {
+                    print("Current master: \(connection_master!.name)")
                 }
             }
         }
+        
+        // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
+        if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
+            // And we can't find another asteroid
+            if !getAsteroid() {
+                print("Couldn't find an asteroid in range!")
+                // We disable ourselves. Nothing to mine =(
+                isDisabled = true
+                asteroid_current = nil
+            }
+        }
+        
     }
     
     func getAsteroid() -> Bool {

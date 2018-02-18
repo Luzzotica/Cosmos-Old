@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func power_add(toAdd: Int)
     {
         power_current += toAdd
+//        print("Current power is \(power_current)")
         if power_current > power_capacity
         {
             power_current = power_capacity
@@ -78,6 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func power_use(amount: Int, deficit: Int) {
         // Subtract energy from global power
         power_current -= amount
+//        print("Current power is \(power_current)")
         
         // If there was a deficit, we find other reactors
         if deficit != -1 {

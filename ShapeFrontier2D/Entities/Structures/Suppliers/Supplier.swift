@@ -34,6 +34,7 @@ class Supplier : Structure {
         
         // Base case: If our current power is greater than 0, we've arrived
         if power_current > 0 {
+            
             // Subtract the power from the source
             power_use(amount: amount)
             
@@ -53,12 +54,16 @@ class Supplier : Structure {
                         powerline.powerUp()
                     }
                 }
+                print("Node found a master")
                 
                 return distanceFound
             }
+            else {
+                print("Nodes master is: \(master.0.name)")
+            }
             // Need to add consistency check between distanceFound and expected
         }
-        
+        print("Node has no masters")
         return -1
     }
     
@@ -189,6 +194,7 @@ class Supplier : Structure {
     }
     
     override func didFinishConstruction() {
+        connection_findMasters()
         for (_, line) in connection_toStructures {
             line.constructPowerLine()
         }

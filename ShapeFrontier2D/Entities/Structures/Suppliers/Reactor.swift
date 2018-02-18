@@ -20,6 +20,8 @@ class Reactor : Supplier {
         }
         if power_current < power_capacity
         {
+            power_current += powerProvided
+            print("Local power is: \(power_current)")
             gameScene.power_add(toAdd: powerProvided)
         }
     }
