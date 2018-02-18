@@ -23,7 +23,7 @@ class Supplier : Structure {
         // Base case: If our current power is greater than 0, we've arrived
         if power_current > 0 {
             // Subtract the power from the source
-//            power_current -= amount
+            power_current -= amount
             // If the power is less than 0, subtract power from another power source
             if power_current < 0 {
                 // Need a function to do that
@@ -39,7 +39,6 @@ class Supplier : Structure {
             // Get the distance found to power
             let distanceFound = master.0.power_use(amount: amount, distance: distance + 1)
             if distanceFound != -1 {
-                
                 // Find the structure's powerline and light it up!
                 for (structure, powerline) in connection_toStructures {
                     if structure == master.0 {
@@ -183,7 +182,7 @@ class Supplier : Structure {
         }
     }
     
-    override func connection_didFinishConstruction() {
+    override func didFinishConstruction() {
         for (_, line) in connection_toStructures {
             line.constructPowerLine()
         }

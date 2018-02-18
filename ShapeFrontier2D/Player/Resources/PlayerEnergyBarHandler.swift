@@ -22,7 +22,7 @@ class PlayerEnergyBarHandler: NSObject {
 	var lastEnergyUpdate : TimeInterval = 0.0
 	var timeModifier : Double = 0.0000007
 	
-	func setupEnergyBar(width: CGFloat) -> SKSpriteNode {
+	func setupEnergyBar(width: CGFloat) -> SKNode {
 		
 		HUDWidth = width
 		let height = sceneHeight * 0.03
@@ -57,21 +57,21 @@ class PlayerEnergyBarHandler: NSObject {
 	}
 	
 	func energyUsed(amount: Int) {
-		currentEnergy -= amount
+		gameScene.power_current -= amount
 		
 		updateEnergyMeter()
 	}
 	
 	func updateMaxEnergy(amount: Int) {
-		maxEnergy = amount
+		gameScene.power_capacity = amount
 	}
 	
 	func energyGained(amount: Int) {
-		currentEnergy += amount
-		
-		if currentEnergy > maxEnergy {
-			currentEnergy = maxEnergy
-		}
+//        gameScene.power_total += amount
+//
+//        if gameScene.power_total > gameScene.power_capacity {
+//            gameScene.power_total = gameScene.power_capacity
+//        }
 		
 		updateEnergyMeter()
 	}
@@ -87,8 +87,8 @@ class PlayerEnergyBarHandler: NSObject {
 	}
 	
 	func updateEnergyMeter() {
-		energyLevelNode.size.width = HUDWidth * CGFloat(currentEnergy / maxEnergy)
-		energyLevelLabel.text = "\(currentEnergy) energy (\(currentEnergy / maxEnergy * 100)%)"
+		energyLevelNode.size.width = HUDWidth * CGFloat(gameScene.power_current / gameScene.power_capacity)
+		energyLevelLabel.text = "\(gameScene.power_current) energy (\(gameScene.power_current / gameScene.power_capacity * 100)%)"
 	}
 	
 	func energyOverTime(time: TimeInterval) {

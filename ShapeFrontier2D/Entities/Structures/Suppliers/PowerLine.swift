@@ -60,7 +60,7 @@ class PowerLine : NSObject {
         
         powerLine.physicsBody = SKPhysicsBody(rectangleOf: size)
         powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
-        powerLine.physicsBody?.contactTestBitMask = CollisionType.Construction
+        powerLine.physicsBody?.contactTestBitMask = CollisionType.Construction | CollisionType.Structure
         powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
     }
     

@@ -15,7 +15,6 @@ class Reactor : Supplier {
     
     override func build() {
         super.build()
-        
 //        if !isBuilding {
 //            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
 //        }
@@ -37,7 +36,24 @@ class Reactor : Supplier {
         
         // Set up low power overlay
         lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
-        
+    }
+    
+    override func tick(_ currentTime: TimeInterval) {
+        super.tick(currentTime)
+        if isDisabled {
+            return
+        }
+        if power_current < power_capacity
+        {
+            gameScene.add_power(toAdd: powerProvided)
+        }
+    }
+    
+    override func didFinishConstruction() {
+        super.didFinishConstruction()
+        //Update overall energy variables
+        gameScene.power_capacity += power_capacity
+        gameScene.power_current += power_current
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

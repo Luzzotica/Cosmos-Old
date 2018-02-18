@@ -33,7 +33,7 @@ class PlayerResourcesHUD: SKNode {
 		
 		// Setup Energy HUD
 		self.addChild(playerEnergyBarHandler.setupEnergyBar(width: HUDWidth))
-		self.addChild(playerEnergyBarHandler.setupEnergyLabel(baseValue: 4))
+		self.addChild(playerEnergyBarHandler.setupEnergyLabel(baseValue: 5))
 		
 		// Setup Mining HUD
 		playerMiningHandler = PlayerMiningHandler(width: HUDWidth)

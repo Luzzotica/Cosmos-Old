@@ -74,12 +74,10 @@ class Structure : Entity {
             if distance != -1 {
                 connection_powerLine?.powerUp()
             }
-            
             return distance
         }
-            // If we have no energy, overlay the out of power
+        // If we have no energy, overlay the out of power
         else {
-            
             return -1
         }
         
@@ -158,7 +156,8 @@ class Structure : Entity {
         }
     }
     
-    func connection_didFinishConstruction() {
+    func didFinishConstruction() {
+        connection_findMasters()
         connection_powerLine?.constructPowerLine()
     }
     
