@@ -23,13 +23,19 @@ class Miner : Structure {
             return
         }
         
-        // Mine the astroid, update HUD with it
-        if asteroid_current != nil {
-            if connection_master != nil
-            {
-                if power_use(amount: power_toUse, distance: 0) != -1 {
-                    PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
-                    let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
+        tick_count += 1
+        //If it's time to take action..
+        if (tick_count == tick_action)
+        {
+            tick_count = 0
+            // Mine the astroid, update HUD with it
+            if asteroid_current != nil {
+                if connection_master != nil
+                {
+                    if power_use(amount: power_toUse, distance: 0) != -1 {
+                        PlayerHUDHandler.shared.minerals_Mined(amount: (asteroid_current?.getMineAmount(amount: miningAmount))!)
+                        let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
+                    }
                 }
             }
             
