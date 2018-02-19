@@ -22,6 +22,7 @@ struct Structures {
     static let reactorLevel1 = SKTexture(imageNamed: "ReactorStage1")
     static let reactorLevel2 = SKTexture(imageNamed: "ReactorStage2")
     static let reactorLevel3 = SKTexture(imageNamed: "ReactorStage3")
+    static let reactorLowPower = SKTexture(imageNamed: "DotSmallNoPwr")
     
     static let minerLowPower = SKTexture(imageNamed: "MinerNoPwr")
     static let miner = SKTexture(imageNamed: "MinerPwr")

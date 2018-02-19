@@ -30,7 +30,7 @@ class Supplier : Structure {
     }
     
     // Traces to a power source with power
-    override func power_find(amount: Int, distance: Int, dontLookAt: [Supplier]) -> Int {
+    override func power_find(amount: Int, distance: Int, dontLookAtID: Int) -> Int {
         
         // Base case: If our current power is greater than 0, we've arrived
         if power_current > 0 {
@@ -43,17 +43,22 @@ class Supplier : Structure {
         }
         
         // If not the base case, loop through all masters
-        // This is sorted, lowest distance on left
+        // This (should) be sorted, lowest distance on left
         for master in connection_masters {
-            // Get the distance found to power
-            print(dontLookAt.count)
-            if let _ = dontLookAt.index(of: master.0) {
+            
+            print(Structure.dontLookAt[dontLookAtID]?.count)
+            // If the master we are looking at is in our don't look index, skip him
+            if let _ = Structure.dontLookAt[dontLookAtID]?.index(of: master.0) {
                 continue
             }
             
-            var dontLookAtPeeps = dontLookAt
-            dontLookAtPeeps.append(self)
-            let distanceFound = master.0.power_find(amount: amount, distance: distance + 1, dontLookAt: dontLookAtPeeps)
+            // Add himself to the don't look at list
+            Structure.dontLookAt[dontLookAtID]!.append(self)
+            
+            // Get the distance found since we weren't at the base case
+            let distanceFound = master.0.power_find(amount: amount, distance: distance + 1, dontLookAtID: dontLookAtID)
+            
+            // If the distance found isn't -1, then we light it up!
             if distanceFound != -1 {
                 // Find the structure's powerline and light it up!
                 for (structure, powerline) in connection_toStructures {
@@ -61,8 +66,8 @@ class Supplier : Structure {
                         powerline.powerUp()
                     }
                 }
-//                print("Node found a master")
                 
+                // return the distance found
                 return distanceFound
             }
             else {
@@ -97,6 +102,11 @@ class Supplier : Structure {
         // Otherwise, add the node to not look at into masters
         connection_masters.append((dontLookAt, distance))
         connection_masters.sort(by: {$0.1 < $1.1})
+        var listOfDistances = "List of distances:"
+        for master in connection_masters {
+            listOfDistances.append(" \(master.1)")
+        }
+        print(listOfDistances)
         
         //if distance passed is less than current distance, update it
         if (distance < connection_distance || connection_distance == -1)

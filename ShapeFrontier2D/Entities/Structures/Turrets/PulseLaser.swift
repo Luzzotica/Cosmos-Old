@@ -31,7 +31,7 @@ class PulseLaser : Turret {
         power_toUse = 1
         
         // Set up low power overlay
-        lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
+        power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
         
     }
     

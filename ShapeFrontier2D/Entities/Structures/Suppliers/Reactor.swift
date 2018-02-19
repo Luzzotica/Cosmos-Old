@@ -11,13 +11,14 @@ import SpriteKit
 
 class Reactor : Supplier {
     
-    var powerProvided : Int = 1
+    var powerProvided : Int = 5
     
     override func tick(_ currentTime: TimeInterval) {
         super.tick(currentTime)
         if isDisabled {
             return
         }
+        
         if power_current < power_capacity
         {
             power_current += powerProvided
@@ -32,6 +33,16 @@ class Reactor : Supplier {
             }
 //            print("Local power is: \(power_current)")
             
+        }
+    }
+    
+    override func power_handleOverlay() {
+        print("My power is: \(power_current)")
+        if power_lowOverlay.parent == nil && power_current <= powerProvided {
+            addChild(power_lowOverlay)
+        }
+        else if power_lowOverlay.parent != nil && power_current > powerProvided {
+            power_lowOverlay.removeFromParent()
         }
     }
     
@@ -57,14 +68,15 @@ class Reactor : Supplier {
         power_current = 100
         
         // Set up low power overlay
-        lowPowerOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
+        power_lowOverlay = SKSpriteNode(texture: Structures.reactorLowPower, size: self.size)
+        power_lowOverlay.zPosition = 1
     }
     
     override func didFinishConstruction() {
         super.didFinishConstruction()
         //Update overall energy variables
-        gameScene.power_capacity += power_capacity
-        gameScene.power_current += power_current
+        gameScene.player_powerCapacity += power_capacity
+        gameScene.player_powerCurrent += power_current
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

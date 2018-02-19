@@ -18,7 +18,6 @@ class Miner : Structure {
     var asteroid_distance : CGFloat = sceneWidth * 0.2
     
     override func tick(_ currentTime: TimeInterval) {
-        super.tick(currentTime)
         if isDisabled {
             return
         }
@@ -29,10 +28,14 @@ class Miner : Structure {
             return
         }
         
+        super.tick(currentTime)
+        
         // If we don't have enough power in the global power, show that we are out of power
-        if gameScene.power_current < power_toUse {
+        if gameScene.player_powerCurrent < power_toUse {
             return
         }
+        
+        
         
         //If it's time to take action..
         // Reset tick count
@@ -41,13 +44,19 @@ class Miner : Structure {
         if asteroid_current != nil {
             if connection_master != nil
             {
-                if power_find(amount: power_toUse, distance: 0, dontLookAt: []) != -1 {
+                let ID = Structure.power_prepareFind()
+//                print("Find ID is: \(ID)")
+                
+                // Find power!
+                if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
                     gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: miningAmount))!
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                 }
                 else {
 //                    print("Current master: \(connection_master!.name)")
                 }
+                
+                Structure.power_finishedFind(findID: ID)
             }
         }
         
@@ -113,8 +122,8 @@ class Miner : Structure {
         power_toUse = 5
         
         // Set up low power overlay
-        lowPowerOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
-        
+        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
+        power_lowOverlay.zPosition = 1
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

@@ -34,7 +34,7 @@ class Node : Supplier {
         power_toUse = 0
         
         // Set up low power overlay
-        lowPowerOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: self.size)
+        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: self.size)
         
     }
     

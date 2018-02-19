@@ -12,6 +12,7 @@ import SpriteKit
 extension PlayerHUD {
 	
 	func setupResourceView() {
+        // Anchor this node at the bottom right of the screen
         resourceNode.position.x = sceneWidth * 0.5
         resourceNode.position.y = -sceneHeight * 0.5
         
@@ -25,6 +26,7 @@ extension PlayerHUD {
 	}
     
     func update_resources() {
+        // Update both resources at the same time
         update_powerLabel()
         update_mineralsLabel()
     }

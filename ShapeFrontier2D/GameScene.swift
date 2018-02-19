@@ -47,8 +47,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playerCamera: SKCameraNode?
     
     // Player structures in game
-    var playerClusters : [Structure] = []
-    var playerStructures : [Structure] = []
+    var player_Clusters : [Structure] = []
+    var player_Structures : [Structure] = []
+    
+    // Power Variables
+    var player_powerCurrent : Int = 0
+    var player_powerCapacity : Int = 0
+    var player_suppliers : [Supplier] = []
     
     // Construction Mode variables
     var toBuild : Structure?
@@ -64,27 +69,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let tick_speed : TimeInterval = 0.5
     var tick_last : TimeInterval = 0.0
     
-    // Power Variables
-    var power_current : Int = 100
-    var power_capacity : Int = 100
-    var power_suppliers : [Supplier] = []
-    
     // Mineral variables
     var minerals_current : Int = 10000
     
     func power_add(toAdd: Int)
     {
-        power_current += toAdd
+        player_powerCurrent += toAdd
 //        print("Current power is \(power_current)")
-        if power_current > power_capacity
+        if player_powerCurrent > player_powerCapacity
         {
-            power_current = power_capacity
+            player_powerCurrent = player_powerCapacity
         }
     }
     
     func power_use(amount: Int, deficit: Int) {
         // Subtract energy from global power
-        power_current -= amount
+        player_powerCurrent -= amount
 //        print("Current power is \(power_current)")
         
         // If there was a deficit, we find other reactors
@@ -118,7 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func power_findPowerSourceWithPower() -> Supplier? {
-        for reactor in power_suppliers {
+        for reactor in player_suppliers {
             if reactor.power_current > 0 {
                 return reactor
             }
@@ -234,8 +234,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func tick(_ currentTime: TimeInterval) {
-        for structure in playerStructures {
-            structure.tick(currentTime)
+        for supplier in player_suppliers {
+            supplier.tick(currentTime)
+        }
+        for structure in player_Structures {
+            if !structure.isSupplier {
+                structure.tick(currentTime)
+            }
         }
         PlayerHUD.shared.update_resources()
     }
@@ -328,7 +333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            playerStructures.append(toBuild!)
+            player_Structures.append(toBuild!)
             
             // Mineral Cost
             minerals_current -= toBuild!.constructionCost
@@ -340,7 +345,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // If this building was a reactor, add it to the players reactors
             // We will add batteries later...
             if toBuild! is Reactor {
-                power_suppliers.append(toBuild as! Supplier)
+                player_suppliers.append(toBuild as! Supplier)
             }
             
         }
@@ -358,7 +363,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var inRange : [Structure] = []
         var currentRange : CGFloat = sceneWidth
         
-        for targetStructure in playerStructures {
+        for targetStructure in player_Structures {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetStructure.position,
@@ -414,7 +419,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func clearGame() {
-        playerStructures.removeAll()
+        player_Structures.removeAll()
     }
     
     /*

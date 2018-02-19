@@ -13,6 +13,11 @@ class Structure : Entity {
     
     var level : Int = 1
     
+    // Recursive searching variables
+    static var dontLookAtID = 0
+    static let dontLookAtID_max = 10000
+    static var dontLookAt : [Int:[Supplier]] = [:]
+    
     // Construction variables
     var constructionCost = 0
     var underConstruction = true
@@ -37,9 +42,9 @@ class Structure : Entity {
     var tick_count = 0
     var tick_action = 1
     
-    var lowPowerOverlay : SKSpriteNode!
+    var power_lowOverlay : SKSpriteNode!
     
-    // If we want to disable it, we can. This make it unable to connect or do anything. Mostly used for the building objects
+    // If we want to disable it, we can. This makes it unable to connect or do anything. Mostly used for the building objects
     var isDisabled = false
     
     func build() {
@@ -56,18 +61,38 @@ class Structure : Entity {
     
     func power_update() {
         if power_current < power_toUse {
-            self.addChild(lowPowerOverlay)
+            self.addChild(power_lowOverlay)
         }
         else {
-            lowPowerOverlay.removeFromParent()
+            power_lowOverlay.removeFromParent()
         }
     }
     
+    static func power_prepareFind() -> Int {
+        // Prepares the static variables for a new find, returns the dontLookAtID after prep
+        // Get a new dontLookAtID by increasing it by one
+        dontLookAtID += 1
+        
+        // If the dontLookAtID is greater than one, we restart at 0
+        if dontLookAtID > dontLookAtID_max {
+            dontLookAtID = 0
+        }
+        
+        // Prepare the dontLookAt dictionary for that ID usage
+        dontLookAt[dontLookAtID] = []
+        
+        return dontLookAtID
+    }
+    
+    static func power_finishedFind(findID: Int) {
+        dontLookAt[findID] = []
+    }
+    
     // Traces to a power source with power
-    func power_find(amount: Int, distance: Int, dontLookAt: [Supplier]) -> Int {
+    func power_find(amount: Int, distance: Int, dontLookAtID: Int) -> Int {
         // If we have energy globaly, use it
-        if gameScene.power_current >= amount {
-            let distance = connection_master!.power_find(amount: amount, distance: distance + 1, dontLookAt: [])
+        if gameScene.player_powerCurrent >= amount {
+            let distance = connection_master!.power_find(amount: amount, distance: distance + 1, dontLookAtID: dontLookAtID)
             
             // If the distance wasn't negative 1, then we light up our powerline to out master!
             if distance != -1 {
@@ -80,6 +105,24 @@ class Structure : Entity {
             return -1
         }
         
+    }
+    
+    func power_handleOverlay() {
+        // Adds the out of power overlay if we
+        // Have no master or If we are out of power
+        if power_lowOverlay.parent == nil
+            && (connection_master == nil
+                || gameScene.player_powerCurrent < power_toUse) {
+            addChild(power_lowOverlay)
+        }
+            // Removes the power overlay if
+            // We have a master, and we have power
+            // Demorgans law for the win in negating the previous if statement =D
+        else if power_lowOverlay.parent != nil
+            && connection_master != nil
+            && gameScene.player_powerCurrent >= power_toUse {
+            power_lowOverlay.removeFromParent()
+        }
     }
     
     func setupStructure() {
@@ -98,7 +141,7 @@ class Structure : Entity {
     }
     
     func tick(_ currentTime: TimeInterval) {
-//        print("Got to structure tick")
+        power_handleOverlay()
     }
     
     func connection_findMasters() {
