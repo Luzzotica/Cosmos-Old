@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07C2CC4C1FFFEE6E0015EFD3 /* PlayerHUDExt_Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4B1FFFEE6E0015EFD3 /* PlayerHUDExt_Resources.swift */; };
-		07C2CC4E1FFFFEC60015EFD3 /* PlayerHUDExt_Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4D1FFFFEC60015EFD3 /* PlayerHUDExt_Power.swift */; };
-		07C2CC51200013C50015EFD3 /* PlayerHUDExt_Minerals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC50200013C50015EFD3 /* PlayerHUDExt_Minerals.swift */; };
+		07C2CC4C1FFFEE6E0015EFD3 /* ResourceViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4B1FFFEE6E0015EFD3 /* ResourceViewNode.swift */; };
+		07C2CC4E1FFFFEC60015EFD3 /* ResourceViewPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC4D1FFFFEC60015EFD3 /* ResourceViewPower.swift */; };
+		07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC50200013C50015EFD3 /* ResourceViewMinerals.swift */; };
 		07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D9DE021FFF621200D973BA /* ConstructionItem.swift */; };
 		3E51B8552BCA4D0D27DC1FB5 /* Pods_ShapeFrontier2DUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */; };
+		B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */; };
+		B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */; };
+		B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFD203B9E06000959B6 /* UI_Button.swift */; };
 		B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */; };
 		B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC729202FB37C002F21E2 /* Laser.swift */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
@@ -50,7 +53,7 @@
 		B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501D81FFF7A44009C2F65 /* PulseLaser.swift */; };
 		B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DA1FFF7A5F009C2F65 /* Turret.swift */; };
 		B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DC1FFFD1FA009C2F65 /* TextureManager.swift */; };
-		B58501DF1FFFE7A0009C2F65 /* PlayerHUDExt_Construction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DE1FFFE7A0009C2F65 /* PlayerHUDExt_Construction.swift */; };
+		B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */; };
 		B58501E1200033FB009C2F65 /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E0200033FB009C2F65 /* Supplier.swift */; };
 		B58501E32000397A009C2F65 /* PowerLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E22000397A009C2F65 /* PowerLine.swift */; };
 		ED9182E23A44DACA0E4F769C /* Pods_ShapeFrontier2D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */; };
@@ -75,9 +78,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		07C2CC4B1FFFEE6E0015EFD3 /* PlayerHUDExt_Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Resources.swift; sourceTree = "<group>"; };
-		07C2CC4D1FFFFEC60015EFD3 /* PlayerHUDExt_Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Power.swift; sourceTree = "<group>"; };
-		07C2CC50200013C50015EFD3 /* PlayerHUDExt_Minerals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Minerals.swift; sourceTree = "<group>"; };
+		07C2CC4B1FFFEE6E0015EFD3 /* ResourceViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewNode.swift; sourceTree = "<group>"; };
+		07C2CC4D1FFFFEC60015EFD3 /* ResourceViewPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewPower.swift; sourceTree = "<group>"; };
+		07C2CC50200013C50015EFD3 /* ResourceViewMinerals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewMinerals.swift; sourceTree = "<group>"; };
 		07D9DE021FFF621200D973BA /* ConstructionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstructionItem.swift; sourceTree = "<group>"; };
 		35F15813B3CD4E6D834DF659 /* Pods-ShapeFrontier2DTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.release.xcconfig"; sourceTree = "<group>"; };
 		43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +89,9 @@
 		7E51DAEF21EC438F1B90F833 /* Pods-ShapeFrontier2DUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DUITests/Pods-ShapeFrontier2DUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8574490085407833AE3396D8 /* Pods-ShapeFrontier2D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.release.xcconfig"; sourceTree = "<group>"; };
 		935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewNode.swift; sourceTree = "<group>"; };
+		B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_SliderButton.swift; sourceTree = "<group>"; };
+		B51D8AFD203B9E06000959B6 /* UI_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Button.swift; sourceTree = "<group>"; };
 		B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Decor.swift; sourceTree = "<group>"; };
 		B56DC729202FB37C002F21E2 /* Laser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laser.swift; sourceTree = "<group>"; };
 		B58501741FFF1018009C2F65 /* ShapeFrontier2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeFrontier2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,7 +126,7 @@
 		B58501D81FFF7A44009C2F65 /* PulseLaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseLaser.swift; sourceTree = "<group>"; };
 		B58501DA1FFF7A5F009C2F65 /* Turret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turret.swift; sourceTree = "<group>"; };
 		B58501DC1FFFD1FA009C2F65 /* TextureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureManager.swift; sourceTree = "<group>"; };
-		B58501DE1FFFE7A0009C2F65 /* PlayerHUDExt_Construction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Construction.swift; sourceTree = "<group>"; };
+		B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructionViewNode.swift; sourceTree = "<group>"; };
 		B58501E0200033FB009C2F65 /* Supplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplier.swift; sourceTree = "<group>"; };
 		B58501E22000397A009C2F65 /* PowerLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerLine.swift; sourceTree = "<group>"; };
 		CA5A2AECA7A7BA6BA00E1F16 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,16 +161,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		07C2CC4F200013840015EFD3 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				07C2CC4B1FFFEE6E0015EFD3 /* PlayerHUDExt_Resources.swift */,
-				07C2CC4D1FFFFEC60015EFD3 /* PlayerHUDExt_Power.swift */,
-				07C2CC50200013C50015EFD3 /* PlayerHUDExt_Minerals.swift */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		124E5B6409BB2497B70FDF7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +182,23 @@
 				740EF0DF7A3B0E10EADB72B0 /* Pods-ShapeFrontier2DUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B51D8AF8203B7A9E000959B6 /* ConstructionVIewNode */ = {
+			isa = PBXGroup;
+			children = (
+				B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */,
+				07D9DE021FFF621200D973BA /* ConstructionItem.swift */,
+			);
+			path = ConstructionVIewNode;
+			sourceTree = "<group>";
+		};
+		B51D8AF9203B7AC3000959B6 /* InfoViewNode */ = {
+			isa = PBXGroup;
+			children = (
+				B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */,
+			);
+			path = InfoViewNode;
 			sourceTree = "<group>";
 		};
 		B585016B1FFF1018009C2F65 = {
@@ -252,9 +265,10 @@
 				B58501AD1FFF1435009C2F65 /* PlayerHUD.swift */,
 				B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */,
 				B58501AC1FFF1435009C2F65 /* PlayerHUDExt_Buttons.swift */,
-				B58501DE1FFFE7A0009C2F65 /* PlayerHUDExt_Construction.swift */,
-				07D9DE021FFF621200D973BA /* ConstructionItem.swift */,
-				07C2CC4F200013840015EFD3 /* Resources */,
+				B5A0EC3B204285E90067A993 /* ResourceViewNode */,
+				B5A0EC3C204286050067A993 /* UI_Items */,
+				B51D8AF8203B7A9E000959B6 /* ConstructionVIewNode */,
+				B51D8AF9203B7AC3000959B6 /* InfoViewNode */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -321,6 +335,25 @@
 				B58501D81FFF7A44009C2F65 /* PulseLaser.swift */,
 			);
 			path = Turrets;
+			sourceTree = "<group>";
+		};
+		B5A0EC3B204285E90067A993 /* ResourceViewNode */ = {
+			isa = PBXGroup;
+			children = (
+				07C2CC4B1FFFEE6E0015EFD3 /* ResourceViewNode.swift */,
+				07C2CC4D1FFFFEC60015EFD3 /* ResourceViewPower.swift */,
+				07C2CC50200013C50015EFD3 /* ResourceViewMinerals.swift */,
+			);
+			path = ResourceViewNode;
+			sourceTree = "<group>";
+		};
+		B5A0EC3C204286050067A993 /* UI_Items */ = {
+			isa = PBXGroup;
+			children = (
+				B51D8AFD203B9E06000959B6 /* UI_Button.swift */,
+				B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */,
+			);
+			path = UI_Items;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -624,27 +657,30 @@
 				B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */,
 				B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
-				07C2CC51200013C50015EFD3 /* PlayerHUDExt_Minerals.swift in Sources */,
+				07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501E1200033FB009C2F65 /* Supplier.swift in Sources */,
+				B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */,
 				B58501B31FFF1C2F009C2F65 /* Entity.swift in Sources */,
 				B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */,
 				B58501BC1FFF1CE8009C2F65 /* AsteroidSmall.swift in Sources */,
-				B58501DF1FFFE7A0009C2F65 /* PlayerHUDExt_Construction.swift in Sources */,
+				B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,
 				B58501E32000397A009C2F65 /* PowerLine.swift in Sources */,
 				B58501D71FFF79BD009C2F65 /* MissileCannon.swift in Sources */,
+				B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */,
 				B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */,
 				B58501D31FFF6932009C2F65 /* Miner.swift in Sources */,
+				B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */,
 				B58501B71FFF1C9A009C2F65 /* Asteroid.swift in Sources */,
 				B58501AF1FFF1435009C2F65 /* PlayerHUD.swift in Sources */,
-				07C2CC4E1FFFFEC60015EFD3 /* PlayerHUDExt_Power.swift in Sources */,
+				07C2CC4E1FFFFEC60015EFD3 /* ResourceViewPower.swift in Sources */,
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,
 				B58501C51FFF1DCF009C2F65 /* AsteroidManager.swift in Sources */,
 				B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */,
 				B58501AE1FFF1435009C2F65 /* PlayerHUDExt_Buttons.swift in Sources */,
-				07C2CC4C1FFFEE6E0015EFD3 /* PlayerHUDExt_Resources.swift in Sources */,
+				07C2CC4C1FFFEE6E0015EFD3 /* ResourceViewNode.swift in Sources */,
 				B58501C01FFF1D05009C2F65 /* AsteroidBig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

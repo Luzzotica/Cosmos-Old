@@ -13,8 +13,8 @@ class Reactor : Supplier {
     
     var powerProvided : Int = 5
     
-    override func tick(_ currentTime: TimeInterval) {
-        super.tick(currentTime)
+    override func tick() {
+        super.tick()
         if isDisabled {
             return
         }
@@ -24,7 +24,7 @@ class Reactor : Supplier {
             power_current += powerProvided
             // If the power is greater than his capacity, then we cap it, and add to the game scene what was added
             if power_current > power_capacity {
-                var powerOver = power_current - power_capacity
+                let powerOver = power_current - power_capacity
                 gameScene.power_add(toAdd: powerProvided - powerOver)
                 power_current = power_capacity
             }
@@ -37,7 +37,7 @@ class Reactor : Supplier {
     }
     
     override func power_handleOverlay() {
-        print("My power is: \(power_current)")
+//        print("My power is: \(power_current)")
         if power_lowOverlay.parent == nil && power_current <= powerProvided {
             addChild(power_lowOverlay)
         }
@@ -58,6 +58,7 @@ class Reactor : Supplier {
         
         // setup health variables
         health_max = 10
+        health_current = health_max
 
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
@@ -82,7 +83,7 @@ class Reactor : Supplier {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: .blue, size: size)
         
-        self.name = "Reactor"
+        name! += "_reactor"
         
         setupStructure()
         

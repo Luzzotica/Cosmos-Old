@@ -11,11 +11,10 @@ import SpriteKit
 extension PlayerHUD {
     
     func createConstructionViewBackground() -> SKSpriteNode {
-        let nodeSize = CGSize(width: sceneWidth, height: sceneHeight * 0.275)
+        let nodeSize = CGSize(width: sceneWidth, height: bottomBar_height + bottomBar_buffer)
         let node = SKSpriteNode(color: .darkGray, size: nodeSize)
         
-        // Move him down to the bottom
-        node.position.y = sceneHeight * -0.5
+        // Set his anchor point to the bottom
         node.anchorPoint.y = 0.0
         
         return node

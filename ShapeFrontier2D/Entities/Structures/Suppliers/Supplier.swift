@@ -46,7 +46,7 @@ class Supplier : Structure {
         // This (should) be sorted, lowest distance on left
         for master in connection_masters {
             
-            print(Structure.dontLookAt[dontLookAtID]?.count)
+//            print(Structure.dontLookAt[dontLookAtID]?.count)
             // If the master we are looking at is in our don't look index, skip him
             if let _ = Structure.dontLookAt[dontLookAtID]?.index(of: master.0) {
                 continue
@@ -92,7 +92,7 @@ class Supplier : Structure {
     }
     
     func connection_updateMasters(dontLookAt: Supplier, distance: Int) {
-        print("Updating masters for: \(self.name)")
+        print("Updating masters for: \(name!)")
         
         // If the updated master is already in my masters, stop the recursion
         if connection_containsMaster(supplier: dontLookAt) {
@@ -111,7 +111,7 @@ class Supplier : Structure {
         //if distance passed is less than current distance, update it
         if (distance < connection_distance || connection_distance == -1)
         {
-            print("Updating Distance: \(distance) for \(self.name)")
+            print("Updating Distance: \(distance) for \(name!)")
             connection_distance = distance
         }
         
@@ -125,7 +125,7 @@ class Supplier : Structure {
     }
     
     override func connection_findMasters() {
-        print("Finding Masters for \(self.name)")
+        print("Finding Masters for \(name!)")
         // if the target structure has no master, make his master this supplier
         for structure in connection_toStructures {
             if !structure.0.isSupplier && structure.0.connection_master == nil  {
@@ -155,7 +155,7 @@ class Supplier : Structure {
         // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
         if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
-                print("connected to: \(structure.0.name)")
+                print("connected to: \(structure.0.name!)")
                 if structure.0.isSupplier {
                     let supplier = structure.0 as! Supplier
                     supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
@@ -166,8 +166,62 @@ class Supplier : Structure {
         print("DONE")
     }
     
-    override func connection_masterDied() {
+    func connection_masterLost(master: Supplier) {
+        // Remove the guy who told us from our list
+        connection_masterDied(master: master)
         
+        //if we aren't a master, we tell our children we aren't a master too
+        if connection_masters.count <= 1 && !(self is Reactor)
+        {
+            print("No longer a master")
+            
+            for master_current in connection_masters
+            {
+                master_current.0.connection_masterLost(master: self)
+            }
+        }
+    }
+    
+    func connection_masterDied(master: Supplier) {
+        if connection_masters.count > 0 {
+            for index in 0...connection_masters.count - 1
+            {
+                if connection_masters[index].0 == master
+                {
+                    //We found the guy that died, remove him
+                    connection_masters.remove(at: index)
+                    break
+                }
+            }
+        }
+    }
+    
+    override func didDied() {
+        super.didDied()
+        //Break all connections with everybody, turrets will lose masters
+        print(connection_toStructures.count)
+        for i in stride(from: connection_toStructures.count - 1, through: 0, by: -1)
+        {
+            connection_toStructures[i].1.destroySelf()
+        }
+        
+        // If we were a master
+        if connection_masters.count > 1 || self is Reactor
+        {
+            //Tell all masters that I died
+            for master in connection_masters
+            {
+                master.0.connection_masterDied(master: self)
+            }
+            
+            // Make them check themselves if they are still masters
+            for master in connection_masters
+            {
+                master.0.connection_masterLost(master: self)
+            }
+        }
+        
+        connection_masters.removeAll()
     }
     
     override func alreadyConnected(toCheck: Structure) -> Bool {
@@ -234,6 +288,8 @@ class Supplier : Structure {
         super.init(texture: texture, color: color, size: size)
         
         isSupplier = true
+        
+        name! += "_supplier"
     }
     
     required init?(coder aDecoder: NSCoder) {

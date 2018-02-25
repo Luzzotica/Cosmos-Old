@@ -14,8 +14,8 @@ struct Layer {
     static let Background1: CGFloat = -5
     static let Background2: CGFloat = -4
     static let Background3: CGFloat = -3
-    static let Overlay: CGFloat = 11
-    static let UI: CGFloat = 10
+    static let Overlay: CGFloat = 25
+    static let UI: CGFloat = 20
     static let Powerup: CGFloat = 8
     static let Player: CGFloat = 9
     static let PlayerBullets: CGFloat = 6
@@ -38,27 +38,32 @@ struct CollisionType {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var entities = [GKEntity]()
-    var graphs = [String : GKGraph]()
+//    var entities = [GKEntity]()
+//    var graphs = [String : GKGraph]()
     
-    private var lastUpdateTime : TimeInterval = 0
+//    private var lastUpdateTime : TimeInterval = 0
     
     // Player camera
     var playerCamera: SKCameraNode?
     
     // Player structures in game
     var player_Clusters : [Structure] = []
-    var player_Structures : [Structure] = []
+    var player_structures : [Structure] = []
+    
+    // Priority structures
+    var player_suppliers : [Supplier] = []
+    var player_turrets : [Turret] = []
+    var player_miners : [Miner] = []
     
     // Power Variables
     var player_powerCurrent : Int = 0
     var player_powerCapacity : Int = 0
-    var player_suppliers : [Supplier] = []
     
     // Construction Mode variables
     var toBuild : Structure?
     var isBuilding = false
     var isValidSpot = false
+    var touchMoved = false
     
     var connection_length : CGFloat = sceneWidth * 0.225
     
@@ -153,6 +158,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let translationInScene = touch!.location(in: self) - touch!.previousLocation(in: self)
         
+        if !touchMoved && getDistance(point1: touch!.location(in: self),
+                                      point2: touch!.previousLocation(in: self)) > sceneWidth * 0.005 {
+            touchMoved = true
+            print("TOUCH WAS MOVED")
+        }
+        
         if !isBuilding {
             // If we aren't building, move camera
             PlayerHUD.shared.cameraMoved(dPoint: translationInScene)
@@ -172,25 +183,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
             // Otherwise, handle button presses
-            for t in touches {
-                let touchedNodes = nodes(at: t.location(in: self))
-                PlayerHUD.shared.buttonPressedUp(touchedNodes, location: t.location(in: self))
+            if !touchMoved {
+                for t in touches {
+                    let touchedNodes = nodes(at: t.location(in: self))
+                    PlayerHUD.shared.buttonPressedUp(touchedNodes, location: t.location(in: self))
+                }
             }
         }
+        touchMoved = false
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
     
-    
     override func update(_ currentTime: TimeInterval) {
         if currentTime - tick_last > tick_speed {
             tick_last = currentTime
-            tick(currentTime)
+            tick()
         }
         
-        // Called before each frame is rendered
+        // Update player hud instantly
+        PlayerHUD.shared.updateHUD()
         
         if isBuilding && toBuild != nil {
             // If building, update validity based on impeding objects and mineral count
@@ -217,30 +231,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuild?.run(color)
         }
         
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
-        self.lastUpdateTime = currentTime
+//        // Initialize _lastUpdateTime if it has not already been
+//        if (self.lastUpdateTime == 0) {
+//            self.lastUpdateTime = currentTime
+//        }
+//        
+//        // Calculate time since last update
+//        let dt = currentTime - self.lastUpdateTime
+//        
+//        // Update entities
+//        for entity in self.entities {
+//            entity.update(deltaTime: dt)
+//        }
+//        
+//        self.lastUpdateTime = currentTime
     }
     
-    func tick(_ currentTime: TimeInterval) {
+    func tick() {
         for supplier in player_suppliers {
-            supplier.tick(currentTime)
+            supplier.tick()
         }
-        for structure in player_Structures {
-            if !structure.isSupplier {
-                structure.tick(currentTime)
-            }
+        for turret in player_turrets {
+            turret.tick()
+        }
+        for miner in player_miners {
+            miner.tick()
         }
         PlayerHUD.shared.update_resources()
     }
@@ -316,7 +331,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuild?.run(color)
             
             // Made it, remove the name identifier
-            for _ in 0...16 {
+            for _ in 0...17 {
                 toBuild?.name?.removeLast()
             }
             
@@ -333,19 +348,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            player_Structures.append(toBuild!)
-            
             // Mineral Cost
             minerals_current -= toBuild!.constructionCost
-            PlayerHUD.shared.update_mineralsLabel()
+            PlayerHUD.shared.update_resources()
             
             // Finish Construction
             toBuild!.didFinishConstruction()
+            
+            // Add everything to structures
+            player_structures.append(toBuild!)
             
             // If this building was a reactor, add it to the players reactors
             // We will add batteries later...
             if toBuild! is Reactor {
                 player_suppliers.append(toBuild as! Supplier)
+            }
+            // If it was a turret, add it to player's turrets
+            if toBuild! is Turret {
+                player_turrets.append(toBuild as! Turret)
+            }
+            // If it was a miner, add it to player's miners
+            if toBuild! is Miner {
+                player_miners.append(toBuild as! Miner)
             }
             
         }
@@ -363,7 +387,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var inRange : [Structure] = []
         var currentRange : CGFloat = sceneWidth
         
-        for targetStructure in player_Structures {
+        for targetStructure in player_structures {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetStructure.position,
@@ -396,6 +420,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return inRange
     }
     
+    func structureDied(structure: Structure)
+    {
+        player_structures.remove(at: player_structures.index(of: structure)!)
+        if structure is Miner
+        {
+            player_miners.remove(at: player_miners.index(of: structure as! Miner)!)
+        }
+        else if structure is Reactor
+        {
+            player_suppliers.remove(at: player_suppliers.index(of: structure as! Reactor)!)
+        }
+        else if structure is Turret
+        {
+            player_turrets.remove(at: player_turrets.index(of: structure as! Turret)!)
+        }
+        else
+        {
+            print("It's a node!")
+        }
+    }
+    
     /*
      
      UI ACTIONS!
@@ -419,7 +464,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func clearGame() {
-        player_Structures.removeAll()
+        player_structures.removeAll()
     }
     
     /*

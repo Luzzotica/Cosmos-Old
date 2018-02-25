@@ -11,11 +11,12 @@ import SpriteKit
 
 class Turret : Structure {
     
-    var damage : Int = 0
     var range : CGFloat = 0.0
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
+        
+        name! += "_turret"
     }
     
     required init?(coder aDecoder: NSCoder) {

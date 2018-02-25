@@ -13,54 +13,82 @@ class PlayerHUD : SKCameraNode {
     
     static let shared = PlayerHUD()
     
+    // Bottom bar!
     let bottomBarNode = SKNode()
+    let bottomBar_height = sceneHeight * 0.18
+    let bottomBar_buffer = sceneHeight * 0.07
     
-    let constructionNode = SKNode()
-    let resourceNode = SKNode()
-    let powerNode = SKNode()
-    let mineralNode = SKNode()
+    // Construction Node!
+    var constructionNode : ConstructionViewNode!
     
-    // Construction Node Variables
-    var structures : [ConstructionItem] = []
+    // Info Node!
+    var infoNode : InfoViewNode!
     
-    // Resource Node Variables
-    var resourceHUDWidth: CGFloat = sceneWidth * 0.25
-    
-    // Power variables
-    var powerLevelNode: SKSpriteNode!
-    var powerLevelLabel: SKLabelNode!
-    let powerLevelBarHeight : CGFloat = sceneHeight * 0.04
-    
-    // Mineral variables
-    var mineralsLevelLabel: SKLabelNode!
-    var mininigRateLabel: SKLabelNode!
+    // Resource Node!
+    var resourceNode : ResourceViewNode!
     
     override init() {
         super.init()
         
-        // Set hit position to the center of the map
+        // Set his position to the center of the map
         position.x = sceneWidth * 0.5
         position.y = sceneHeight * 0.5
         zPosition = Layer.UI
         name = "mainCamera"
         
-        // Add the bottom bar to the camera
+        // Move the bottom bar down, and add the bottom bar to the camera
+        bottomBarNode.position.y = -sceneHeight * 0.5
         addChild(bottomBarNode)
         
-        // setup and add the resource node to the bottom bar
-        setupResourceView()
+        // initialize resourceNode, infoNode, and constructionNode
+        constructionNode = ConstructionViewNode(bottomBar_height: bottomBar_height, bottomBar_buffer: bottomBar_buffer)
+        infoNode = InfoViewNode(bottomBar_height: bottomBar_height, bottomBar_buffer: bottomBar_buffer)
+        resourceNode = ResourceViewNode(bottomBar_height: bottomBar_height, bottomBar_buffer: bottomBar_buffer)
+        
+        displayConstruction()
+        
+        // Add the resource node to the bottom bar
+        bottomBarNode.addChild(constructionNode)
+        bottomBarNode.addChild(infoNode)
         bottomBarNode.addChild(resourceNode)
         
-        // Setup Building Constructor and add him to the bottom bar
-        setupConstructionView()
-        addChild(constructionNode)
         
+        // COOL UI STUFF
         // Add background UI for the bottom area
-        addChild(createConstructionViewBackground())
+        bottomBarNode.addChild(createConstructionViewBackground())
     }
     
     func resetHUD() {
+        displayConstruction()
+    }
+    
+    // Info Node
+    func displayInfo(entity: Entity) {
+        infoNode.displayInfo(entity: entity)
         
+        constructionNode.isHidden = true
+        infoNode.isHidden = false
+    }
+    
+    func displayConstruction() {
+        constructionNode.isHidden = false
+        infoNode.isHidden = true
+    }
+    
+    func destroySelectedStructure() {
+        displayConstruction()
+        infoNode.destroySelectedStructure()
+    }
+    
+    func updateHUD() {
+        if !infoNode.isHidden {
+            infoNode.updateInfo()
+        }
+    }
+    
+    // Resources
+    func update_resources() {
+        resourceNode.update_resources()
     }
     
     // Move the camera function

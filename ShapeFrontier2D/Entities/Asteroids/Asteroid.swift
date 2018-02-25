@@ -12,20 +12,18 @@ import SpriteKit
 class Asteroid : Entity {
     
     var gasSprite : SKSpriteNode?
-    var minerals_current : Int = 0
-    var minerals_max : Int = 0
     
     func getMineAmount(amount: Int) -> Int {
         var amountMined = 0
-        if amount > minerals_current {
-            amountMined = minerals_current
-            minerals_current = 0
+        if amount > health_current {
+            amountMined = health_current
+            health_current = 0
             gasSprite?.alpha = 0.0
         }
         else {
             amountMined = amount
-            minerals_current -= amount
-            gasSprite?.alpha = CGFloat(minerals_current) / CGFloat(minerals_max)
+            health_current -= amount
+            gasSprite?.alpha = CGFloat(health_current) / CGFloat(health_max)
         }
         
         return amountMined
@@ -46,10 +44,10 @@ class Asteroid : Entity {
         
         zPosition = Layer.Asteroids
         
-        minerals_current = minerals
-        minerals_max = minerals
+        health_current = minerals
+        health_max = minerals
         
-        name = "asteroid"
+        name! += "_asteroid"
     }
     
     

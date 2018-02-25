@@ -25,6 +25,7 @@ class MissileCannon : Turret {
         
         // setup health variables
         health_max = 8
+        health_current = health_max
         
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
@@ -38,12 +39,12 @@ class MissileCannon : Turret {
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: .blue, size: size)
-        self.name = "MissileCannon"
         
         range = sceneWidth * 0.8
         
         setupStructure()
         
+        name! += "_missileCannon"
     }
     
     convenience init(texture: SKTexture) {

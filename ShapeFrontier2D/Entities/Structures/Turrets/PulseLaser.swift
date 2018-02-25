@@ -24,6 +24,7 @@ class PulseLaser : Turret {
         
         // setup health variables
         health_max = 8
+        health_current = health_max
         
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
@@ -38,11 +39,11 @@ class PulseLaser : Turret {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         
-        self.name = "PulseLaser"
-        
         range = sceneWidth * 0.5
         
         setupStructure()
+        
+        name! += "_pulseLaser"
     }
     
     convenience init(texture: SKTexture) {

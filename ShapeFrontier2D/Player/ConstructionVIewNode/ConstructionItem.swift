@@ -28,7 +28,7 @@ class ConstructionItem: NSObject {
         
         // Build stuff
         building = structure
-        building.name?.append("Constructor")
+        building.name! += "_constructor"
         
         building.addChild(nameLabel)
     }

@@ -49,15 +49,52 @@ class Structure : Entity {
     
     func build() {
         // Current way is to add to health the powerToBuild
-        health += power_toBuild
+        health_current += power_toBuild
         
         // Once health is full, cap it, and make it done building
-        if health >= health_max {
-            health = health_max
+        if health_current >= health_max {
+            health_current = health_max
             underConstruction = false
             
         }
     }
+    
+    
+    
+    func setupStructure() {
+        
+    }
+    
+    func levelup() {
+        level += 1
+    }
+    
+    func heal(amount: Int) {
+        health_current += amount
+        if health_current > health_max {
+            health_current = health_max
+        }
+    }
+    
+    override func didDied() {
+        super.didDied()
+        //Remove self from global structures list and individual type list
+        gameScene.structureDied(structure: self)
+        connection_powerLine?.destroySelf()
+    }
+    
+    func recycle() {
+        gameScene.minerals_current += Int(CGFloat(constructionCost) * 0.75)
+        didDied()
+    }
+    
+    func tick() {
+        power_handleOverlay()
+    }
+    
+     /*
+     POWERRRR FUNCTIONS
+     */
     
     func power_update() {
         if power_current < power_toUse {
@@ -100,7 +137,7 @@ class Structure : Entity {
             }
             return distance
         }
-        // If we have no energy, overlay the out of power
+            // If we have no energy, overlay the out of power
         else {
             return -1
         }
@@ -125,24 +162,9 @@ class Structure : Entity {
         }
     }
     
-    func setupStructure() {
-        
-    }
-    
-    func levelup() {
-        level += 1
-    }
-    
-    func heal(amount: Int) {
-        health += amount
-        if health > health_max {
-            health = health_max
-        }
-    }
-    
-    func tick(_ currentTime: TimeInterval) {
-        power_handleOverlay()
-    }
+    /*
+    CONNECTION FUNCTIONS
+    */
     
     func connection_findMasters() {
 //        print("Finding wrong master")
@@ -170,7 +192,7 @@ class Structure : Entity {
         if connection_master != structure {
             
             // Connect to the new supplier
-            connection_master = structure as! Supplier
+            connection_master = (structure as! Supplier)
             print(connection_master!.name!)
             
             // If we have a connection already, destroy it.
@@ -201,6 +223,8 @@ class Structure : Entity {
     func didFinishConstruction() {
         connection_findMasters()
         connection_powerLine?.constructPowerLine()
+        
+        power_handleOverlay()
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
@@ -213,6 +237,7 @@ class Structure : Entity {
         
         zPosition = Layer.Player
         
+        name! += "_structure"
     }
     
     required init?(coder aDecoder: NSCoder) {

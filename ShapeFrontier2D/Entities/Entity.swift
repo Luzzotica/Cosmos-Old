@@ -12,12 +12,25 @@ import SpriteKit
 class Entity : SKSpriteNode {
     
     var health_max : Int = 0
-    var health : Int = 0
+    var health_current : Int = 0
+    
+    var damage : Int = 0
+    
+    func takeDamage(amount: Int) {
+        health_current -= amount
+        if health_current < 0 {
+            didDied()
+        }
+    }
+    
+    func didDied() {
+        self.removeFromParent()
+    }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         
-        
+        name = "entity"
     }
     
     required init?(coder aDecoder: NSCoder) {

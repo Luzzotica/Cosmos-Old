@@ -12,12 +12,11 @@ import SpriteKit
 class Miner : Structure {
     
     var miningRange : CGFloat = sceneWidth * 0.2
-    var miningAmount = 1
     
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
     
-    override func tick(_ currentTime: TimeInterval) {
+    override func tick() {
         if isDisabled {
             return
         }
@@ -28,14 +27,12 @@ class Miner : Structure {
             return
         }
         
-        super.tick(currentTime)
+        super.tick()
         
         // If we don't have enough power in the global power, show that we are out of power
         if gameScene.player_powerCurrent < power_toUse {
             return
         }
-        
-        
         
         //If it's time to take action..
         // Reset tick count
@@ -49,7 +46,7 @@ class Miner : Structure {
                 
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
-                    gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: miningAmount))!
+                    gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: damage))!
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
                 }
                 else {
@@ -61,7 +58,7 @@ class Miner : Structure {
         }
         
         // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
-        if asteroid_current?.minerals_current == 0 || asteroid_current == nil {
+        if asteroid_current?.health_current == 0 || asteroid_current == nil {
             // And we can't find another asteroid
             if !getAsteroid() {
                 print("Couldn't find an asteroid in range!")
@@ -81,7 +78,7 @@ class Miner : Structure {
         for asteroid in gameScene.asteroidCluster.children {
             // Make sure he has minerals, if he doesn't, skip him
             let asteroid2 = asteroid as? Asteroid
-            if asteroid2!.minerals_current == 0 {
+            if asteroid2!.health_current == 0 {
                 continue
             }
             
@@ -115,6 +112,10 @@ class Miner : Structure {
         
         // setup health variables
         health_max = 8
+        health_current = health_max
+        
+        // Damage = mining amount
+        damage = 10
         
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
@@ -129,10 +130,9 @@ class Miner : Structure {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: .blue, size: size)
         
-        self.name = "Miner"
+        name! += "_miner"
         
         setupStructure()
-        
     }
     
     convenience init(texture: SKTexture) {

@@ -48,6 +48,18 @@ class PowerLine : NSObject {
         }
         
         powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
+        
+        // If we are a non-supplier structure, then we 
+        if !structureTwo!.isSupplier && structureOne!.isSupplier {
+            print("Added structure to my list")
+            let supplier = structureOne as! Supplier
+            supplier.connection_toStructures.append((structureTwo!, self))
+        }
+        else if !structureOne!.isSupplier && structureTwo!.isSupplier {
+            print("Added structure to my list")
+            let supplier = structureTwo as! Supplier
+            supplier.connection_toStructures.append((structureOne!, self))
+        }
     }
     
     // Checks for collisions on the line of the powerline
