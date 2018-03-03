@@ -28,10 +28,14 @@ extension PlayerHUD {
         var functionToRun: (() -> Void)?
         var tappedEntity: Entity?
         
-        for i in stride(from: touchedNodes.count - 1, through: 0, by: -1) {
-            //print(touchedNodes[i].name)
+        for i in stride(from: 0, to: touchedNodes.count, by: 1) {
             if touchedNodes[i].name == nil {
                 continue
+            }
+            print(touchedNodes[i].name)
+            
+            if touchedNodes[i].name!.contains("power_line") {
+                break
             }
             
             if touchedNodes[i].name == "button_pause" {

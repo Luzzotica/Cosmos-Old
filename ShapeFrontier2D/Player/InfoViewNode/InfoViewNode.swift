@@ -31,7 +31,6 @@ class InfoViewNode : SKNode {
     
     func deselectEntity() {
         if currentEntity != nil {
-            print(currentEntity.name!)
             currentEntity.removeAllActions()
             currentEntity.run(colorNormal)
         }

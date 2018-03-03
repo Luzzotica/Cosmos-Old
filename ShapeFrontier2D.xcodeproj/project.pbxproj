@@ -15,6 +15,9 @@
 		B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */; };
 		B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */; };
 		B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFD203B9E06000959B6 /* UI_Button.swift */; };
+		B51FBC28204B2B46001BFFB4 /* EnemyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC27204B2B46001BFFB4 /* EnemyHandler.swift */; };
+		B51FBC6A204B30F4001BFFB4 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC69204B30F4001BFFB4 /* Enemy.swift */; };
+		B51FBC6C204B3ADE001BFFB4 /* Menu Ambience1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B51FBC6B204B3ADE001BFFB4 /* Menu Ambience1.mp3 */; };
 		B5546E28204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546E26204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift */; };
 		B5546E29204B112300E3DC68 /* SoundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546E27204B112300E3DC68 /* SoundHandler.swift */; };
 		B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5546E2C204B135400E3DC68 /* Dying Angel.wav */; };
@@ -95,6 +98,9 @@
 		B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewNode.swift; sourceTree = "<group>"; };
 		B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_SliderButton.swift; sourceTree = "<group>"; };
 		B51D8AFD203B9E06000959B6 /* UI_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Button.swift; sourceTree = "<group>"; };
+		B51FBC27204B2B46001BFFB4 /* EnemyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyHandler.swift; sourceTree = "<group>"; };
+		B51FBC69204B30F4001BFFB4 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		B51FBC6B204B3ADE001BFFB4 /* Menu Ambience1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Menu Ambience1.mp3"; sourceTree = "<group>"; };
 		B5546E26204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundHandler_BackgroundMusic.swift; sourceTree = "<group>"; };
 		B5546E27204B112300E3DC68 /* SoundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundHandler.swift; sourceTree = "<group>"; };
 		B5546E2C204B135400E3DC68 /* Dying Angel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Dying Angel.wav"; sourceTree = "<group>"; };
@@ -207,6 +213,15 @@
 			path = InfoViewNode;
 			sourceTree = "<group>";
 		};
+		B51FBC26204B2B35001BFFB4 /* Enemies */ = {
+			isa = PBXGroup;
+			children = (
+				B51FBC27204B2B46001BFFB4 /* EnemyHandler.swift */,
+				B51FBC69204B30F4001BFFB4 /* Enemy.swift */,
+			);
+			path = Enemies;
+			sourceTree = "<group>";
+		};
 		B5546E2A204B122300E3DC68 /* SoundManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +235,7 @@
 		B5546E2B204B123B00E3DC68 /* BackgroundMusic */ = {
 			isa = PBXGroup;
 			children = (
+				B51FBC6B204B3ADE001BFFB4 /* Menu Ambience1.mp3 */,
 				B5546E2C204B135400E3DC68 /* Dying Angel.wav */,
 			);
 			path = BackgroundMusic;
@@ -301,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				B58501B21FFF1C2F009C2F65 /* Entity.swift */,
+				B51FBC26204B2B35001BFFB4 /* Enemies */,
 				B58501CB1FFF45FD009C2F65 /* Structures */,
 				B58501C31FFF1D5E009C2F65 /* Asteroids */,
 			);
@@ -497,6 +514,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B51FBC6C204B3ADE001BFFB4 /* Menu Ambience1.mp3 in Resources */,
 				B58501831FFF1018009C2F65 /* Main.storyboard in Resources */,
 				B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */,
 				B58501851FFF1018009C2F65 /* Assets.xcassets in Resources */,
@@ -675,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B51FBC6A204B30F4001BFFB4 /* Enemy.swift in Sources */,
 				07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
@@ -684,6 +703,7 @@
 				B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
 				07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */,
+				B51FBC28204B2B46001BFFB4 /* EnemyHandler.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501E1200033FB009C2F65 /* Supplier.swift in Sources */,

@@ -13,11 +13,11 @@ import AVFoundation
 extension SoundHandler {
     
     func prepareBackgroundMusic() {
-        let music : [String] = ["Dying Angel"]
+        let music : [String] = ["Menu Ambience1"]
         
         for song in music {
             // Get the file and URL for the path
-            let soundFile = Bundle.main.path(forResource: song, ofType: ".wav")!
+            let soundFile = Bundle.main.path(forResource: song, ofType: ".mp3")!
             let path = URL(fileURLWithPath: soundFile)
             
             // Create background music node

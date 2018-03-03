@@ -83,6 +83,7 @@ class Supplier : Structure {
         // Loop through and check the supplier in the tuple
         for i in 0..<connection_masters.count {
             if connection_masters[i].0.isEqual(supplier) {
+                print("We already have that master")
                 return true
             }
         }
@@ -155,6 +156,25 @@ class Supplier : Structure {
         // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
         if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
+                print("connected to: \(structure.0.name!)")
+                if structure.0.isSupplier {
+                    let supplier = structure.0 as! Supplier
+                    supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
+                }
+            }
+        }
+            // If we have at least one connection, tell everyone but our master that we are a master
+        else if connection_masters.count == 1 {
+            for structure in connection_toStructures {
+                // If the structure is a supplier and our master, we skip over him.
+                // Don't tell him NUFFING!
+                if structure.0.isSupplier {
+                    if connection_containsMaster(supplier: structure.0 as! Supplier) {
+                        continue
+                    }
+                }
+                
+                // Tell everone else we are connected to about all the great things we are doing with life.
                 print("connected to: \(structure.0.name!)")
                 if structure.0.isSupplier {
                     let supplier = structure.0 as! Supplier

@@ -149,6 +149,7 @@ class PowerLine : NSObject {
         
         // Create the powerline based on the size and correct color
         powerLine = SKSpriteNode(color: PowerLine.colorNormal, size: size)
+        powerLine.name = "power_line"
         
         // Rotate him to the proper angle
         let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)

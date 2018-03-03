@@ -38,7 +38,7 @@ struct CollisionType {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-//    var entities = [GKEntity]()
+    var enemies : [GKEntity] = []
 //    var graphs = [String : GKGraph]()
     
 //    private var lastUpdateTime : TimeInterval = 0
@@ -139,6 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
+        let enemies = EnemyHandler.shared.spawnWave()
+        addChild(enemies[0])
+        
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
         view.addGestureRecognizer(pinch)
@@ -231,20 +234,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuild?.run(color)
         }
         
-//        // Initialize _lastUpdateTime if it has not already been
-//        if (self.lastUpdateTime == 0) {
-//            self.lastUpdateTime = currentTime
-//        }
-//        
-//        // Calculate time since last update
-//        let dt = currentTime - self.lastUpdateTime
-//        
-//        // Update entities
-//        for entity in self.entities {
-//            entity.update(deltaTime: dt)
-//        }
-//        
-//        self.lastUpdateTime = currentTime
+        // Enemy updating
+        EnemyHandler.shared.update(currentTime)
+        
     }
     
     func tick() {
