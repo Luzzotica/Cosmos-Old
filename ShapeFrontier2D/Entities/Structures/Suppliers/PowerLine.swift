@@ -49,7 +49,7 @@ class PowerLine : NSObject {
         
         powerLine.physicsBody?.categoryBitMask = CollisionType.PowerLine
         
-        // If we are a non-supplier structure, then we 
+        // If we are a non-supplier structure, then we make sure whoever we just connected to knows we are here
         if !structureTwo!.isSupplier && structureOne!.isSupplier {
             print("Added structure to my list")
             let supplier = structureOne as! Supplier
@@ -109,7 +109,7 @@ class PowerLine : NSObject {
         if toDestroy {
             return
         }
-        print("Destroy self")
+        //print("Destroy self")
         
         // Remove themselves from the connected lists
         if structureOne != nil && structureTwo != nil {

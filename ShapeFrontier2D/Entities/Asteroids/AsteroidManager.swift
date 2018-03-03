@@ -49,22 +49,30 @@ class AsteroidManager : NSObject {
         let smallThreshold = 2000
         let mediumThreshold = 4000
         
+        let textures = getRandomAsteroid()
         if minerals < smallThreshold {
-            let asteroid = AsteroidSmall(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
+            let asteroid = AsteroidSmall(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }
         else if minerals < mediumThreshold {
-            let asteroid = AsteroidMedium(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
+            let asteroid = AsteroidMedium(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }
         else {
-            let asteroid = AsteroidBig(texture: Asteroids.asteroid1, gasTexture: Asteroids.asteroidGas1, minerals: minerals)
+            let asteroid = AsteroidBig(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
             asteroid.position = atPoint
             return asteroid
         }
         
+    }
+    
+    func getRandomAsteroid() -> (asteroidTexture: SKTexture, gasTexture: SKTexture){
+        let randomA = Int(arc4random_uniform(UInt32(4)))
+        let randomG = Int(arc4random_uniform(UInt32(4)))
+        
+        return (Asteroids.asteroids[randomA], Asteroids.asteroidGas[randomG])
     }
     
 }

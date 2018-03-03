@@ -484,6 +484,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Setup asteroids
         asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 30000)
         addChild(asteroidCluster)
+        
+        // Start up the background music
+        SoundHandler.shared.playBackgroundMusic()
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {

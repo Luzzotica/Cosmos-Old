@@ -14,8 +14,8 @@ struct Enemies {
 }
 
 struct Asteroids {
-    static let asteroid1 = SKTexture(image: #imageLiteral(resourceName: "Asteroid1"))
-    static let asteroidGas1 = SKTexture(image: #imageLiteral(resourceName: "AsteroidGas1"))
+    static let asteroids = [SKTexture(image: #imageLiteral(resourceName: "Asteroid1")), SKTexture(image: #imageLiteral(resourceName: "Asteroid2")), SKTexture(image: #imageLiteral(resourceName: "Asteroid3")), SKTexture(image: #imageLiteral(resourceName: "Asteroid4"))]
+    static let asteroidGas = [SKTexture(image: #imageLiteral(resourceName: "AsteroidGas1")), SKTexture(image: #imageLiteral(resourceName: "AsteroidGas2")), SKTexture(image: #imageLiteral(resourceName: "AsteroidGas3")), SKTexture(image: #imageLiteral(resourceName: "AsteroidGas4"))]
 }
 
 struct Structures {

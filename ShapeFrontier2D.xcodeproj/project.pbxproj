@@ -15,6 +15,9 @@
 		B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */; };
 		B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */; };
 		B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D8AFD203B9E06000959B6 /* UI_Button.swift */; };
+		B5546E28204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546E26204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift */; };
+		B5546E29204B112300E3DC68 /* SoundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546E27204B112300E3DC68 /* SoundHandler.swift */; };
+		B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5546E2C204B135400E3DC68 /* Dying Angel.wav */; };
 		B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */; };
 		B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC729202FB37C002F21E2 /* Laser.swift */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
@@ -92,6 +95,9 @@
 		B51D8AFA203B7DEA000959B6 /* InfoViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewNode.swift; sourceTree = "<group>"; };
 		B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_SliderButton.swift; sourceTree = "<group>"; };
 		B51D8AFD203B9E06000959B6 /* UI_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Button.swift; sourceTree = "<group>"; };
+		B5546E26204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundHandler_BackgroundMusic.swift; sourceTree = "<group>"; };
+		B5546E27204B112300E3DC68 /* SoundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundHandler.swift; sourceTree = "<group>"; };
+		B5546E2C204B135400E3DC68 /* Dying Angel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Dying Angel.wav"; sourceTree = "<group>"; };
 		B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Decor.swift; sourceTree = "<group>"; };
 		B56DC729202FB37C002F21E2 /* Laser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laser.swift; sourceTree = "<group>"; };
 		B58501741FFF1018009C2F65 /* ShapeFrontier2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeFrontier2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +207,24 @@
 			path = InfoViewNode;
 			sourceTree = "<group>";
 		};
+		B5546E2A204B122300E3DC68 /* SoundManager */ = {
+			isa = PBXGroup;
+			children = (
+				B5546E2B204B123B00E3DC68 /* BackgroundMusic */,
+				B5546E26204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift */,
+				B5546E27204B112300E3DC68 /* SoundHandler.swift */,
+			);
+			path = SoundManager;
+			sourceTree = "<group>";
+		};
+		B5546E2B204B123B00E3DC68 /* BackgroundMusic */ = {
+			isa = PBXGroup;
+			children = (
+				B5546E2C204B135400E3DC68 /* Dying Angel.wav */,
+			);
+			path = BackgroundMusic;
+			sourceTree = "<group>";
+		};
 		B585016B1FFF1018009C2F65 = {
 			isa = PBXGroup;
 			children = (
@@ -266,9 +290,9 @@
 				B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */,
 				B58501AC1FFF1435009C2F65 /* PlayerHUDExt_Buttons.swift */,
 				B5A0EC3B204285E90067A993 /* ResourceViewNode */,
-				B5A0EC3C204286050067A993 /* UI_Items */,
 				B51D8AF8203B7A9E000959B6 /* ConstructionVIewNode */,
 				B51D8AF9203B7AC3000959B6 /* InfoViewNode */,
+				B5A0EC3C204286050067A993 /* UI_Items */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -298,6 +322,7 @@
 		B58501C81FFF4516009C2F65 /* Game Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B5546E2A204B122300E3DC68 /* SoundManager */,
 				B58501DC1FFFD1FA009C2F65 /* TextureManager.swift */,
 				B58501C91FFF453B009C2F65 /* UsefulFunctions.swift */,
 			);
@@ -473,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58501831FFF1018009C2F65 /* Main.storyboard in Resources */,
+				B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */,
 				B58501851FFF1018009C2F65 /* Assets.xcassets in Resources */,
 				B58501881FFF1018009C2F65 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -662,11 +688,13 @@
 				B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */,
 				B58501E1200033FB009C2F65 /* Supplier.swift in Sources */,
 				B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */,
+				B5546E29204B112300E3DC68 /* SoundHandler.swift in Sources */,
 				B58501B31FFF1C2F009C2F65 /* Entity.swift in Sources */,
 				B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */,
 				B58501BC1FFF1CE8009C2F65 /* AsteroidSmall.swift in Sources */,
 				B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,
+				B5546E28204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift in Sources */,
 				B58501E32000397A009C2F65 /* PowerLine.swift in Sources */,
 				B58501D71FFF79BD009C2F65 /* MissileCannon.swift in Sources */,
 				B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */,

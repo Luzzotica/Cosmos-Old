@@ -26,9 +26,25 @@ class InfoViewNode : SKNode {
     
     var currentEntity : Entity!
     
+    let colorGreen = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.2)
+    let colorNormal = SKAction.colorize(with: .green , colorBlendFactor: 0.0, duration: 0.2)
+    
+    func deselectEntity() {
+        if currentEntity != nil {
+            print(currentEntity.name!)
+            currentEntity.removeAllActions()
+            currentEntity.run(colorNormal)
+        }
+    }
+    
     func displayInfo(entity: Entity) {
+        // If there was a node before we tapped, then we should color him back to normal...
+        deselectEntity()
+        
+        // Set the new entity!
         currentEntity = entity
         
+        // Show or hide buttons depending on the type of the the entity we tapped on
         if !(currentEntity is Structure)
         {
             destroyButton.isHidden = true
@@ -40,6 +56,11 @@ class InfoViewNode : SKNode {
             upgradeButton.isHidden = false
         }
         
+        // Color the entity so we know who we are looking at
+        currentEntity.removeAllActions()
+        currentEntity.run(colorGreen)
+        
+        // Update the info, this is called every frame
         updateInfo()
     }
     

@@ -73,6 +73,9 @@ class PlayerHUD : SKCameraNode {
     func displayConstruction() {
         constructionNode.isHidden = false
         infoNode.isHidden = true
+        
+        // Deselect the entity
+        infoNode.deselectEntity()
     }
     
     func destroySelectedStructure() {

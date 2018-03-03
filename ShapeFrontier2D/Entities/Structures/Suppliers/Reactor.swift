@@ -53,6 +53,14 @@ class Reactor : Supplier {
 //        }
     }
     
+    override func didDied() {
+        super.didDied()
+        
+        // Make sure the game scene power is updated when a reactor is destroyed
+        gameScene.player_powerCapacity -= power_capacity
+        gameScene.player_powerCurrent -= power_current
+    }
+    
     override func setupStructure() {
         super.setupStructure()
         
