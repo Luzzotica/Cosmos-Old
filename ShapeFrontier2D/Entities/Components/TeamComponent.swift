@@ -13,6 +13,7 @@ import GameplayKit
 enum Team: Int {
     case team1 = 1
     case team2 = 2
+    case team3 = 3
     
     static let allValues = [team1, team2]
     
@@ -22,6 +23,8 @@ enum Team: Int {
             return .team2
         case .team2:
             return .team1
+        case .team3:
+            return .team2
         }
     }
 }

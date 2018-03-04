@@ -32,7 +32,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         }
         
         position = float2(spriteComponent.node.position)
-        rotation = Float(spriteComponent.node.zRotation)
+        rotation = Float(spriteComponent.node.zRotation - .pi/2.0)
     }
     
     func agentDidUpdate(_ agent: GKAgent) {
@@ -41,7 +41,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         }
         
         spriteComponent.node.position = CGPoint(position)
-        spriteComponent.node.zRotation = CGFloat(rotation)
+        spriteComponent.node.zRotation = CGFloat(rotation - .pi/2)
     }
     
     func closestMoveComponentOnTeam(_ team: Team) -> GKAgent2D? {
@@ -52,7 +52,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         let enemyMoveComponents = EntityManager.shared.moveComponentsOnTeam(team)
         for enemyMoveComponent in enemyMoveComponents {
             let distance = (CGPoint(enemyMoveComponent.position) - CGPoint(position)).length()
-            if closestMoveComponent == nil || distance < closestDistance {
+            if closestMoveComponent == nil || distance > closestDistance {
                 closestMoveComponent = enemyMoveComponent
                 closestDistance = distance
             }
@@ -62,8 +62,11 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        
+        if maxSpeed == 0 {
+            return
+        }
         super.update(deltaTime: seconds)
+        
         
         var targetMoveComponent: GKAgent2D
         

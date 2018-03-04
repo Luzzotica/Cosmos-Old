@@ -40,7 +40,8 @@ class Asteroid : GKEntity {
         let sprite = SpriteComponent(entity: self, texture: texture, size: size)
         sprite.node.name = "entity"
         addComponent(sprite)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5)))
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.2)))
+        addComponent(TeamComponent(team: .team3))
         
         mySprite = sprite.node
         
