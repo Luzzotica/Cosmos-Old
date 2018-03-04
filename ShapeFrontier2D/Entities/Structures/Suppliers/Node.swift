@@ -34,8 +34,8 @@ class Node : Supplier {
         
     }
     
-    init(texture: SKTexture, teamID: String = "") {
-        super.init(texture: texture, size: StructureSize.node, teamID: teamID)
+    init(texture: SKTexture, team: Team) {
+        super.init(texture: texture, size: StructureSize.node, team: team)
         
         mySprite.name! += "_node"
         

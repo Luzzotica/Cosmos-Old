@@ -304,8 +304,8 @@ class Supplier : Structure {
         return false
     }
     
-    override init(texture: SKTexture, size: CGSize, teamID: String) {
-        super.init(texture: texture, size: size, teamID: teamID)
+    override init(texture: SKTexture, size: CGSize, team: Team) {
+        super.init(texture: texture, size: size, team: team)
         
         isSupplier = true
         

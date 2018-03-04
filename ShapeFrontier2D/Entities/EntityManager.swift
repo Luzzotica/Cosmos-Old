@@ -56,11 +56,11 @@ class EntityManager {
         entities.remove(entity)
     }
     
-    func entitiesOnTeam(_ teamID: String) -> [GKEntity] {
+    func entitiesOnTeam(_ team: Team) -> [GKEntity] {
         
         return entities.flatMap { entity in
             if let teamComponent = entity.component(ofType: TeamComponent.self) {
-                if teamComponent.teamID == teamID {
+                if teamComponent.team == team {
                     return entity
                 }
             }
@@ -69,8 +69,8 @@ class EntityManager {
         
     }
     
-    func moveComponentsOnTeam(_ teamID: String) -> [MoveComponent] {
-        let entities = entitiesOnTeam(teamID)
+    func moveComponentsOnTeam(_ team: Team) -> [MoveComponent] {
+        let entities = entitiesOnTeam(team)
         var moveComponents = [MoveComponent]()
         for entity in entities {
             if let moveComponent = entity.component(ofType: MoveComponent.self) {

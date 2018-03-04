@@ -32,8 +32,8 @@ class MissileCannon : Turret {
         power_toUse = 1
     }
     
-    init(texture: SKTexture, teamID: String = "") {
-        super.init(texture: texture, size: StructureSize.large, teamID: teamID)
+    init(texture: SKTexture, team: Team) {
+        super.init(texture: texture, size: StructureSize.large, team: team)
         
         range = sceneWidth * 0.8
         

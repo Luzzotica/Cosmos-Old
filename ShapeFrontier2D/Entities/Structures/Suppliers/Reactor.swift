@@ -85,8 +85,8 @@ class Reactor : Supplier {
         gameScene.player_powerCurrent += power_current
     }
     
-    init(texture: SKTexture, teamID: String = "") {
-        super.init(texture: texture, size: StructureSize.large, teamID: teamID)
+    init(texture: SKTexture, team: Team) {
+        super.init(texture: texture, size: StructureSize.large, team: team)
         
         mySprite.name! += "_reactor"
         

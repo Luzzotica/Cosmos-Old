@@ -10,9 +10,9 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class EnemyHandler : NSObject {
+class EnemyManager : NSObject {
     
-    static let shared = EnemyHandler()
+    static let shared = EnemyManager()
     
     // Our enemies!
     var enemies : [GKEntity] = []
@@ -26,12 +26,13 @@ class EnemyHandler : NSObject {
         
         waveToSpawn.append(createEnemy())
         
+        
         return waveToSpawn
     }
     
     func createEnemy() -> GenericEnemy {
-        let size = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.5)
-        let enemy = GenericEnemy(texture: Enemies.fighter, size: size, teamID: "Swag")
+        let size = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.05)
+        let enemy = GenericEnemy(texture: Enemies.fighter, size: size, team: .team2)
         
         return enemy
     }

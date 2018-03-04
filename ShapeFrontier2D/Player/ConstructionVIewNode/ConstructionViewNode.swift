@@ -29,15 +29,15 @@ class ConstructionViewNode : SKNode {
         
         // Add all buildings you can make, in the order you want them
         constructionStructures.append(ConstructionItem(Reactor(texture: Structures.reactorLevel1,
-                                                               teamID: "Construction")))
+                                                               team: .team1)))
         constructionStructures.append(ConstructionItem(Miner(texture: Structures.miner,
-                                                             teamID: "Construction")))
+                                                             team: .team1)))
         constructionStructures.append(ConstructionItem(Node(texture: Structures.node,
-                                                            teamID: "Construction")))
+                                                            team: .team1)))
         constructionStructures.append(ConstructionItem(MissileCannon(texture: Structures.missileCannonLevel1,
-                                                                     teamID: "Construction")))
+                                                                     team: .team1)))
         constructionStructures.append(ConstructionItem(PulseLaser(texture: Structures.pulseLaser,
-                                                                  teamID: "Construction")))
+                                                                  team: .team1)))
         
         // Set the anchor point to the bottom left
         let anchorPoint = CGPoint(x: 0.0, y: 0.0)
@@ -63,28 +63,28 @@ class ConstructionViewNode : SKNode {
         
         if name.contains("constructor") {
             if name.contains("reactor") {
-                let reactor = Reactor(texture: Structures.reactorLevel1)
+                let reactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
                 structure = reactor
                 structure.constructionCost = StructureCost.Reactor
             }
             else if name.contains("miner") {
-                let miner = Miner(texture: Structures.miner)
+                let miner = Miner(texture: Structures.miner, team: .team1)
                 miner.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: miner.miningRange, color: .green))
                 structure = miner
                 structure.constructionCost = StructureCost.Miner
             }
             else if name.contains("node") {
-                structure = Node(texture: Structures.node)
+                structure = Node(texture: Structures.node, team: .team1)
                 structure.constructionCost = StructureCost.Node
             }
             else if name.contains("missileCannon") {
-                let turret = MissileCannon(texture: Structures.missileCannonLevel1)
+                let turret = MissileCannon(texture: Structures.missileCannonLevel1, team: .team1)
                 turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
                 structure = turret
                 structure.constructionCost = StructureCost.MissileTurret
             }
             else if name.contains("pulseLaser") {
-                let turret = PulseLaser(texture: Structures.pulseLaser)
+                let turret = PulseLaser(texture: Structures.pulseLaser, team: .team1)
                 turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
                 structure = turret
                 structure.constructionCost = StructureCost.PulseLaser

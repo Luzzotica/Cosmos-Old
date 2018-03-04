@@ -136,7 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
-        let enemies = EnemyHandler.shared.spawnWave()
+        let enemies = EnemyManager.shared.spawnWave()
         
         EntityManager.shared.add(enemies[0])
         
@@ -235,7 +235,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Enemy updating
-        EnemyHandler.shared.update(currentTime)
+        EnemyManager.shared.update(currentTime)
+        EntityManager.shared.update(currentTime)
         
     }
     

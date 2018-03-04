@@ -242,7 +242,7 @@ class Structure : GKEntity {
         power_handleOverlay()
     }
     
-    init(texture: SKTexture, size: CGSize, teamID: String = "") {
+    init(texture: SKTexture, size: CGSize, team: Team) {
         super.init()
         
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
@@ -250,8 +250,9 @@ class Structure : GKEntity {
         mySprite = spriteComponent.node
         
         addComponent(spriteComponent)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5)))
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(texture.size().width * 0.2)))
         addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.5, health: 50))
+        addComponent(TeamComponent(team: team))
         
         mySprite.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
         mySprite.physicsBody?.categoryBitMask = CollisionType.Structure

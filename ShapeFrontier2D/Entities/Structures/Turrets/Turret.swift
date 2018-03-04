@@ -13,8 +13,8 @@ class Turret : Structure {
     
     var range : CGFloat = 0.0
     
-    override init(texture: SKTexture, size: CGSize, teamID: String = "") {
-        super.init(texture: texture, size: size, teamID: teamID)
+    override init(texture: SKTexture, size: CGSize, team: Team) {
+        super.init(texture: texture, size: size, team: team)
         
         mySprite.name! += "_turret"
     }
