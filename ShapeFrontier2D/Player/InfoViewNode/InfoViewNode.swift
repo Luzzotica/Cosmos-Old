@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class InfoViewNode : SKNode {
     
@@ -24,24 +25,27 @@ class InfoViewNode : SKNode {
     var destroyButton : UI_Button!
     var upgradeBar : SKSpriteNode!
     
-    var currentEntity : Entity!
+    var currentEntity : GKEntity!
+    var currentSprite : SKSpriteNode!
     
     let colorGreen = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.2)
     let colorNormal = SKAction.colorize(with: .green , colorBlendFactor: 0.0, duration: 0.2)
     
     func deselectEntity() {
         if currentEntity != nil {
-            currentEntity.removeAllActions()
-            currentEntity.run(colorNormal)
+            
+            currentSprite.removeAllActions()
+            currentSprite.run(colorNormal)
         }
     }
     
-    func displayInfo(entity: Entity) {
+    func displayInfo(entity: GKEntity) {
         // If there was a node before we tapped, then we should color him back to normal...
         deselectEntity()
         
         // Set the new entity!
         currentEntity = entity
+        currentSprite = currentEntity.component(ofType: SpriteComponent.self)?.node
         
         // Show or hide buttons depending on the type of the the entity we tapped on
         if !(currentEntity is Structure)
@@ -55,49 +59,50 @@ class InfoViewNode : SKNode {
             upgradeButton.isHidden = false
         }
         
+        // Set the structure display image to our currentSprite image
+        structureImage.texture = currentSprite.texture
+        
         // Color the entity so we know who we are looking at
-        currentEntity.removeAllActions()
-        currentEntity.run(colorGreen)
+        currentSprite.removeAllActions()
+        currentSprite.run(colorGreen)
         
         // Update the info, this is called every frame
         updateInfo()
     }
     
     func updateInfo() {
-        structureImage.texture = currentEntity.texture
         
-        healthLabel.text = "Health: \(currentEntity.health_current)/\(currentEntity.health_max)"
-        if currentEntity.damage != 0 {
-            damageLabel.text = "Damage: \(currentEntity.damage)"
-        }
-        else {
-            damageLabel.text = "Damage: N/A"
-        }
         
-        if currentEntity is Structure {
-            healthLabel.text = (currentEntity as! Structure).connection_master?.name
-        }
-        
-        if currentEntity is Supplier {
-            healthLabel.text = "Master Count: \((currentEntity as! Supplier).connection_masters.count), Conn Count: \((currentEntity as! Supplier).connection_toStructures.count)"
-        }
-        
-        if currentEntity is Asteroid {
-            healthLabel.text = "Minerals: \(currentEntity.health_current)/\(currentEntity.health_max)"
-            // If our currentEntity has no child, and he is an asteroid
-            let asteroid = currentEntity as! Asteroid
-            let gas = asteroid.children[0] as? SKSpriteNode
-            if gas != nil {
-                structureImageTwo.texture = gas?.texture
-            }
-            structureImageTwo.alpha = CGFloat(currentEntity.health_current) / CGFloat(currentEntity.health_max)
-        }
-        else if currentEntity is Miner {
-            damageLabel.text = "Mining POWERRRR!: \(currentEntity.damage)"
-        }
-        else {
-            structureImageTwo.texture = nil
-        }
+//        healthLabel.text = "Health: \(currentEntity.health_current)/\(currentEntity.health_max)"
+//        if currentEntity.damage != 0 {
+//            damageLabel.text = "Damage: \(currentEntity.damage)"
+//        }
+//        else {
+//            damageLabel.text = "Damage: N/A"
+//        }
+//        
+//        if currentEntity is Structure {
+////            healthLabel.text = (currentEntity as! Structure).connection_master?.name
+//        }
+//        
+//        if currentEntity is Supplier {
+//            healthLabel.text = "Master Count: \((currentEntity as! Supplier).connection_masters.count), Conn Count: \((currentEntity as! Supplier).connection_toStructures.count)"
+//        }
+//        
+//        if currentEntity is Asteroid {
+//            healthLabel.text = "Minerals: \(currentEntity.health_current)/\(currentEntity.health_max)"
+//            // If our currentEntity has no child, and he is an asteroid
+//            let gas = currentSprite.children[0] as! SKSpriteNode
+//            structureImageTwo.texture = gas.texture
+//            
+//            structureImageTwo.alpha = CGFloat(currentEntity.health_current) / CGFloat(currentEntity.health_max)
+//        }
+//        else if currentEntity is Miner {
+//            damageLabel.text = "Mining POWERRRR!: \(currentEntity.damage)"
+//        }
+//        else {
+//            structureImageTwo.texture = nil
+//        }
         
         
     }

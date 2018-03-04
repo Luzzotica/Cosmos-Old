@@ -47,7 +47,7 @@ class Miner : Structure {
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
                     gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: damage))!
-                    let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005, entityType: EntityType.Miner)
+                    let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
                 }
                 else {
 //                    print("Current master: \(connection_master!.name)")
@@ -75,15 +75,14 @@ class Miner : Structure {
         var foundAsteroid = false
         
         // Get asteroid in range
-        for asteroid in gameScene.asteroidCluster.children {
+        for asteroid in gameScene.asteroidCluster {
             // Make sure he has minerals, if he doesn't, skip him
-            let asteroid2 = asteroid as? Asteroid
-            if asteroid2!.health_current == 0 {
+            if asteroid.health_current == 0 {
                 continue
             }
             
             // Otherwise, we continue!
-            let values = withinDistance(point1: position, point2: asteroid.position, distance: miningRange)
+            let values = withinDistance(point1: mySprite.position, point2: asteroid.mySprite.position, distance: miningRange)
             
             // If in range, make sure he is the closest
             if values.0 {
@@ -102,9 +101,6 @@ class Miner : Structure {
     override func build() {
         super.build()
         
-        if !underConstruction {
-            texture = Structures.miner
-        }
     }
     
     override func setupStructure() {
@@ -121,25 +117,17 @@ class Miner : Structure {
         power_priority = 0
         power_toBuild = 1
         power_toUse = 5
-        
-        // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: self.size)
-        power_lowOverlay.zPosition = 1
     }
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: .blue, size: size)
+    init(texture: SKTexture, teamID: String = "") {
+        super.init(texture: texture, size: StructureSize.small, teamID: teamID)
         
-        name! += "_miner"
+        mySprite.name! += "_miner"
+        
+        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: mySprite.size)
+        power_lowOverlay.zPosition = 1
         
         setupStructure()
-    }
-    
-    convenience init(texture: SKTexture) {
-        let xy = sceneWidth * 0.05
-        let rSize = CGSize(width: xy, height: xy)
-        
-        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

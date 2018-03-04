@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import GameplayKit
 
 class PlayerHUD : SKCameraNode {
     
@@ -63,7 +64,7 @@ class PlayerHUD : SKCameraNode {
     }
     
     // Info Node
-    func displayInfo(entity: Entity) {
+    func displayInfo(entity: GKEntity) {
         infoNode.displayInfo(entity: entity)
         
         constructionNode.isHidden = true

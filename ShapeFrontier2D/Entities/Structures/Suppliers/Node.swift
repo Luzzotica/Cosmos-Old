@@ -16,10 +16,6 @@ class Node : Supplier {
     override func build() {
         super.build()
         
-        if !underConstruction {
-            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "NodePwr"))
-            texture = normalTexture
-        }
     }
     
     override func setupStructure() {
@@ -34,24 +30,20 @@ class Node : Supplier {
         power_toBuild = 1
         power_toUse = 0
         
-        // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: self.size)
+        
         
     }
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
-        name! += "_node"
+    init(texture: SKTexture, teamID: String = "") {
+        super.init(texture: texture, size: StructureSize.node, teamID: teamID)
+        
+        mySprite.name! += "_node"
+        
+        // Set up low power overlay
+        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: mySprite.size)
+        power_lowOverlay.zPosition = 1
         
         setupStructure()
-    }
-    
-    convenience init(texture: SKTexture) {
-        let x = sceneWidth * 0.015
-        let y = sceneWidth * 0.03
-        let rSize = CGSize(width: x, height: y)
-        
-        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -13,10 +13,10 @@ class Turret : Structure {
     
     var range : CGFloat = 0.0
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    override init(texture: SKTexture, size: CGSize, teamID: String = "") {
+        super.init(texture: texture, size: size, teamID: teamID)
         
-        name! += "_turret"
+        mySprite.name! += "_turret"
     }
     
     required init?(coder aDecoder: NSCoder) {

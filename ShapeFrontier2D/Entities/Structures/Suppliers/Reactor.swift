@@ -39,7 +39,8 @@ class Reactor : Supplier {
     override func power_handleOverlay() {
 //        print("My power is: \(power_current)")
         if power_lowOverlay.parent == nil && power_current <= powerProvided {
-            addChild(power_lowOverlay)
+            let mySprite = component(ofType: SpriteComponent.self)!.node
+            mySprite.addChild(power_lowOverlay)
         }
         else if power_lowOverlay.parent != nil && power_current > powerProvided {
             power_lowOverlay.removeFromParent()
@@ -75,10 +76,6 @@ class Reactor : Supplier {
         
         power_capacity = 100
         power_current = 100
-        
-        // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.reactorLowPower, size: self.size)
-        power_lowOverlay.zPosition = 1
     }
     
     override func didFinishConstruction() {
@@ -88,22 +85,19 @@ class Reactor : Supplier {
         gameScene.player_powerCurrent += power_current
     }
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: .blue, size: size)
+    init(texture: SKTexture, teamID: String = "") {
+        super.init(texture: texture, size: StructureSize.large, teamID: teamID)
         
-        name! += "_reactor"
+        mySprite.name! += "_reactor"
+        
+        // Set up low power overlay
+        power_lowOverlay = SKSpriteNode(texture: Structures.reactorLowPower, size: mySprite.size)
+        power_lowOverlay.zPosition = 1
         
         setupStructure()
         
         connection_distance = 0
         
-    }
-    
-    convenience init(texture: SKTexture) {
-        let xy = sceneWidth * 0.10
-        let rSize = CGSize(width: xy, height: xy)
-        
-        self.init(texture: texture, color: .clear, size: rSize)
     }
     
     required init?(coder aDecoder: NSCoder) {

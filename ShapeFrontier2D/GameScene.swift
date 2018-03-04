@@ -39,9 +39,6 @@ struct CollisionType {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var enemies : [GKEntity] = []
-//    var graphs = [String : GKGraph]()
-    
-//    private var lastUpdateTime : TimeInterval = 0
     
     // Player camera
     var playerCamera: SKCameraNode?
@@ -68,7 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var connection_length : CGFloat = sceneWidth * 0.225
     
     // Asteroids
-    var asteroidCluster = SKNode()
+    var asteroidCluster : [Asteroid] = []
     
     // MARK: - Tick Variables
     let tick_speed : TimeInterval = 0.5
@@ -140,7 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupGame()
         
         let enemies = EnemyHandler.shared.spawnWave()
-        addChild(enemies[0])
+        
+        EntityManager.shared.add(enemies[0])
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
@@ -164,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !touchMoved && getDistance(point1: touch!.location(in: self),
                                       point2: touch!.previousLocation(in: self)) > sceneWidth * 0.005 {
             touchMoved = true
-            print("TOUCH WAS MOVED")
+//            print("TOUCH WAS MOVED")
         }
         
         if !isBuilding {
@@ -214,14 +212,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // And change color based on current location validity
             var color: SKAction
             // Check impediments
-//            print(toBuild!.physicsBody!.allContactedBodies().count)
-            if toBuild!.physicsBody!.allContactedBodies().count > 0
+            
+            if toBuild!.mySprite.physicsBody!.allContactedBodies().count > 0
             {
+//                print("Colliding")
                 isValidSpot = false
                 color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
                 // Check minerals
             else if toBuild!.constructionCost > minerals_current {
+//                print("no minerals")
                 isValidSpot = false
                 color = SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.0)
             }
@@ -231,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
             }
             
-            toBuild?.run(color)
+            toBuild?.mySprite.run(color)
         }
         
         // Enemy updating
@@ -277,15 +277,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild!.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
+        toBuild!.mySprite.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
         
         // Add connection range
-        toBuild?.addChild(UIHandler.shared.createRangeIndicator(
+        toBuild!.mySprite?.addChild(UIHandler.shared.createRangeIndicator(
             range: connection_length,
             color: .yellow))
         
         // Add to game scene
-        addChild(toBuild!)
+        addChild(toBuild!.mySprite!)
         
         // Make sure the scene knows we are currently building
         isBuilding = true
@@ -294,7 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateConstruction(translation: CGPoint) {
         // Move the structure
-        toBuild?.position = toBuild!.position + translation
+        toBuild!.mySprite.position = toBuild!.mySprite!.position + translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
@@ -320,23 +320,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if isValidSpot {
             // Turn him to normal color
             let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild?.run(color)
+            toBuild!.mySprite.run(color)
             
             // Made it, remove the name identifier
             for _ in 0...17 {
-                toBuild?.name?.removeLast()
+                toBuild!.mySprite.name?.removeLast()
             }
             
             // Make him be a structure
-            toBuild!.physicsBody?.categoryBitMask = CollisionType.Structure
+            toBuild!.mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
             
             // Make him enabled
             toBuild?.isDisabled = false
             
             // Remove his range indicator
-            for i in stride(from: toBuild!.children.count - 1, through: 0, by: -1) {
-                if toBuild?.children[i].name == "rangeIndicator" {
-                    toBuild?.children[i].removeFromParent()
+            for i in stride(from: toBuild!.mySprite.children.count - 1, through: 0, by: -1) {
+                if toBuild!.mySprite.children[i].name == "rangeIndicator" {
+                    toBuild!.mySprite.children[i].removeFromParent()
                 }
             }
             
@@ -349,6 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Add everything to structures
             player_structures.append(toBuild!)
+            EntityManager.shared.add(toBuild!)
             
             // If this building was a reactor, add it to the players reactors
             // We will add batteries later...
@@ -366,7 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         else {
-            toBuild?.removeFromParent()
+            toBuild!.mySprite.removeFromParent()
         }
         
         // Reset the building, connecting, and validity
@@ -380,10 +381,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var currentRange : CGFloat = sceneWidth
         
         for targetStructure in player_structures {
+            // Get the target structure sprite
+            let targetSprite = targetStructure.component(ofType: SpriteComponent.self)!.node
+            
             // If he is a supplier, he can link to all people in range
             if isSupplier {
-                if withinDistance(point1: targetStructure.position,
-                                  point2: toBuild!.position,
+                if withinDistance(point1: targetSprite.position,
+                                  point2: toBuild!.mySprite.position,
                                   distance: connection_length).0 {
                     if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
                         inRange.append(targetStructure)
@@ -396,8 +400,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
                 // Otherwise, get the closest supplier
             else if targetStructure.isSupplier {
-                let values = withinDistance(point1: targetStructure.position,
-                                            point2: toBuild!.position,
+                let values = withinDistance(point1: targetSprite.position,
+                                            point2: toBuild!.mySprite.position,
                                             distance: connection_length)
                 if values.0 {
                     if currentRange > values.1! {
@@ -475,7 +479,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Setup asteroids
         asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 30000)
-        addChild(asteroidCluster)
+        for asteroid in asteroidCluster {
+            EntityManager.shared.add(asteroid)
+        }
         
         // Start up the background music
         SoundHandler.shared.playBackgroundMusic()

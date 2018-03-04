@@ -7,13 +7,15 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class Laser : NSObject {
     
     static var laserAnimations : [Int:SKAction] = [:]
     
-    var entityOne : Entity?
-    var entityTwo : Entity?
+    var entityOne : SKSpriteNode?
+    var entityTwo : SKSpriteNode?
+    
     var laser : SKShapeNode?
     
     var toDestroy = false
@@ -39,21 +41,17 @@ class Laser : NSObject {
     }
     
     static func prepareLaserAnimation() {
-        for i in 0...EntityType.MaxType {
-            if i == EntityType.Miner {
-                let wait = SKAction.wait(forDuration: 0.2)
-                let fadeout = SKAction.fadeOut(withDuration: 0.3)
-                let sequence = SKAction.sequence([wait, fadeout])
-                Laser.laserAnimations[EntityType.Miner] = sequence
-            }
-        }
+        let wait = SKAction.wait(forDuration: 0.2)
+        let fadeout = SKAction.fadeOut(withDuration: 0.3)
+        let sequence = SKAction.sequence([wait, fadeout])
+        Laser.laserAnimations[0] = sequence
     }
     
-    init(entOne: Entity, entTwo: Entity, color: UIColor, width: CGFloat, entityType: Int) {
+    init(entOne: GKEntity, entTwo: GKEntity, color: UIColor, width: CGFloat) {
         super.init()
         
-        entityOne = entOne
-        entityTwo = entTwo
+        entityOne = entOne.component(ofType: SpriteComponent.self)?.node
+        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.node
         
         // Create a path
         let path: CGMutablePath = CGMutablePath()
@@ -84,7 +82,7 @@ class Laser : NSObject {
         // Add the line to the target structure
         entityOne?.addChild(laser!)
         
-        laser?.run(Laser.laserAnimations[entityType]!) {
+        laser?.run(Laser.laserAnimations[0]!) {
             self.destroySelf()
         }
     }

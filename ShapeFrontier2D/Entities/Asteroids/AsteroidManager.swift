@@ -8,13 +8,14 @@
 
 import Foundation
 import SpriteKit
+import GameplayKit
 
 class AsteroidManager : NSObject {
     
     static let shared = AsteroidManager()
     
-    func createAsteroidCluster(atPoint: CGPoint, mineralCap: Int) -> SKNode {
-        let clusterNode = SKNode()
+    func createAsteroidCluster(atPoint: CGPoint, mineralCap: Int) -> [Asteroid] {
+        var cluster : [Asteroid] = []
         
         let clusterRadius = Int(arc4random_uniform(UInt32(sceneWidth * 0.6))) + Int(sceneWidth * 0.2)
         
@@ -32,16 +33,16 @@ class AsteroidManager : NSObject {
             
             // Create the asteroid at the point, add it to the cluster
             let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
-            asteroid.zRotation = CGFloat(angle)
+            asteroid.mySprite.zRotation = CGFloat(angle)
             
             // Add it to the clusternode
-            clusterNode.addChild(asteroid)
+            cluster.append(asteroid)
             
             // Subtract from mineralcap
             currentMinerals -= minerals
         }
         
-        return clusterNode
+        return cluster
     }
     
     func createAsteroid(minerals: Int, atPoint: CGPoint) -> Asteroid {
@@ -52,17 +53,17 @@ class AsteroidManager : NSObject {
         let textures = getRandomAsteroid()
         if minerals < smallThreshold {
             let asteroid = AsteroidSmall(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.position = atPoint
+            asteroid.mySprite.position = atPoint
             return asteroid
         }
         else if minerals < mediumThreshold {
             let asteroid = AsteroidMedium(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.position = atPoint
+            asteroid.mySprite.position = atPoint
             return asteroid
         }
         else {
             let asteroid = AsteroidBig(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.position = atPoint
+            asteroid.mySprite.position = atPoint
             return asteroid
         }
         

@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 extension PlayerHUD {
     
@@ -26,7 +27,7 @@ extension PlayerHUD {
     
     func buttonPressedUp(_ touchedNodes: [SKNode], location: CGPoint) {
         var functionToRun: (() -> Void)?
-        var tappedEntity: Entity?
+        var tappedEntity: GKEntity?
         
         for i in stride(from: 0, to: touchedNodes.count, by: 1) {
             if touchedNodes[i].name == nil {
@@ -56,7 +57,7 @@ extension PlayerHUD {
                 //print("touched a node! Function is: \(functionToRun)")
                 // Check if we tapped on an entity
                 print(touchedNodes[i].name!)
-                tappedEntity = touchedNodes[i] as! Entity
+                tappedEntity = touchedNodes[i].entity
             }
         }
         

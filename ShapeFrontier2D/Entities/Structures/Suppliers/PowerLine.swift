@@ -85,17 +85,17 @@ class PowerLine : NSObject {
             return
         }
         
-        if withinDistance(point1: structureOne!.position,
-                          point2: structureTwo!.position,
+        if withinDistance(point1: structureOne!.mySprite.position,
+                          point2: structureTwo!.mySprite.position,
                           distance: PowerLine.range_max).0
         {
             // update the size of the power line
-            let newSize = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
+            let newSize = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.mySprite.position, point2: structureTwo!.mySprite.position))
             let updateSize = SKAction.scale(to: newSize, duration: 0.0)
             powerLine.run(updateSize)
             
             // Rotate powerline
-            let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
+            let angleBetweenStructures = atan2(structureOne!.mySprite.position.x - structureTwo!.mySprite.position.x, structureTwo!.mySprite.position.y - structureOne!.mySprite.position.y)
             powerLine.zRotation = angleBetweenStructures
             
             collisionCheck()
@@ -145,14 +145,17 @@ class PowerLine : NSObject {
         structureTwo = structTwo
         
         // Set his size to the linewidth and the distance between the two structures
-        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.position, point2: structureTwo!.position))
+        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.mySprite.position, point2: structureTwo!.mySprite.position))
         
         // Create the powerline based on the size and correct color
         powerLine = SKSpriteNode(color: PowerLine.colorNormal, size: size)
         powerLine.name = "power_line"
         
         // Rotate him to the proper angle
-        let angleBetweenStructures = atan2(structureOne!.position.x - structureTwo!.position.x, structureTwo!.position.y - structureOne!.position.y)
+        let angleBetweenStructures = atan2(structureOne!.mySprite.position.x
+            - structureTwo!.mySprite.position.x,
+                                           structureTwo!.mySprite.position.y
+                                            - structureOne!.mySprite.position.y)
         powerLine.zRotation = angleBetweenStructures
         
         // Set its anchor point to 0.0 so it is centered on structure one
@@ -165,7 +168,7 @@ class PowerLine : NSObject {
         powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
         
         // Add the line to the target structure
-        structureOne?.addChild(powerLine)
+        structureOne!.mySprite.addChild(powerLine)
         
         super.init()
     }

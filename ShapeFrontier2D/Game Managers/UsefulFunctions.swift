@@ -36,3 +36,16 @@ func withinDistance(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> (Boo
         return (true, actual)
     }
 }
+
+// MARK: Points and vectors
+extension CGPoint {
+    init(_ point: float2) {
+        x = CGFloat(point.x)
+        y = CGFloat(point.y)
+    }
+}
+extension float2 {
+    init(_ point: CGPoint) {
+        self.init(x: Float(point.x), y: Float(point.y))
+    }
+}

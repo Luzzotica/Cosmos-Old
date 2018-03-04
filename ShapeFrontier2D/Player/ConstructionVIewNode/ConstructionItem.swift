@@ -14,6 +14,7 @@ class ConstructionItem: NSObject {
 	private var nameLabel : SKLabelNode = SKLabelNode()
 	
 	var building : Structure!
+    var buildingSprite : SKSpriteNode!
     
     init(_ structure: Structure) {
         super.init()
@@ -28,9 +29,11 @@ class ConstructionItem: NSObject {
         
         // Build stuff
         building = structure
-        building.name! += "_constructor"
+        buildingSprite = building.component(ofType: SpriteComponent.self)!.node
         
-        building.addChild(nameLabel)
+        buildingSprite.name! += "_constructor"
+        
+        buildingSprite.addChild(nameLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {

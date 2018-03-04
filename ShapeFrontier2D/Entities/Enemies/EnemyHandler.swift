@@ -21,19 +21,17 @@ class EnemyHandler : NSObject {
     // Wave system variables
     var wave_current = 0
     
-    func spawnWave() -> [Enemy] {
-        var waveToSpawn : [Enemy] = []
+    func spawnWave() -> [GenericEnemy] {
+        var waveToSpawn : [GenericEnemy] = []
         
-        waveToSpawn.append(spawnEnemy())
+        waveToSpawn.append(createEnemy())
         
         return waveToSpawn
     }
     
-    func spawnEnemy() -> Enemy {
-        let enemy = Enemy(texture: Enemies.fighter)
-        
-        // Add their GKEntity to our list so we can update it
-        enemies.append(enemy.AI_handler)
+    func createEnemy() -> GenericEnemy {
+        let size = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.5)
+        let enemy = GenericEnemy(texture: Enemies.fighter, size: size, teamID: "Swag")
         
         return enemy
     }

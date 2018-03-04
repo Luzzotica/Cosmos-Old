@@ -31,27 +31,20 @@ class PulseLaser : Turret {
         power_toBuild = 1
         power_toUse = 1
         
-        // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: self.size)
-        
     }
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    init(texture: SKTexture, teamID: String = "") {
+        super.init(texture: texture, size: StructureSize.large, teamID: teamID)
         
         range = sceneWidth * 0.5
         
+        mySprite.name! += "_pulseLaser"
+        
+        // Set up low power overlay
+        power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: mySprite.size)
+        power_lowOverlay.zPosition = 1
+        
         setupStructure()
-        
-        name! += "_pulseLaser"
-    }
-    
-    convenience init(texture: SKTexture) {
-        let xy = sceneWidth * 0.10
-        let rSize = CGSize(width: xy, height: xy)
-        
-        self.init(texture: texture, color: .clear, size: rSize)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

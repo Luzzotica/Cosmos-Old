@@ -8,10 +8,18 @@
 
 import Foundation
 import SpriteKit
+import GameplayKit
 
-class Structure : Entity {
+class Structure : GKEntity {
     
     var level : Int = 1
+    
+    var health_max : Int = 0
+    var health_current : Int = 0
+    
+    var damage : Int = 0
+    
+    var mySprite : SKSpriteNode!
     
     // Recursive searching variables
     static var dontLookAtID = 0
@@ -47,6 +55,13 @@ class Structure : Entity {
     // If we want to disable it, we can. This makes it unable to connect or do anything. Mostly used for the building objects
     var isDisabled = false
     
+    func takeDamage(amount: Int) {
+        health_current -= amount
+        if health_current < 0 {
+            didDied()
+        }
+    }
+    
     func build() {
         // Current way is to add to health the powerToBuild
         health_current += power_toBuild
@@ -76,8 +91,7 @@ class Structure : Entity {
         }
     }
     
-    override func didDied() {
-        super.didDied()
+    func didDied() {
         //Remove self from global structures list and individual type list
         gameScene.structureDied(structure: self)
         connection_powerLine?.destroySelf()
@@ -98,7 +112,8 @@ class Structure : Entity {
     
     func power_update() {
         if power_current < power_toUse {
-            self.addChild(power_lowOverlay)
+            let mySprite = component(ofType: SpriteComponent.self)!.node
+            mySprite.addChild(power_lowOverlay)
         }
         else {
             power_lowOverlay.removeFromParent()
@@ -150,7 +165,8 @@ class Structure : Entity {
         if power_lowOverlay.parent == nil
             && (connection_master == nil
                 || gameScene.player_powerCurrent < power_toUse) {
-            addChild(power_lowOverlay)
+            let mySprite = component(ofType: SpriteComponent.self)!.node
+            mySprite.addChild(power_lowOverlay)
         }
             // Removes the power overlay if
             // We have a master, and we have power
@@ -193,7 +209,6 @@ class Structure : Entity {
             
             // Connect to the new supplier
             connection_master = (structure as! Supplier)
-            print(connection_master!.name!)
             
             // If we have a connection already, destroy it.
             if connection_powerLine != nil {
@@ -227,17 +242,25 @@ class Structure : Entity {
         power_handleOverlay()
     }
     
-    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    init(texture: SKTexture, size: CGSize, teamID: String = "") {
+        super.init()
         
-        physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
-        physicsBody?.categoryBitMask = CollisionType.Structure
-        physicsBody?.contactTestBitMask = CollisionType.Structure
-        physicsBody?.collisionBitMask = CollisionType.Nothing
+        let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
+        spriteComponent.node.name = "entity"
+        mySprite = spriteComponent.node
         
-        zPosition = Layer.Player
+        addComponent(spriteComponent)
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5)))
+        addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.5, health: 50))
         
-        name! += "_structure"
+        mySprite.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
+        mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
+        mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure
+        mySprite.physicsBody?.collisionBitMask = CollisionType.Nothing
+        
+        mySprite.zPosition = Layer.Player
+        
+        mySprite.name! += "_structure"
     }
     
     required init?(coder aDecoder: NSCoder) {
