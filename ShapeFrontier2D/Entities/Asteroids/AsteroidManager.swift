@@ -17,7 +17,7 @@ class AsteroidManager : NSObject {
     func createAsteroidCluster(atPoint: CGPoint, mineralCap: Int) -> [Asteroid] {
         var cluster : [Asteroid] = []
         
-        let clusterRadius = Int(arc4random_uniform(UInt32(sceneWidth * 0.6))) + Int(sceneWidth * 0.2)
+        let clusterRadius = Int(sceneWidth * 20.0)
         
         var currentMinerals = mineralCap
         

@@ -14,6 +14,9 @@ class PlayerHUD : SKCameraNode {
     
     static let shared = PlayerHUD()
     
+    // Max camera range
+    let cameraRange = sceneWidth * 5.0
+    
     // Bottom bar!
     let bottomBarNode = SKNode()
     let bottomBar_height = sceneHeight * 0.18
@@ -27,6 +30,11 @@ class PlayerHUD : SKCameraNode {
     
     // Resource Node!
     var resourceNode : ResourceViewNode!
+    
+    // Background Node
+    let backgroundNode = SKNode()
+    var backgroundOne = SKNode()
+    var backgroundTwo = SKNode()
     
     override init() {
         super.init()
@@ -53,10 +61,12 @@ class PlayerHUD : SKCameraNode {
         bottomBarNode.addChild(infoNode)
         bottomBarNode.addChild(resourceNode)
         
-        
         // COOL UI STUFF
         // Add background UI for the bottom area
         bottomBarNode.addChild(createConstructionViewBackground())
+        
+        // Add the background!
+        createBackground()
     }
     
     func resetHUD() {
@@ -97,14 +107,32 @@ class PlayerHUD : SKCameraNode {
     
     // Move the camera function
     func cameraMoved(dPoint: CGPoint) {
-        position = position - dPoint
+        
+        // Check if we are out of bounds
+        var transPoint = dPoint
+        if abs(position.x - transPoint.x) > cameraRange {
+            transPoint.x = 0
+        }
+        
+        if abs(position.y - transPoint.y) > cameraRange {
+            transPoint.y = 0
+        }
+        
+        // Move the camera
+        position = position - transPoint
+        
+        // Parallax the background
+        var backgroundPoint = (backgroundOne.position + transPoint * 0.05)
+        backgroundOne.position = backgroundPoint
+        backgroundPoint *= 1.3
+        backgroundTwo.position = backgroundPoint
     }
     
     func zoom(scale: CGFloat) {
         
         // If the scale of the camera is already <= the threshold, abort pinch
         if (scale > 1) {
-            if (xScale <= 0.1) {
+            if (xScale <= 1.0) {
                 return
             }
         }
@@ -112,11 +140,61 @@ class PlayerHUD : SKCameraNode {
         // If the scale of the camera is already >= the threshold, abort zoom
         if (scale < 1) {
             if (xScale >= 10.0) {
-                return;
+                return
             }
         }
         
-        run(SKAction.scale(by: 1.0 / scale, duration: 0))
+        //
+        var backgroundScale = 1.0 - scale
+        backgroundScale *= 0.9
+        backgroundScale += 1
+//        print(scale)
+        let scaleAction = SKAction.scale(by: 1.0 / scale, duration: 0)
+        run(scaleAction)
+        backgroundNode.run(SKAction.scale(by: 1.0 / backgroundScale, duration: 0))
+    }
+    
+    func createBackground() {
+        
+        let backgroundTexture1 = SKTexture(imageNamed: "StarsOnlyUpper")
+        let backgroundTexture2 = SKTexture(imageNamed: "StarsOnlyLower")
+        
+        // Add in the stars, make them cover a massive area!
+        let backgroundSize = CGSize(width: sceneWidth, height: sceneWidth)
+        
+        let gridCount = 15
+        for i in 0...gridCount {
+            for j in 0...gridCount {
+                // Get a grid position, slightly overlapping
+                let position = CGPoint(x: backgroundSize.width * 0.9 * CGFloat(i), y: backgroundSize.height * 0.9 * CGFloat(j))
+                
+                let scale = CGFloat(pow(-1.0, Double(i + j)))
+                
+                var background = SKSpriteNode(texture: backgroundTexture1)
+                background.size = backgroundSize
+                background.position = position
+                background.zPosition = Layer.Background3 - self.zPosition
+                
+                background.xScale = scale
+                backgroundOne.addChild(background)
+                
+                background = SKSpriteNode(texture: backgroundTexture2)
+                background.size = backgroundSize
+                background.position = position
+                background.zPosition = Layer.Background3 - self.zPosition
+                background.xScale = scale
+                backgroundTwo.addChild(background)
+            }
+        }
+        
+        // To center all the images, move the background nodes out to the left half the distance
+        let offset = CGPoint(x: backgroundSize.width * CGFloat(gridCount) * -0.5,
+                             y: backgroundSize.height * CGFloat(gridCount) * -0.5)
+        backgroundOne.position = offset
+        backgroundTwo.position = offset
+        
+        addChild(backgroundOne)
+        addChild(backgroundTwo)
     }
     
     required init?(coder aDecoder: NSCoder) {

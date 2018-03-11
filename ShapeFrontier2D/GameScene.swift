@@ -38,8 +38,6 @@ struct CollisionType {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var enemies : [GKEntity] = []
-    
     // Player camera
     var playerCamera: SKCameraNode?
     
@@ -136,9 +134,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up game and all it's goodness
         setupGame()
         
-        let enemies = EnemyManager.shared.spawnWave()
+        // Add the first player reactor
+        let firstReactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
+        firstReactor.didFinishConstruction()
+        firstReactor.mySprite.position = playerCamera!.position
         
-        EntityManager.shared.add(enemies[0])
+        // Add everything to structures
+        player_structures.append(firstReactor)
+        player_suppliers.append(firstReactor)
+        EntityManager.shared.add(firstReactor)
+        
+//        let enemies = EnemyManager.shared.spawnWave()
+//
+//        EntityManager.shared.add(enemies[0])
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
@@ -479,13 +487,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         camera = playerCamera
         
         // Setup asteroids
-        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 30000)
+        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 1000000)
         for asteroid in asteroidCluster {
             EntityManager.shared.add(asteroid)
         }
         
         // Start up the background music
         SoundHandler.shared.playBackgroundMusic()
+        
+        // Set the background to a nice dark blue
+        backgroundColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {

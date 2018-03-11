@@ -65,6 +65,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         if maxSpeed == 0 {
             return
         }
+        print(maxSpeed)
         super.update(deltaTime: seconds)
         
         
@@ -81,6 +82,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         targetMoveComponent = enemyMoveComponent
         
         // Reset behavior
+        print(targetMoveComponent)
         behavior = MoveBehavior(targetSpeed: maxSpeed, seek: targetMoveComponent, avoid: [])
         
     }
