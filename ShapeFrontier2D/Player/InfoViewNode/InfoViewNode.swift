@@ -33,7 +33,6 @@ class InfoViewNode : SKNode {
     
     func deselectEntity() {
         if currentEntity != nil {
-            
             currentSprite.removeAllActions()
             currentSprite.run(colorNormal)
         }
@@ -43,25 +42,25 @@ class InfoViewNode : SKNode {
         // Upgrade button not done. Hide it for now
         // Destroy button broken... need to fix it
 //        upgradeButton.isHidden = true
-        destroyButton.isHidden = true
+//        destroyButton.isHidden = true
         
         // If there was a node before we tapped, then we should color him back to normal...
         deselectEntity()
         
         // Set the new entity!
         currentEntity = entity
-        currentSprite = currentEntity.component(ofType: SpriteComponent.self)?.node
+        currentSprite = currentEntity.component(ofType: SpriteComponent.self)!.node
         
         // Show or hide buttons depending on the type of the the entity we tapped on
         if !(currentEntity is Structure)
         {
-//            destroyButton.isHidden = true
-//            upgradeButton.isHidden = true
+            destroyButton.isHidden = true
+            upgradeButton.isHidden = true
         }
         else
         {
-//            destroyButton.isHidden = false
-//            upgradeButton.isHidden = false
+            destroyButton.isHidden = false
+            upgradeButton.isHidden = false
         }
         
         // Set the structure display image to our currentSprite image
@@ -168,21 +167,21 @@ class InfoViewNode : SKNode {
         damageLabel.verticalAlignmentMode = .top
         
         // Setup upgrade button
-        let buttonSize = CGSize(width: infoViewWidth * 0.4, height: bottomBar_height * 0.95)
+        let buttonSize = CGSize(width: infoViewWidth * 0.4, height: bottomBar_height * 0.45)
         
         yPosition = bottomBar_height + bottomBar_buffer * 0.5
-//        upgradeButton = UI_Button(size: buttonSize,
-//                                  text: "Upgrade",
-//                                  name: "upgrade",
-//                                  backgroundColor: .green,
-//                                  fontSize: fontSizeS,
-//                                  anchor: CGPoint(x: 1.0, y: 1.0))
-//        upgradeButton.position.x = infoViewWidth - bottomBar_buffer * 0.5
-//        upgradeButton.position.y = yPosition
-//        upgradeButton.zPosition = 1
+        upgradeButton = UI_Button(size: buttonSize,
+                                  text: "Upgrade",
+                                  name: "upgrade",
+                                  backgroundColor: .green,
+                                  fontSize: fontSizeS,
+                                  anchor: CGPoint(x: 1.0, y: 1.0))
+        upgradeButton.position.x = infoViewWidth - bottomBar_buffer * 0.5
+        upgradeButton.position.y = yPosition
+        upgradeButton.zPosition = 1
         
         // Setup destroy button
-        //yPosition -= buttonSize.height + bottomBar_height * 0.1
+        yPosition -= buttonSize.height + bottomBar_height * 0.1
         destroyButton = UI_Button(size: buttonSize,
                                   text: "Destroy",
                                   name: "destroy",

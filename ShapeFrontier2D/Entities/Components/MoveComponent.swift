@@ -12,14 +12,21 @@ import GameplayKit
 
 class MoveComponent : GKAgent2D, GKAgentDelegate {
     
-    init(maxSpeed: Float, maxAcceleration: Float, radius: Float) {
+    // The target he tries to attack!
+    var name : String
+    var target : Int = 1
+    
+    init(maxSpeed: Float, maxAcceleration: Float, radius: Float, name: String) {
+        self.name = name
+        
         super.init()
-        delegate = self
-        self.maxSpeed = maxSpeed * 0.00001
-        self.maxAcceleration = maxAcceleration
+        self.delegate = self
+        self.maxSpeed = maxSpeed * 0.000001
+        self.maxAcceleration = maxAcceleration * 0.001
         self.radius = radius
-        print(self.mass)
-        self.mass = 0.01
+        self.mass = 500
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -27,63 +34,79 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
     }
     
     func agentWillUpdate(_ agent: GKAgent) {
+        // Update the agent right before he's about to do stuff so he's in line with the sprite
+        
         guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
             return
         }
-        
+//        print("got here")
         position = float2(spriteComponent.node.position)
-        rotation = Float(spriteComponent.node.zRotation - .pi/2.0)
+        
     }
     
     func agentDidUpdate(_ agent: GKAgent) {
+        // Need to update the sprite after the agent has executed his actions
+        
         guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
             return
         }
         
         spriteComponent.node.position = CGPoint(position)
-        spriteComponent.node.zRotation = CGFloat(rotation - .pi/2)
+        spriteComponent.node.physicsBody!.velocity = CGVector(velocity)
+        spriteComponent.node.zRotation = CGFloat(rotation - .pi/2.0)
     }
     
-    func closestMoveComponentOnTeam(_ team: Team) -> GKAgent2D? {
+    func closestAgentForPlayer() -> GKAgent2D? {
         
-        var closestMoveComponent: MoveComponent? = nil
-        var closestDistance = CGFloat(0)
+        // The clostest agent we want to attack
+        var closestAgentComponent: MoveComponent? = nil
         
-        let enemyMoveComponents = EntityManager.shared.moveComponentsOnTeam(team)
-        for enemyMoveComponent in enemyMoveComponents {
-            let distance = (CGPoint(enemyMoveComponent.position) - CGPoint(position)).length()
-            if closestMoveComponent == nil || distance > closestDistance {
-                closestMoveComponent = enemyMoveComponent
+        // Keep track of the closest distance
+        var closestDistance : CGFloat = 0
+        
+        // Loop through all of the target agents and find the closest one
+        let targetAgentComponents = EntityManager.shared.agentComponentsForPlayer(target)
+        for targetAgentComponent in targetAgentComponents {
+            let distance = (CGPoint(targetAgentComponent.position) - CGPoint(position)).length()
+            if closestAgentComponent == nil || distance > closestDistance {
+                closestAgentComponent = targetAgentComponent
                 closestDistance = distance
             }
         }
-        return closestMoveComponent
+        
+        // Return the closest agent from the target player that we found
+        return closestAgentComponent
         
     }
     
+    func getAgentsForPlayer() -> [GKAgent] {
+        return EntityManager.shared.agentComponentsForPlayer(target)
+    }
+    
     override func update(deltaTime seconds: TimeInterval) {
+        
+        // If we have no speed... do nothing
         if maxSpeed == 0 {
+            // Update the GKAgents position
+            guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
+                return
+            }
+            position = float2(spriteComponent.node.position)
             return
         }
-        print(maxSpeed)
+//        print(maxSpeed)
         super.update(deltaTime: seconds)
-        
-        
-        var targetMoveComponent: GKAgent2D
-        
-        guard let teamComponent = entity!.component(ofType: TeamComponent.self) else {
+
+        // We will want a target to move towards
+        var targetMoveComponent: MoveComponent
+
+        // Find closest agent in the target player
+        guard let enemyMoveComponent = closestAgentForPlayer() else {
             return
         }
+        targetMoveComponent = enemyMoveComponent as! MoveComponent
         
-        // Find closest enemy
-        guard let enemyMoveComponent = closestMoveComponentOnTeam(teamComponent.team.oppositeTeam()) else {
-            return
-        }
-        targetMoveComponent = enemyMoveComponent
-        
-        // Reset behavior
-        print(targetMoveComponent)
-        behavior = MoveBehavior(targetSpeed: maxSpeed, seek: targetMoveComponent, avoid: [])
+        behavior = MoveBehavior(targetSpeed: maxSpeed, seek: getAgentsForPlayer(), avoid: [])
         
     }
     

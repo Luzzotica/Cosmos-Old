@@ -9,33 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-
-struct Layer {
-    static let Background1: CGFloat = -5
-    static let Background2: CGFloat = -4
-    static let Background3: CGFloat = -3
-    static let Overlay: CGFloat = 25
-    static let UI: CGFloat = 20
-    static let Powerup: CGFloat = 8
-    static let Player: CGFloat = 9
-    static let PlayerBullets: CGFloat = 6
-    static let Enemies: CGFloat = 5
-    static let Asteroids: CGFloat = 1
-    static let EnemyBullets: CGFloat = 7
-}
-
-struct CollisionType {
-    static let Nothing: UInt32 = 1
-    static let Structure: UInt32 = 2
-    static let StructureMissile: UInt32 = 4
-    static let Construction: UInt32 = 8
-    static let PowerLine: UInt32 = 16
-    static let Enemy: UInt32 = 32
-    static let EnemyMissile: UInt32 = 64
-    static let Asteroid: UInt32 = 128
-    static let Ground: UInt32 = 256
-}
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Player camera
@@ -65,67 +38,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Asteroids
     var asteroidCluster : [Asteroid] = []
     
-    // MARK: - Tick Variables
+    // Tick Variables
     let tick_speed : TimeInterval = 0.5
     var tick_last : TimeInterval = 0.0
     
     // Mineral variables
     var minerals_current : Int = 10000
-    
-    func power_add(toAdd: Int)
-    {
-        player_powerCurrent += toAdd
-//        print("Current power is \(power_current)")
-        if player_powerCurrent > player_powerCapacity
-        {
-            player_powerCurrent = player_powerCapacity
-        }
-    }
-    
-    func power_use(amount: Int, deficit: Int) {
-        // Subtract energy from global power
-        player_powerCurrent -= amount
-//        print("Current power is \(power_current)")
-        
-        // If there was a deficit, we find other reactors
-        if deficit != -1 {
-            // Store the deficit
-            var deficit_curr = deficit
-
-            // While it's greater than 0, we want to keep looking for reactors with energy
-            while deficit_curr > 0 {
-                
-                let reactor = power_findPowerSourceWithPower()
-                
-                if reactor != nil {
-                    reactor!.power_current -= deficit_curr
-                    // Set the deficit to whatever the reactors power now is
-                    deficit_curr = reactor!.power_current
-                    
-                    // If the deficit is still less than 0, then we want to set the reactors power to 0
-                    // Continue with the while loop
-                    if deficit_curr < 0 {
-                        reactor!.power_current = 0
-                        deficit_curr *= -1
-                    }
-                }
-                else {
-                    print("This was impossible. Do something about it. Now.")
-                    deficit_curr = 0
-                }
-            }
-        }
-    }
-    
-    func power_findPowerSourceWithPower() -> Supplier? {
-        for reactor in player_suppliers {
-            if reactor.power_current > 0 {
-                return reactor
-            }
-        }
-        
-        return nil
-    }
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -144,9 +62,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player_suppliers.append(firstReactor)
         EntityManager.shared.add(firstReactor)
         
-//        let enemies = EnemyManager.shared.spawnWave()
-//
-//        EntityManager.shared.add(enemies[0])
+        let enemies = EnemyManager.shared.spawnWave()
+
+        EntityManager.shared.add(enemies[0])
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
@@ -181,7 +99,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Otherwise, update the construction
             updateConstruction(translation: translationInScene)
         }
-        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -245,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Enemy updating
         EnemyManager.shared.update(currentTime)
         EntityManager.shared.update(currentTime)
-        
     }
     
     func tick() {
@@ -278,153 +194,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /*
- 
-    Construction Actions
- 
-    */
-    
-    func startConstructionMode(structure: Structure) {
-        toBuild = structure
-        toBuild!.mySprite.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
-        
-        // Add connection range
-        toBuild!.mySprite?.addChild(UIHandler.shared.createRangeIndicator(
-            range: connection_length,
-            color: .yellow))
-        
-        // Add to game scene
-        addChild(toBuild!.mySprite!)
-        
-        // Make sure the scene knows we are currently building
-        isBuilding = true
-        
-    }
-    
-    func updateConstruction(translation: CGPoint) {
-        // Move the structure
-        toBuild!.mySprite.position = toBuild!.mySprite!.position + translation
-        
-        // Get structures we can draw to
-        let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
-        
-        if toBuild!.isSupplier {
-            let toBuildSupplier = toBuild as! Supplier
-            for structures in drawTo {
-                toBuildSupplier.connection_addTo(structure: structures)
-            }
-            
-            toBuildSupplier.connection_updateLines()
-        }
-        else {
-            //print(drawTo)
-            if drawTo.count > 0 {
-                toBuild?.connection_addTo(structure: drawTo[0])
-            }
-            toBuild?.connection_updateLines()
-        }
-    }
-    
-    func endConstructionMode() {
-        if isValidSpot {
-            // Turn him to normal color
-            let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
-            toBuild!.mySprite.run(color)
-            
-            // Made it, remove the name identifier
-            for _ in 0...17 {
-                toBuild!.mySprite.name?.removeLast()
-            }
-            
-            // Make him be a structure
-            toBuild!.mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
-            
-            // Make him enabled
-            toBuild?.isDisabled = false
-            
-            // Remove his range indicator
-            for i in stride(from: toBuild!.mySprite.children.count - 1, through: 0, by: -1) {
-                if toBuild!.mySprite.children[i].name == "rangeIndicator" {
-                    toBuild!.mySprite.children[i].removeFromParent()
-                }
-            }
-            
-            // Mineral Cost
-            minerals_current -= toBuild!.constructionCost
-            PlayerHUD.shared.update_resources()
-            
-            // Finish Construction
-            toBuild!.didFinishConstruction()
-            
-            // Add everything to structures
-            player_structures.append(toBuild!)
-            EntityManager.shared.add(toBuild!)
-            
-            // If this building was a reactor, add it to the players reactors
-            // We will add batteries later...
-            if toBuild! is Reactor {
-                player_suppliers.append(toBuild as! Supplier)
-            }
-            // If it was a turret, add it to player's turrets
-            if toBuild! is Turret {
-                player_turrets.append(toBuild as! Turret)
-            }
-            // If it was a miner, add it to player's miners
-            if toBuild! is Miner {
-                player_miners.append(toBuild as! Miner)
-            }
-            
-        }
-        else {
-            toBuild!.mySprite.removeFromParent()
-        }
-        
-        // Reset the building, connecting, and validity
-        toBuild = nil
-        isValidSpot = true
-        isBuilding = false
-    }
-    
-    func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
-        var inRange : [Structure] = []
-        var currentRange : CGFloat = sceneWidth
-        
-        for targetStructure in player_structures {
-            // Get the target structure sprite
-            let targetSprite = targetStructure.component(ofType: SpriteComponent.self)!.node
-            
-            // If he is a supplier, he can link to all people in range
-            if isSupplier {
-                if withinDistance(point1: targetSprite.position,
-                                  point2: toBuild!.mySprite.position,
-                                  distance: connection_length).0 {
-                    if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
-                        inRange.append(targetStructure)
-                    }
-                    else if targetStructure.isSupplier {
-                        inRange.append(targetStructure)
-                    }
-                    
-                }
-            }
-                // Otherwise, get the closest supplier
-            else if targetStructure.isSupplier {
-                let values = withinDistance(point1: targetSprite.position,
-                                            point2: toBuild!.mySprite.position,
-                                            distance: connection_length)
-                if values.0 {
-                    if currentRange > values.1! {
-                        currentRange = values.1!
-                        inRange.removeAll()
-                        inRange.append(targetStructure)
-                    }
-                }
-            }
-        }
-        
-        return inRange
-    }
-    
     func structureDied(structure: Structure)
     {
         player_structures.remove(at: player_structures.index(of: structure)!)
@@ -446,9 +215,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Mark: - UI ACTIONS
+    
     /*
-     
-     UI ACTIONS!
      
      Pause Game
      Restart Game
@@ -500,8 +269,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {
-        
-        // Don't let the map get too small or too big:
         
         PlayerHUD.shared.zoom(scale: sender.scale)
         sender.scale = 1.0

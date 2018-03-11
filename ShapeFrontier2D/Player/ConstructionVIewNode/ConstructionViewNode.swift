@@ -34,10 +34,10 @@ class ConstructionViewNode : SKNode {
                                                              team: .team1)))
         constructionStructures.append(ConstructionItem(Node(texture: Structures.node,
                                                             team: .team1)))
-        //constructionStructures.append(ConstructionItem(MissileCannon(texture: Structures.missileCannonLevel1,
-                                                                    // team: .team1)))
-        //constructionStructures.append(ConstructionItem(PulseLaser(texture: Structures.pulseLaser,
-                                                                  //team: .team1)))
+        constructionStructures.append(ConstructionItem(MissileCannon(texture: Structures.missileCannonLevel1,
+                                                                     team: .team1)))
+        constructionStructures.append(ConstructionItem(PulseLaser(texture: Structures.pulseLaser,
+                                                                  team: .team1)))
         
         // Set the anchor point to the bottom left
         let anchorPoint = CGPoint(x: 0.0, y: 0.0)

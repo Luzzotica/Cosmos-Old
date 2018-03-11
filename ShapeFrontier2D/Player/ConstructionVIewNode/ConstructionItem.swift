@@ -29,7 +29,7 @@ class ConstructionItem: NSObject {
         
         // Build stuff
         building = structure
-        buildingSprite = building.component(ofType: SpriteComponent.self)!.node
+        buildingSprite = building.mySprite
         
         buildingSprite.name! += "_constructor"
         

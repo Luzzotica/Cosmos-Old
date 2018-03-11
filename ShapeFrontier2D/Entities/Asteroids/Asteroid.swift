@@ -37,18 +37,17 @@ class Asteroid : GKEntity {
     init(texture: SKTexture, gasTexture: SKTexture, size: CGSize, minerals: Int) {
         super.init()
         
-        let sprite = SpriteComponent(entity: self, texture: texture, size: size)
-        sprite.node.name = "entity"
-        addComponent(sprite)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.2)))
-        addComponent(TeamComponent(team: .team3))
+        let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
+        mySprite = spriteComponent.node
         
-        mySprite = sprite.node
+        addComponent(spriteComponent)
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.2), name: "Asteroid"))
+        addComponent(TeamComponent(team: .team3))
+        addComponent(PlayerComponent(player: 0))
         
         health_current = minerals
         health_max = minerals
         
-        mySprite.physicsBody = SKPhysicsBody(circleOfRadius: mySprite.size.width * 0.5)
         mySprite.physicsBody?.isDynamic = false
         mySprite.physicsBody?.categoryBitMask = CollisionType.Asteroid
         mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.Enemy
@@ -56,6 +55,7 @@ class Asteroid : GKEntity {
         
         mySprite.zPosition = Layer.Asteroids
         
+        mySprite.name = "entity"
         mySprite.name! += "_asteroid"
         
         gasSprite = SKSpriteNode(texture: gasTexture, color: .clear, size: mySprite.size)

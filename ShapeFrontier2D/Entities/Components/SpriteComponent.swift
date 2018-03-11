@@ -23,6 +23,9 @@ class SpriteComponent: GKComponent {
         node = SKSpriteNode(texture: texture,
                         color: SKColor.white, size: size)
         super.init()
+        
+        // Setup his physics body
+        node.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
     }
     
     override func didAddToEntity() {

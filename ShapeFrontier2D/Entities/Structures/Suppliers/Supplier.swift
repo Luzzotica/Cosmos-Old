@@ -309,9 +309,7 @@ class Supplier : Structure {
         
         isSupplier = true
         
-        let myNode = component(ofType: SpriteComponent.self)!.node
-        
-        myNode.name! += "_supplier"
+        mySprite.name! += "_supplier"
     }
     
     required init?(coder aDecoder: NSCoder) {

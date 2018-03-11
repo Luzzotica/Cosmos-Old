@@ -165,7 +165,6 @@ class Structure : GKEntity {
         if power_lowOverlay.parent == nil
             && (connection_master == nil
                 || gameScene.player_powerCurrent < power_toUse) {
-            let mySprite = component(ofType: SpriteComponent.self)!.node
             mySprite.addChild(power_lowOverlay)
         }
             // Removes the power overlay if
@@ -245,16 +244,28 @@ class Structure : GKEntity {
     init(texture: SKTexture, size: CGSize, team: Team) {
         super.init()
         
-        let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
-        spriteComponent.node.name = "entity"
-        mySprite = spriteComponent.node
+//        let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
+//        spriteComponent.node.name = "entity"
+//        mySprite = spriteComponent.node
         
+//        addComponent(spriteComponent)
+//        mySprite = SKSpriteNode(texture: texture, color: .clear, size: size)
+//        mySprite.name = "entity"
+//        let node = GKSKNodeComponent(node: mySprite)
+//        addComponent(node)
+        
+        
+        let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
+        mySprite = spriteComponent.node
+        mySprite.name = "entity"
         addComponent(spriteComponent)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(texture.size().width * 0.2)))
+        
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: mySprite!.name!))
         addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.5, health: 50))
         addComponent(TeamComponent(team: team))
+        addComponent(PlayerComponent(player: 1))
         
-        mySprite.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
+        
         mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
         mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure
         mySprite.physicsBody?.collisionBitMask = CollisionType.Nothing

@@ -95,6 +95,12 @@ extension CGPoint {
         y = CGFloat(point.y)
     }
 }
+extension CGVector {
+    init(_ vel: float2) {
+        dx = CGFloat(vel.x)
+        dy = CGFloat(vel.y)
+    }
+}
 extension float2 {
     init(_ point: CGPoint) {
         self.init(x: Float(point.x), y: Float(point.y))

@@ -16,7 +16,7 @@ class HealthComponent: GKComponent {
     let healthBarFullWidth: CGFloat
     let healthBar: SKShapeNode
 
-    let soundAction = SKAction.playSoundFileNamed("smallHit.wav", waitForCompletion: false)
+//    let soundAction = SKAction.playSoundFileNamed("smallHit.wav", waitForCompletion: false)
 
     init(parentNode: SKNode, barWidth: CGFloat,
            barOffset: CGFloat, health: CGFloat) {
@@ -48,7 +48,7 @@ class HealthComponent: GKComponent {
         healthBar.isHidden = false
         let healthScale = health / fullHealth
         let scaleAction = SKAction.scaleX(to: healthScale, duration: 0.5)
-        healthBar.run(SKAction.group([soundAction, scaleAction]))
+        healthBar.run(SKAction.group([scaleAction]))
 
         if health == 0 {
             if let entity = entity {
