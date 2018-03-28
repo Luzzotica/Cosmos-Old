@@ -120,6 +120,7 @@ class Miner : Structure {
     }
     
     init(texture: SKTexture, team: Team) {
+        
         super.init(texture: texture, size: StructureSize.small, team: team)
         
         mySprite.name! += "_miner"

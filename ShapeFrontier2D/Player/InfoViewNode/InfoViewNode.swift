@@ -33,16 +33,22 @@ class InfoViewNode : SKNode {
     
     func deselectEntity() {
         if currentEntity != nil {
+            if let health = currentEntity.component(ofType: HealthComponent.self) {
+                health.deselected()
+            }
+            
             currentSprite.removeAllActions()
             currentSprite.run(colorNormal)
         }
     }
     
+    func selectEntity() {
+        if currentEntity != nil {
+            
+        }
+    }
+    
     func displayInfo(entity: GKEntity) {
-        // Upgrade button not done. Hide it for now
-        // Destroy button broken... need to fix it
-//        upgradeButton.isHidden = true
-//        destroyButton.isHidden = true
         
         // If there was a node before we tapped, then we should color him back to normal...
         deselectEntity()
@@ -63,6 +69,11 @@ class InfoViewNode : SKNode {
             upgradeButton.isHidden = false
         }
         
+        // Show the health bar above him
+        if let health = currentEntity.component(ofType: HealthComponent.self) {
+            health.selected()
+        }
+        
         // Set the structure display image to our currentSprite image
         structureImage.texture = currentSprite.texture
         
@@ -75,46 +86,54 @@ class InfoViewNode : SKNode {
     }
     
     func updateInfo() {
+        // If they have a health node
+        if let health = currentEntity.component(ofType: HealthComponent.self) {
+            healthLabel.text = "Health: \(health.health_current)/\(health.health_max)"
+            
+            // If he's an asteroid do other stuff
+            if currentEntity is Asteroid {
+                healthLabel.text = "Minerals: \(health.health_current)/\(health.health_max)"
+                // If our currentEntity has no child, and he is an asteroid
+                let gas = currentSprite.children[0] as! SKSpriteNode
+                structureImageTwo.texture = gas.texture
+                
+                structureImageTwo.alpha = CGFloat(health.health_current) / CGFloat(health.health_max)
+            }
+            else {
+                structureImageTwo.texture = nil
+            }
+        }
         
-        
-//        healthLabel.text = "Health: \(currentEntity.health_current)/\(currentEntity.health_max)"
-//        if currentEntity.damage != 0 {
+        // When we have attack components, this will help
+//        if let attackComponent = currentEntity.component(ofType: ) {
 //            damageLabel.text = "Damage: \(currentEntity.damage)"
+        
+//            if currentEntity is Miner {
+//                damageLabel.text = "Mining POWERRRR!: \(currentEntity.damage)"
+//            }
 //        }
-//        else {
-//            damageLabel.text = "Damage: N/A"
-//        }
-//        
+        
+        damageLabel.text = "Damage: N/A"
+
+        // Testing values!
 //        if currentEntity is Structure {
 ////            healthLabel.text = (currentEntity as! Structure).connection_master?.name
 //        }
-//        
+//
 //        if currentEntity is Supplier {
 //            healthLabel.text = "Master Count: \((currentEntity as! Supplier).connection_masters.count), Conn Count: \((currentEntity as! Supplier).connection_toStructures.count)"
 //        }
-//        
-//        if currentEntity is Asteroid {
-//            healthLabel.text = "Minerals: \(currentEntity.health_current)/\(currentEntity.health_max)"
-//            // If our currentEntity has no child, and he is an asteroid
-//            let gas = currentSprite.children[0] as! SKSpriteNode
-//            structureImageTwo.texture = gas.texture
-//            
-//            structureImageTwo.alpha = CGFloat(currentEntity.health_current) / CGFloat(currentEntity.health_max)
-//        }
-//        else if currentEntity is Miner {
-//            damageLabel.text = "Mining POWERRRR!: \(currentEntity.damage)"
-//        }
-//        else {
-//            structureImageTwo.texture = nil
-//        }
-        
         
     }
     
     func destroySelectedStructure()
     {
-        (currentEntity as! Structure).recycle()
-        
+        // This should never be run if it isn't a structure. But sanity check anyways
+        if currentEntity is Structure {
+            print("test")
+            (currentEntity as! Structure).recycle()
+            EntityManager.shared.remove(currentEntity)
+        }
     }
     
     init(bottomBar_height: CGFloat, bottomBar_buffer: CGFloat) {

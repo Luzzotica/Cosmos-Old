@@ -51,7 +51,7 @@ extension PlayerHUD {
                 
             }
             else if touchedNodes[i].name == "button_destroy" {
-                functionToRun = PlayerHUD.shared.destroySelectedStructure
+                functionToRun = destroySelectedStructure
             }
             else if touchedNodes[i].name!.contains("entity") && !(touchedNodes[i].name!.contains("constructor")) {
                 //print("touched a node! Function is: \(functionToRun)")

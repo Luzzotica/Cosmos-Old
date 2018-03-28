@@ -93,13 +93,12 @@ class Structure : GKEntity {
     
     func didDied() {
         //Remove self from global structures list and individual type list
-        gameScene.structureDied(structure: self)
         connection_powerLine?.destroySelf()
     }
     
     func recycle() {
         gameScene.minerals_current += Int(CGFloat(constructionCost) * 0.75)
-        didDied()
+//        didDied()
     }
     
     func tick() {
@@ -261,9 +260,10 @@ class Structure : GKEntity {
         addComponent(spriteComponent)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: mySprite!.name!))
-        addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.5, health: 50))
+        addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.61, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
+        addComponent(EntityTypeComponent(type: Type.structure))
         
         
         mySprite.physicsBody?.categoryBitMask = CollisionType.Structure

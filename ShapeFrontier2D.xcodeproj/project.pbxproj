@@ -70,7 +70,10 @@
 		B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */; };
 		B58501E1200033FB009C2F65 /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E0200033FB009C2F65 /* Supplier.swift */; };
 		B58501E32000397A009C2F65 /* PowerLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E22000397A009C2F65 /* PowerLine.swift */; };
-		B5F900E92054FEF5004705F8 /* ObstructionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F900E82054FEF5004705F8 /* ObstructionComponent.swift */; };
+		B589E994206738F80083FAC5 /* FiringComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E992206738F80083FAC5 /* FiringComponent.swift */; };
+		B589E995206738F80083FAC5 /* MeleeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E993206738F80083FAC5 /* MeleeComponent.swift */; };
+		B589E99720673AB70083FAC5 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99620673AB70083FAC5 /* Missile.swift */; };
+		B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99820686A450083FAC5 /* EntityTypeComponent.swift */; };
 		ED9182E23A44DACA0E4F769C /* Pods_ShapeFrontier2D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */; };
 		F5D04B474599FB60BF3BB1FA /* Pods_ShapeFrontier2DTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */; };
 /* End PBXBuildFile section */
@@ -160,7 +163,10 @@
 		B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructionViewNode.swift; sourceTree = "<group>"; };
 		B58501E0200033FB009C2F65 /* Supplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplier.swift; sourceTree = "<group>"; };
 		B58501E22000397A009C2F65 /* PowerLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerLine.swift; sourceTree = "<group>"; };
-		B5F900E82054FEF5004705F8 /* ObstructionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstructionComponent.swift; sourceTree = "<group>"; };
+		B589E992206738F80083FAC5 /* FiringComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiringComponent.swift; sourceTree = "<group>"; };
+		B589E993206738F80083FAC5 /* MeleeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeComponent.swift; sourceTree = "<group>"; };
+		B589E99620673AB70083FAC5 /* Missile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
+		B589E99820686A450083FAC5 /* EntityTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTypeComponent.swift; sourceTree = "<group>"; };
 		CA5A2AECA7A7BA6BA00E1F16 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
 		FE1F563E7BE2189287ECCB76 /* Pods-ShapeFrontier2DTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,13 +251,16 @@
 		B51FBC77204B8395001BFFB4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B589E992206738F80083FAC5 /* FiringComponent.swift */,
+				B589E993206738F80083FAC5 /* MeleeComponent.swift */,
+				B589E99620673AB70083FAC5 /* Missile.swift */,
 				B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */,
+				B51FBC73204B824C001BFFB4 /* MoveComponent.swift */,
 				B51FBC6F204B7D00001BFFB4 /* SpriteComponent.swift */,
 				B5321F462054B02D00C7580B /* PlayerComponent.swift */,
 				B51FBC78204B8597001BFFB4 /* TeamComponent.swift */,
-				B51FBC73204B824C001BFFB4 /* MoveComponent.swift */,
 				B51FBC75204B838F001BFFB4 /* HealthComponent.swift */,
-				B5F900E82054FEF5004705F8 /* ObstructionComponent.swift */,
+				B589E99820686A450083FAC5 /* EntityTypeComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -743,8 +752,8 @@
 				B51FBC6A204B30F4001BFFB4 /* GenericEnemy.swift in Sources */,
 				B5321F412054AC8800C7580B /* GameScene_Construction.swift in Sources */,
 				07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */,
+				B589E995206738F80083FAC5 /* MeleeComponent.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
-				B5F900E92054FEF5004705F8 /* ObstructionComponent.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
 				B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */,
 				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
@@ -773,8 +782,10 @@
 				B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */,
 				B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */,
 				B58501D31FFF6932009C2F65 /* Miner.swift in Sources */,
+				B589E99720673AB70083FAC5 /* Missile.swift in Sources */,
 				B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */,
 				B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */,
+				B589E994206738F80083FAC5 /* FiringComponent.swift in Sources */,
 				B51FBC72204B81F5001BFFB4 /* EntityManager.swift in Sources */,
 				B58501B71FFF1C9A009C2F65 /* Asteroid.swift in Sources */,
 				B58501AF1FFF1435009C2F65 /* PlayerHUD.swift in Sources */,
@@ -783,6 +794,7 @@
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,
 				B58501C51FFF1DCF009C2F65 /* AsteroidManager.swift in Sources */,
 				B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */,
+				B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */,
 				B58501AE1FFF1435009C2F65 /* PlayerHUDExt_Buttons.swift in Sources */,
 				07C2CC4C1FFFEE6E0015EFD3 /* ResourceViewNode.swift in Sources */,
 				B58501C01FFF1D05009C2F65 /* AsteroidBig.swift in Sources */,

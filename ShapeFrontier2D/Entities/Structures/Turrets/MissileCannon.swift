@@ -44,6 +44,11 @@ class MissileCannon : Turret {
         power_lowOverlay.zPosition = 1
         
         setupStructure()
+        
+        let weapon = FiringComponent(range: range, damage: 10.0, damageRate: 1.0, player: 1, targetPlayer: 666)
+        weapon.setPossibleTargets(types: .ship)
+        
+        addComponent(weapon)
     }
     
     required init?(coder aDecoder: NSCoder) {

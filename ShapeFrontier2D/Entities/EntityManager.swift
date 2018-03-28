@@ -28,8 +28,9 @@ class EntityManager {
     
     lazy var componentSystems: [GKComponentSystem] = {
         let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
-        
-        return [moveSystem]
+        let meleeSystem = GKComponentSystem(componentClass: MeleeComponent.self)
+        let firingSystem = GKComponentSystem(componentClass: FiringComponent.self)
+        return [moveSystem, meleeSystem, firingSystem]
     }()
     
     func add(_ entity: GKEntity) {
@@ -49,6 +50,7 @@ class EntityManager {
         }
         
         // If they have a player component, add them to that specific playerEntity group
+        // This will handle asteroids as well, they are player 0, neutral
         if let playerComponent = entity.component(ofType: PlayerComponent.self) {
             // If this is the first time an entity has been added for this player
             // Create a new set for him
@@ -69,6 +71,20 @@ class EntityManager {
         
         toRemove.insert(entity)
         entities.remove(entity)
+        
+        // Run the death action on the entity
+        runDiedAction(entity)
+        
+        // If the entity was a player, remove him from the player set
+        if let playerComponent = entity.component(ofType: PlayerComponent.self) {
+            entitiesForPlayer[playerComponent.player]?.remove(entity)
+        }
+    }
+    
+    func runDiedAction(_ entity: GKEntity) {
+        if entity is Structure {
+            (entity as! Structure).didDied()
+        }
     }
     
     // This is going to get called a lot, we might want to save all of the agents for the players

@@ -21,11 +21,10 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         
         super.init()
         self.delegate = self
-        self.maxSpeed = maxSpeed * 0.000001
+        self.maxSpeed = maxSpeed * 0.000005
         self.maxAcceleration = maxAcceleration * 0.001
         self.radius = radius
-        self.mass = 500
-        
+        self.mass = 1
         
     }
     
@@ -56,7 +55,10 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         spriteComponent.node.zRotation = CGFloat(rotation - .pi/2.0)
     }
     
-    func closestAgentForPlayer() -> GKAgent2D? {
+    func closestAgentInGroup(agents: [MoveComponent]) -> MoveComponent? {
+        if agents.count == 0 {
+            return nil
+        }
         
         // The clostest agent we want to attack
         var closestAgentComponent: MoveComponent? = nil
@@ -65,13 +67,20 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         var closestDistance : CGFloat = 0
         
         // Loop through all of the target agents and find the closest one
-        let targetAgentComponents = EntityManager.shared.agentComponentsForPlayer(target)
-        for targetAgentComponent in targetAgentComponents {
+//        let targetAgentComponents = EntityManager.shared.agentComponentsForPlayer(target)
+        for targetAgentComponent in agents {
             let distance = (CGPoint(targetAgentComponent.position) - CGPoint(position)).length()
-            if closestAgentComponent == nil || distance > closestDistance {
+            if closestAgentComponent == nil || distance < closestDistance {
                 closestAgentComponent = targetAgentComponent
                 closestDistance = distance
             }
+        }
+        
+        // If we are close enough, stop
+        let distanceCheck = closestAgentComponent!.radius * 2.0 + radius * 2.0
+        if Float(closestDistance) < distanceCheck + Float(sceneWidth * 0.2) {
+//            print("Closest Dist: \(closestDistance), compared to \(closestAgentComponent!.radius * 1.3 + radius)")
+            return nil
         }
         
         // Return the closest agent from the target player that we found
@@ -79,8 +88,12 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         
     }
     
-    func getAgentsForPlayer() -> [GKAgent] {
+    func getAgentsForPlayer() -> [MoveComponent] {
         return EntityManager.shared.agentComponentsForPlayer(target)
+    }
+    
+    func getObstacles() -> [GKAgent] {
+        return EntityManager.shared.agentComponentsForPlayer(0)
     }
     
     override func update(deltaTime seconds: TimeInterval) {
@@ -97,16 +110,21 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
 //        print(maxSpeed)
         super.update(deltaTime: seconds)
 
-        // We will want a target to move towards
-        var targetMoveComponent: MoveComponent
-
-        // Find closest agent in the target player
-        guard let enemyMoveComponent = closestAgentForPlayer() else {
-            return
-        }
-        targetMoveComponent = enemyMoveComponent as! MoveComponent
+        // Get the targets I will want to chase
+        let toAttack = getAgentsForPlayer()
         
-        behavior = MoveBehavior(targetSpeed: maxSpeed, seek: getAgentsForPlayer(), avoid: [])
+        // Find closest agent in the target player
+        let targetMoveComponent = closestAgentInGroup(agents: toAttack)
+        
+        if targetMoveComponent == nil {
+            behavior = MoveBehavior()
+        }
+        else {
+            behavior = MoveBehavior(targetSpeed: maxSpeed,
+                                    seek: targetMoveComponent!,
+                                    avoid: getObstacles())
+        }
+        
         
     }
     

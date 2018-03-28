@@ -17,24 +17,30 @@ class MoveBehavior: GKBehavior {
     var goal_speed : GKGoal?
     var goal_avoid : GKGoal?
 
-    init(targetSpeed: Float, seek: [GKAgent], avoid: [GKAgent]) {
+    init(targetSpeed: Float, seek: GKAgent, avoid: [GKAgent]) {
         super.init()
         
-        goal_seekTarget = GKGoal(toCohereWith: seek, maxDistance: Float(sceneWidth), maxAngle: .pi/2.0)
-        goal_circleTarget = GKGoal(toSeparateFrom: seek, maxDistance: Float(sceneWidth * 0.08), maxAngle: .pi/16.0)
+        goal_seekTarget = GKGoal(toSeekAgent: seek)
         goal_speed = GKGoal(toReachTargetSpeed: targetSpeed)
-        goal_avoid = GKGoal(toAvoid: avoid, maxPredictionTime: 1.0)
+        goal_avoid = GKGoal(toAvoid: avoid, maxPredictionTime: 2.0)
         
         setWeight(60, for: goal_seekTarget!)
-        setWeight(50, for: goal_circleTarget!)
-//        setWeight(1000, for: GKGoal(toWander: 500000.0))
-//        setWeight(55, for: goal_speed!)
-//        setWeight(1.0, for: goal_avoid!)
+        setWeight(50, for: goal_speed!)
+        setWeight(50, for: goal_avoid!)
+        
+        //        goal_seekTarget = GKGoal(toCohereWith: seek, maxDistance: Float(sceneWidth), maxAngle: .pi/2.0)
+        //        goal_circleTarget = GKGoal(toSeparateFrom: seek, maxDistance: Float(sceneWidth * 0.08), maxAngle: .pi/16.0)
         
     }
     
-    init(targetSpeed: Float, seek: GKAgent) {
+    override init() {
+        super.init()
         
+        // Make him stop if we have been given no instructions
+        goal_speed = GKGoal(toReachTargetSpeed: 0.0)
+        setWeight(100.0, for: goal_speed!)
     }
+    
+    
 
 }

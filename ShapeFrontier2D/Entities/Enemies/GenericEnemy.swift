@@ -17,16 +17,6 @@ class GenericEnemy : GKEntity {
     init(texture: SKTexture, size: CGSize, team: Team) {
         super.init()
         
-//        let sprite = SKSpriteNode(texture: texture, color: .clear, size: size)
-        
-//        let node = GKSKNodeComponent(node: sprite)
-//        addComponent(node)
-        
-//        let agent = MoveComponent(maxSpeed: 5.0, maxAcceleration: 1, radius: Float(texture.size().width * 0.05), name: "Enemy")
-//        agent.delegate = node
-        
-//        addComponent(agent)
-        
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
         addComponent(spriteComponent)
         mySprite = spriteComponent.node
@@ -36,6 +26,12 @@ class GenericEnemy : GKEntity {
         addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width, barOffset: size.height * 0.5, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 666))
+        addComponent(EntityTypeComponent(type: Type.ship))
+        
+        let weapon = FiringComponent(range: sceneWidth * 0.2, damage: 0.1, damageRate: 0.1, player: 666, targetPlayer: 1)
+        weapon.setPossibleTargets(types: .structure)
+        
+        addComponent(weapon)
         
         // Update his physics body
         mySprite.physicsBody?.categoryBitMask = CollisionType.Enemy

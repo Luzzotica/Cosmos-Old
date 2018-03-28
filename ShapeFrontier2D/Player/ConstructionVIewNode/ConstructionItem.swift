@@ -29,6 +29,9 @@ class ConstructionItem: NSObject {
         
         // Build stuff
         building = structure
+        
+        // Make sure he can't get hit
+        building.removeComponent(ofType: HealthComponent.self)
         buildingSprite = building.mySprite
         
         buildingSprite.name! += "_constructor"

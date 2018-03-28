@@ -64,7 +64,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let enemies = EnemyManager.shared.spawnWave()
 
-        EntityManager.shared.add(enemies[0])
+        for enemy in enemies {
+            EntityManager.shared.add(enemy)
+        }
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
@@ -194,8 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func structureDied(structure: Structure)
-    {
+    func structureDied(structure: Structure) {
         player_structures.remove(at: player_structures.index(of: structure)!)
         if structure is Miner
         {

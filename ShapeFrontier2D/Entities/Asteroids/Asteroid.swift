@@ -41,9 +41,10 @@ class Asteroid : GKEntity {
         mySprite = spriteComponent.node
         
         addComponent(spriteComponent)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.2), name: "Asteroid"))
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: "Asteroid"))
         addComponent(TeamComponent(team: .team3))
         addComponent(PlayerComponent(player: 0))
+        addComponent(EntityTypeComponent(type: Type.asteroid))
         
         health_current = minerals
         health_max = minerals

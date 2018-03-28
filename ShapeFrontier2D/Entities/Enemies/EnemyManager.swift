@@ -24,15 +24,41 @@ class EnemyManager : NSObject {
     func spawnWave() -> [GenericEnemy] {
         var waveToSpawn : [GenericEnemy] = []
         
-        waveToSpawn.append(createEnemy())
+        // Get a random rotation and distance
+        let radius = sceneWidth * 4.0 //Int(arc4random_uniform(UInt32(sceneWidth * 2.0))) +
+        let angle = Double(arc4random_uniform(361))
+        let spawnPoint = CGPoint(x: CGFloat(cos(angle) * Double(radius)), y: CGFloat((sin(angle) * Double(radius))))
         
+        // Create the wave
+        waveToSpawn = createWave(atPoint: spawnPoint)
         
+        // Return the wave needing spawning
         return waveToSpawn
     }
     
-    func createEnemy() -> GenericEnemy {
+    func createWave(atPoint: CGPoint) -> [GenericEnemy] {
+        var waveToSpawn : [GenericEnemy] = []
+        
+        // Just make 10 enemies for now
+        for i in 0...10 {
+            // Get random angle and distance from center
+            let radius = Double(arc4random_uniform(UInt32(sceneWidth * 0.6)))
+            let angle = Double(arc4random_uniform(361))
+            let spawnPoint = CGPoint(x: CGFloat(cos(angle) * Double(radius)), y: CGFloat((sin(angle) * Double(radius))))
+            
+            waveToSpawn.append(createEnemy(atPoint: spawnPoint))
+        }
+        
+        // Return out beautiful wave of fresh enemies
+        return waveToSpawn
+    }
+    
+    func createEnemy(atPoint: CGPoint) -> GenericEnemy {
         let size = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.05)
         let enemy = GenericEnemy(texture: Enemies.fighter, size: size, team: .team2)
+        
+        // Move him to the proper point
+        enemy.mySprite.position = atPoint
         
         return enemy
     }
