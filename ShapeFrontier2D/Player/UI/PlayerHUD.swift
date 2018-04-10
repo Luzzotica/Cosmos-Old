@@ -13,14 +13,15 @@ import GameplayKit
 class PlayerHUD : SKCameraNode {
     
     static let shared = PlayerHUD()
+    var playerEntity : PlayerEntity!
     
     // Max camera range
     let cameraRange = sceneWidth * 5.0
     
     // Bottom bar!
     let bottomBarNode = SKNode()
-    let bottomBar_height = sceneHeight * 0.18
-    let bottomBar_buffer = sceneHeight * 0.07
+    let bottomBar_height = sceneHeight * 0.13
+    let bottomBar_buffer = sceneHeight * 0.03
     
     // Construction Node!
     var constructionNode : ConstructionViewNode!
@@ -30,6 +31,9 @@ class PlayerHUD : SKCameraNode {
     
     // Resource Node!
     var resourceNode : ResourceViewNode!
+    
+    // Enemy Indicator Node!
+    var enemyIndicatorManager : EnemyIndicatorManager!
     
     // Background Node
     let backgroundNode = SKNode()
@@ -67,6 +71,10 @@ class PlayerHUD : SKCameraNode {
         
         // Add the background!
         createBackground()
+        
+        // Add the enemy indicator manager
+        enemyIndicatorManager = EnemyIndicatorManager()
+        addChild(enemyIndicatorManager)
     }
     
     func resetHUD() {
@@ -98,6 +106,14 @@ class PlayerHUD : SKCameraNode {
         if !infoNode.isHidden {
             infoNode.updateInfo()
         }
+        
+        if playerEntity != nil {
+            enemyIndicatorManager.update(player: playerEntity)
+        }
+    }
+    
+    func enemyDied(_ enemy: GKEntity) {
+        enemyIndicatorManager.removeEnemy(enemy)
     }
     
     // Resources

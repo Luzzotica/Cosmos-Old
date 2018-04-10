@@ -14,13 +14,15 @@ class UIHandler : NSObject {
     static let shared = UIHandler()
 	private override init() {}
     
-    func createRangeIndicator(range: CGFloat, color: UIColor) -> SKSpriteNode {
-        let rangeSize = CGSize(width: range * 2.0, height: range * 2.0)
-        let rangeIndicator = SKSpriteNode(texture: Area.area, size: rangeSize)
+    func createRangeIndicator(range: CGFloat, color: UIColor) -> SKShapeNode {
+//        let rangeSize = CGSize(width: range * 2.0, height: range * 2.0)
+        let rangeIndicator = SKShapeNode(circleOfRadius: range)
+        rangeIndicator.strokeColor = color
+        
         rangeIndicator.name = "rangeIndicator"
         
-        let color = SKAction.colorize(with: color, colorBlendFactor: 1.0, duration: 0.0)
-        rangeIndicator.run(color)
+//        let color = SKAction.colorize(with: color, colorBlendFactor: 1.0, duration: 0.0)
+//        rangeIndicator.run(color)
         
         return rangeIndicator
     }

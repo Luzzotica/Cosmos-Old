@@ -40,15 +40,6 @@ class Asteroid : GKEntity {
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
         mySprite = spriteComponent.node
         
-        addComponent(spriteComponent)
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: "Asteroid"))
-        addComponent(TeamComponent(team: .team3))
-        addComponent(PlayerComponent(player: 0))
-        addComponent(EntityTypeComponent(type: Type.asteroid))
-        
-        health_current = minerals
-        health_max = minerals
-        
         mySprite.physicsBody?.isDynamic = false
         mySprite.physicsBody?.categoryBitMask = CollisionType.Asteroid
         mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.Enemy
@@ -59,9 +50,21 @@ class Asteroid : GKEntity {
         mySprite.name = "entity"
         mySprite.name! += "_asteroid"
         
-        gasSprite = SKSpriteNode(texture: gasTexture, color: .clear, size: mySprite.size)
+        let gasSpriteSize = CGSize(width: mySprite.size.width * 0.9, height: mySprite.size.height * 0.9)
+        gasSprite = SKSpriteNode(texture: gasTexture, color: .clear, size: gasSpriteSize)
         gasSprite?.zPosition = -1
         mySprite.addChild(gasSprite!)
+        
+        addComponent(spriteComponent)
+        addComponent(AsteroidComponent(minerals: minerals, gasSprite: gasSprite!))
+        addComponent(ObstacleComponent(position: mySprite.position, radius: size.width * 0.5))
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: "Asteroid"))
+        addComponent(TeamComponent(team: .team3))
+        addComponent(PlayerComponent(player: 0))
+        addComponent(EntityTypeComponent(type: Type.asteroid))
+        
+        health_current = minerals
+        health_max = minerals
     }
     
     required init?(coder aDecoder: NSCoder) {

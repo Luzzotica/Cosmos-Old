@@ -88,6 +88,12 @@ class Reactor : Supplier {
     init(texture: SKTexture, team: Team) {
         super.init(texture: texture, size: StructureSize.large, team: team)
         
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(mySprite!.size.width * 0.5), name: "Reactor"))
+        addComponent(HealthComponent(parentNode: mySprite, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
+        addComponent(TeamComponent(team: team))
+        addComponent(PlayerComponent(player: 1))
+        addComponent(EntityTypeComponent(type: Type.structure))
+        
         mySprite.name! += "_reactor"
         
         // Set up low power overlay

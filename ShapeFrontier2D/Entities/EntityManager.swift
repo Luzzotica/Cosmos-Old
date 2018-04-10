@@ -22,6 +22,8 @@ class EntityManager {
     
     static let shared = EntityManager()
     
+    var players : Set<PlayerEntity> = Set()
+    
     var entities : Set<GKEntity> = Set()
     var entitiesForPlayer : [Int:Set<GKEntity>] = [:]
     var toRemove : Set<GKEntity> = Set()
@@ -32,6 +34,10 @@ class EntityManager {
         let firingSystem = GKComponentSystem(componentClass: FiringComponent.self)
         return [moveSystem, meleeSystem, firingSystem]
     }()
+    
+    func addPlayer(_ player: PlayerEntity) {
+        players.insert(player)
+    }
     
     func add(_ entity: GKEntity) {
         // Add the entity to the global list
@@ -78,12 +84,22 @@ class EntityManager {
         // If the entity was a player, remove him from the player set
         if let playerComponent = entity.component(ofType: PlayerComponent.self) {
             entitiesForPlayer[playerComponent.player]?.remove(entity)
+            
+            // loop through all of the player entities, update the HUD for each of them if this
+            // person was their enemy
+            for player in players {
+                print(playerComponent.player)
+                if player.enemies.contains(playerComponent.player) {
+                    player.enemyDied(entity)
+                }
+            }
         }
     }
     
     func runDiedAction(_ entity: GKEntity) {
         if entity is Structure {
             (entity as! Structure).didDied()
+            gameScene.structureDied(structure: (entity as! Structure))
         }
     }
     
@@ -104,6 +120,21 @@ class EntityManager {
         
         // Return the agents of the player
         return moveComponents
+    }
+    
+    func obstacles() -> [GKObstacle] {
+        var obstacles : [GKObstacle] = []
+        
+        // Might want to change this...
+        // Just make a list with all of the obstacles in the game. Would make this much faster
+        // Especially since this will be running a LOT
+        for entity in entities {
+            if let obstacleComponent = entity.component(ofType: ObstacleComponent.self) {
+                obstacles.append(obstacleComponent.obstacle)
+            }
+        }
+        
+        return obstacles
     }
     
     func update(_ deltaTime: CFTimeInterval) {

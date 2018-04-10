@@ -95,7 +95,8 @@ class PowerLine : NSObject {
             powerLine.run(updateSize)
             
             // Rotate powerline
-            let angleBetweenStructures = atan2(structureOne!.mySprite.position.x - structureTwo!.mySprite.position.x, structureTwo!.mySprite.position.y - structureOne!.mySprite.position.y)
+//            let angleBetweenStructures = atan2(structureOne!.mySprite.position.x - structureTwo!.mySprite.position.x, structureTwo!.mySprite.position.y - structureOne!.mySprite.position.y)
+            let angleBetweenStructures = angleBetweenPoints(point1: structureOne!.mySprite.position, point2: structureTwo!.mySprite.position)
             powerLine.zRotation = angleBetweenStructures
             
             collisionCheck()

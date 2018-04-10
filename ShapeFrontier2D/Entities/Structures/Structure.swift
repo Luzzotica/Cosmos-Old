@@ -98,7 +98,7 @@ class Structure : GKEntity {
     
     func recycle() {
         gameScene.minerals_current += Int(CGFloat(constructionCost) * 0.75)
-//        didDied()
+        EntityManager.shared.remove(self)
     }
     
     func tick() {
@@ -185,7 +185,7 @@ class Structure : GKEntity {
     }
     
     func connection_masterDied() {
-        print("got here")
+//        print("got here")
         connection_master = nil
         connection_powerLine = nil
     }
@@ -258,13 +258,6 @@ class Structure : GKEntity {
         mySprite = spriteComponent.node
         mySprite.name = "entity"
         addComponent(spriteComponent)
-        
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(size.width * 0.5), name: mySprite!.name!))
-        addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width * 0.5, barOffset: size.height * 0.61, health: 50))
-        addComponent(TeamComponent(team: team))
-        addComponent(PlayerComponent(player: 1))
-        addComponent(EntityTypeComponent(type: Type.structure))
-        
         
         mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
         mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure

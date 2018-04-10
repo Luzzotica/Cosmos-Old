@@ -46,7 +46,8 @@ class Miner : Structure {
                 
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
-                    gameScene.minerals_current += (asteroid_current?.getMineAmount(amount: damage))!
+                    let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
+                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: damage)
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
                 }
                 else {
@@ -122,6 +123,12 @@ class Miner : Structure {
     init(texture: SKTexture, team: Team) {
         
         super.init(texture: texture, size: StructureSize.small, team: team)
+        
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(mySprite!.size.width * 0.5), name: "Miner"))
+        addComponent(HealthComponent(parentNode: mySprite, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
+        addComponent(TeamComponent(team: team))
+        addComponent(PlayerComponent(player: 1))
+        addComponent(EntityTypeComponent(type: Type.structure))
         
         mySprite.name! += "_miner"
         

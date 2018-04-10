@@ -22,13 +22,13 @@ class GenericEnemy : GKEntity {
         mySprite = spriteComponent.node
         mySprite.name = "entity"
         
-        addComponent(MoveComponent(maxSpeed: 5.0, maxAcceleration: 1, radius: Float(size.width * 0.5), name: "Enemy"))
+        addComponent(MoveComponent(maxSpeed: 25.0, maxAcceleration: 1, radius: Float(size.width * 0.5), name: "Enemy"))
         addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width, barOffset: size.height * 0.5, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 666))
         addComponent(EntityTypeComponent(type: Type.ship))
         
-        let weapon = FiringComponent(range: sceneWidth * 0.2, damage: 0.1, damageRate: 0.1, player: 666, targetPlayer: 1)
+        let weapon = FiringComponent(range: sceneWidth * 0.2, damage: 1.0, damageRate: 0.5, player: 666, targetPlayer: 1)
         weapon.setPossibleTargets(types: .structure)
         
         addComponent(weapon)

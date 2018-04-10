@@ -19,6 +19,7 @@ class InfoViewNode : SKNode {
     var infoView = SKNode()
     var infoViewWidth: CGFloat = sceneWidth * 0.25
     
+    var titleLabel : SKLabelNode!
     var healthLabel : SKLabelNode!
     var damageLabel : SKLabelNode!
     var upgradeButton : UI_Button!
@@ -27,6 +28,7 @@ class InfoViewNode : SKNode {
     
     var currentEntity : GKEntity!
     var currentSprite : SKSpriteNode!
+    var currentRange : SKShapeNode!
     
     let colorGreen = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.2)
     let colorNormal = SKAction.colorize(with: .green , colorBlendFactor: 0.0, duration: 0.2)
@@ -39,6 +41,11 @@ class InfoViewNode : SKNode {
             
             currentSprite.removeAllActions()
             currentSprite.run(colorNormal)
+            
+            if currentRange != nil {
+                currentRange.removeFromParent()
+                currentRange = nil
+            }
         }
     }
     
@@ -86,34 +93,46 @@ class InfoViewNode : SKNode {
     }
     
     func updateInfo() {
+        // If they have a move component
+        if let title = currentEntity.component(ofType: MoveComponent.self) {
+            titleLabel.text = title.name
+        }
+        
         // If they have a health node
         if let health = currentEntity.component(ofType: HealthComponent.self) {
             healthLabel.text = "Health: \(health.health_current)/\(health.health_max)"
             
-            // If he's an asteroid do other stuff
-            if currentEntity is Asteroid {
-                healthLabel.text = "Minerals: \(health.health_current)/\(health.health_max)"
-                // If our currentEntity has no child, and he is an asteroid
-                let gas = currentSprite.children[0] as! SKSpriteNode
-                structureImageTwo.texture = gas.texture
-                
-                structureImageTwo.alpha = CGFloat(health.health_current) / CGFloat(health.health_max)
-            }
-            else {
-                structureImageTwo.texture = nil
-            }
+            structureImageTwo.texture = nil
+            
+        }
+        else if let asteroid = currentEntity.component(ofType: AsteroidComponent.self) {
+            healthLabel.text = "Minerals: \(asteroid.minerals_current)/\(asteroid.minerals_max)"
+            // If our currentEntity has no child, and he is an asteroid
+            let gas = currentSprite.children[0] as! SKSpriteNode
+            structureImageTwo.texture = gas.texture
+            
+            structureImageTwo.alpha =
+                CGFloat(asteroid.minerals_current) /
+                CGFloat(asteroid.minerals_current)
         }
         
         // When we have attack components, this will help
-//        if let attackComponent = currentEntity.component(ofType: ) {
-//            damageLabel.text = "Damage: \(currentEntity.damage)"
-        
+        if let attackComponent = currentEntity.component(ofType: FiringComponent.self) {
+            damageLabel.text = "Damage: \(attackComponent.damage)"
+            
+            if currentRange == nil {
+                currentRange = UIHandler.shared.createRangeIndicator(range: attackComponent.range, color: .red)
+                currentSprite.addChild(currentRange)
+            }
+            
 //            if currentEntity is Miner {
-//                damageLabel.text = "Mining POWERRRR!: \(currentEntity.damage)"
+//                damageLabel.text = "Mining POWERRRR!: \(attackComponent.damage)"
 //            }
-//        }
+        }
+        else {
+            damageLabel.text = "Damage: N/A"
+        }
         
-        damageLabel.text = "Damage: N/A"
 
         // Testing values!
 //        if currentEntity is Structure {
@@ -132,7 +151,6 @@ class InfoViewNode : SKNode {
         if currentEntity is Structure {
             print("test")
             (currentEntity as! Structure).recycle()
-            EntityManager.shared.remove(currentEntity)
         }
     }
     
@@ -163,6 +181,18 @@ class InfoViewNode : SKNode {
         
         // Setup the Health Label
         var yPosition = bottomBar_height + bottomBar_buffer * 0.5
+        titleLabel = SKLabelNode(text: "Structure Title")
+        titleLabel.position.y = yPosition
+        titleLabel.zPosition = 1
+        
+        titleLabel.fontName = fontStyleN
+        titleLabel.fontSize = fontSizeS
+        
+        titleLabel.horizontalAlignmentMode = .left
+        titleLabel.verticalAlignmentMode = .top
+        
+        // Setup the Health Label
+        yPosition -= fontSizeS * 1.2
         healthLabel = SKLabelNode(text: "Structure Health")
         healthLabel.position.y = yPosition
         healthLabel.zPosition = 1
@@ -217,6 +247,7 @@ class InfoViewNode : SKNode {
         
         addChild(infoView)
         
+        infoView.addChild(titleLabel)
         infoView.addChild(healthLabel)
         infoView.addChild(damageLabel)
 //        infoView.addChild(upgradeButton)

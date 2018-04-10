@@ -73,6 +73,11 @@ func withinDistance(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> (Boo
     }
 }
 
+func angleBetweenPoints(point1: CGPoint, point2: CGPoint) -> CGFloat {
+    return atan2(point1.x - point2.x,
+                 point2.y - point1.y)
+}
+
 extension CGPoint {
     
     func length() -> CGFloat {

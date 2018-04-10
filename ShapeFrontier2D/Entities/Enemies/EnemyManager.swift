@@ -25,7 +25,7 @@ class EnemyManager : NSObject {
         var waveToSpawn : [GenericEnemy] = []
         
         // Get a random rotation and distance
-        let radius = sceneWidth * 4.0 //Int(arc4random_uniform(UInt32(sceneWidth * 2.0))) +
+        let radius = sceneWidth * 3.5
         let angle = Double(arc4random_uniform(361))
         let spawnPoint = CGPoint(x: CGFloat(cos(angle) * Double(radius)), y: CGFloat((sin(angle) * Double(radius))))
         
@@ -40,11 +40,12 @@ class EnemyManager : NSObject {
         var waveToSpawn : [GenericEnemy] = []
         
         // Just make 10 enemies for now
-        for i in 0...10 {
+        for _ in 0...10 {
             // Get random angle and distance from center
             let radius = Double(arc4random_uniform(UInt32(sceneWidth * 0.6)))
             let angle = Double(arc4random_uniform(361))
-            let spawnPoint = CGPoint(x: CGFloat(cos(angle) * Double(radius)), y: CGFloat((sin(angle) * Double(radius))))
+            var spawnPoint = CGPoint(x: CGFloat(cos(angle) * Double(radius)), y: CGFloat((sin(angle) * Double(radius))))
+            spawnPoint += atPoint
             
             waveToSpawn.append(createEnemy(atPoint: spawnPoint))
         }

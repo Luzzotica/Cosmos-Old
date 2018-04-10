@@ -18,13 +18,14 @@ class HealthComponent: GKComponent {
     var health_current: CGFloat
     let healthBarFullWidth: CGFloat
     let healthBar: SKShapeNode
+    var healthBarShow: Bool
     
     var invulnerable = false
 
 //    let soundAction = SKAction.playSoundFileNamed("smallHit.wav", waitForCompletion: false)
 
     init(parentNode: SKNode, barWidth: CGFloat,
-           barOffset: CGFloat, health: CGFloat) {
+         barOffset: CGFloat, health: CGFloat, showHealth: Bool = true) {
 
         // Setup health variables
         self.health_max = health
@@ -38,6 +39,7 @@ class HealthComponent: GKComponent {
         healthBar.strokeColor = UIColor.green
         healthBar.position = CGPoint(x: 0, y: barOffset)
         healthBar.zPosition = 2
+        healthBarShow = showHealth
         
         // Add him to the parent and hide him
         parentNode.addChild(healthBar)
@@ -71,14 +73,17 @@ class HealthComponent: GKComponent {
         // Update current health
         health_current = max(health_current - damage, 0)
 
-        // Unhide the bar and create an action to scale it
-        healthBar.isHidden = false
-        let healthScale = health_current / health_max
-        let scaleAction = SKAction.scaleX(to: healthScale, duration: 0.25)
-        
-        // remove all previous actions and run the new one
-        healthBar.removeAllActions()
-        healthBar.run(SKAction.group([scaleAction, HealthComponent.showAction, HealthComponent.hideAction]))
+        // If the health bar can be shown, show it
+        if healthBarShow {
+            // Unhide the bar and create an action to scale it
+            healthBar.isHidden = false
+            let healthScale = health_current / health_max
+            let scaleAction = SKAction.scaleX(to: healthScale, duration: 0.25)
+            
+            // remove all previous actions and run the new one
+            healthBar.removeAllActions()
+            healthBar.run(SKAction.group([scaleAction, HealthComponent.showAction, HealthComponent.hideAction]))
+        }
 
         // Kill him if he is dead
         if health_current == 0 {
@@ -89,6 +94,12 @@ class HealthComponent: GKComponent {
 
         // Return the current health of the target
         return health_current == 0
+    }
+    
+    func suicide() {
+        if let entity = entity {
+            EntityManager.shared.remove(entity)
+        }
     }
     
     func selected() {

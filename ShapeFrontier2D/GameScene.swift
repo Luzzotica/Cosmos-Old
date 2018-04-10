@@ -126,6 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        // Handle the tick for all the entities
         if currentTime - tick_last > tick_speed {
             tick_last = currentTime
             tick()
@@ -134,6 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Update player hud instantly
         PlayerHUD.shared.updateHUD()
         
+        // Handle the building functions
         if isBuilding && toBuild != nil {
             // If building, update validity based on impeding objects and mineral count
             // And change color based on current location validity
@@ -255,6 +257,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerCamera = PlayerHUD.shared
         addChild(playerCamera!)
         camera = playerCamera
+        
+        // Add the player
+        let player = PlayerEntity(playerHUD: PlayerHUD.shared, player: 1, enemies: [666])
+        EntityManager.shared.addPlayer(player)
         
         // Setup asteroids
         asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 1000000)
