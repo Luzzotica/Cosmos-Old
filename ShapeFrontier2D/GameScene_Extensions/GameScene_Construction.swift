@@ -16,12 +16,21 @@ extension GameScene {
     func startConstructionMode(structure: Structure) {
         toBuild = structure
         
+        toBuild!.isDisabled = true
+        
         // Get the sprite components
         let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
         toBuildNode = spriteComponent!.node
         toBuildSprite = spriteComponent!.spriteNode
         
+        // Update position
         toBuildNode!.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
+        
+        // Update name and physics body
+        toBuildNode!.name?.append("_underConstruction")
+        
+        toBuildNode!.physicsBody?.categoryBitMask = CollisionType.Construction
+        toBuildNode!.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
         
         // Add connection range
         toBuildSprite!.addChild(UIHandler.shared.createRangeIndicator(
@@ -38,7 +47,7 @@ extension GameScene {
     
     func updateConstruction(translation: CGPoint) {
         // Move the structure
-        toBuildNode!.position + translation
+        toBuildNode!.position += translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)

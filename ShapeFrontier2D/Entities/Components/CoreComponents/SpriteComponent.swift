@@ -13,6 +13,20 @@ class SpriteComponent: GKComponent {
     
     let spriteNode: SKSpriteNode
     let node: SKNode
+    
+    func select(toAdd: [SKNode]) {
+        for i in 0..<toAdd.count {
+            node.addChild(toAdd[i])
+        }
+    }
+    
+    func deselect() {
+        for i in stride(from: node.children.count - 1, through: 0, by: -1) {
+            if node.children[i].name!.contains("selection") {
+                node.children[i].removeFromParent()
+            }
+        }
+    }
 
     init(entity: GKEntity, texture: SKTexture, size: CGSize) {
         node = SKNode()

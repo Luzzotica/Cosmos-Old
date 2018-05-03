@@ -85,7 +85,11 @@ class Miner : Structure {
             }
             
             // Otherwise, we continue!
-            let values = withinDistance(point1: myNode.position, point2: asteroid.myNode.position, distance: miningRange)
+            let spriteComponent = component(ofType: SpriteComponent.self)
+            let asteroidSpriteComponent = component(ofType: SpriteComponent.self)
+            let values = withinDistance(point1: spriteComponent!.node.position,
+                                        point2: asteroidSpriteComponent!.node.position,
+                                        distance: miningRange)
             
             // If in range, make sure he is the closest
             if values.0 {
@@ -104,6 +108,15 @@ class Miner : Structure {
     override func build() {
         super.build()
         
+    }
+    
+    override func select() {
+        // Create a range indicator for ourselves
+        let range = UIHandler.shared.createRangeIndicator(range: miningRange, color: .green)
+        
+        // Get the sprite component
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        spriteComponent!.select(toAdd: [range])
     }
     
     override func setupStructure() {

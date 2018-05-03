@@ -19,7 +19,7 @@ class UIHandler : NSObject {
         let rangeIndicator = SKShapeNode(circleOfRadius: range)
         rangeIndicator.strokeColor = color
         
-        rangeIndicator.name = "rangeIndicator"
+        rangeIndicator.name = "rangeIndicator_selection"
         
 //        let color = SKAction.colorize(with: color, colorBlendFactor: 1.0, duration: 0.0)
 //        rangeIndicator.run(color)

@@ -13,31 +13,17 @@ class ConstructionItem: NSObject {
     
 	private var nameLabel : SKLabelNode = SKLabelNode()
 	
-	var building : Structure!
     var buildingSprite : SKSpriteNode!
     
     init(_ structure: Structure) {
         super.init()
         
-//        // Label above it
-//        nameLabel = SKLabelNode(text: structure.name)
-//        nameLabel.fontName = fontStyleN
-//        nameLabel.fontSize = fontSizeN
-//        nameLabel.horizontalAlignmentMode = .center
-//        
-//        nameLabel.position.y = fontSizeN * 0.5
+        // Get his spriteComponent and name!
+        let spriteComponent = structure.component(ofType: SpriteComponent.self)
+        buildingSprite = spriteComponent?.spriteNode
         
-        // Build stuff
-        building = structure
-        
-        // Make sure he can't get hit
-        building.removeComponent(ofType: HealthComponent.self)
-        buildingSprite = building.getComponent(ofType: SpriteComponent.self)
-        buildingSprite.removeFromParent()
-        
-        buildingSprite.name = building.myNode.name! + "_constructor"
-        
-        buildingSprite.addChild(nameLabel)
+        // Set his name, this is how we recognize him!
+        buildingSprite.name! = spriteComponent!.node.name! + "_constructor"
     }
     
     required init?(coder aDecoder: NSCoder) {

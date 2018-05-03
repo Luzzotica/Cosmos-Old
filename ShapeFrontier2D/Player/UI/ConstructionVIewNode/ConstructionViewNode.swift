@@ -69,7 +69,7 @@ class ConstructionViewNode : SKNode {
             }
             else if name.contains("miner") {
                 let miner = Miner(texture: Structures.miner, team: .team1)
-                miner.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: miner.miningRange, color: .green))
+                miner.select()
                 structure = miner
                 structure.constructionCost = StructureCost.Miner
             }
@@ -79,24 +79,17 @@ class ConstructionViewNode : SKNode {
             }
             else if name.contains("missileCannon") {
                 let turret = MissileCannon(texture: Structures.missileCannonLevel1, team: .team1)
-                turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
+                turret.select()
                 structure = turret
                 structure.constructionCost = StructureCost.MissileTurret
             }
             else if name.contains("pulseLaser") {
                 let turret = PulseLaser(texture: Structures.pulseLaser, team: .team1)
-                turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
+                turret.select()
                 structure = turret
                 structure.constructionCost = StructureCost.PulseLaser
             }
         }
-        
-        structure.isDisabled = true
-        structure.myNode.position = location
-        structure.myNode.name?.append("_underConstruction")
-        
-        structure.myNode.physicsBody?.categoryBitMask = CollisionType.Construction
-        structure.myNode.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
         
         gameScene.startConstructionMode(structure: structure)
     }

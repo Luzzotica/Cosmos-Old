@@ -13,6 +13,15 @@ class Turret : Structure {
     
     var range : CGFloat = 0.0
     
+    override func select() {
+        // Create a range indicator for ourselves
+        let indicatorRange = UIHandler.shared.createRangeIndicator(range: range, color: .red)
+        
+        // Get the sprite component
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        spriteComponent!.select(toAdd: [indicatorRange])
+    }
+    
     override init(texture: SKTexture, size: CGSize, team: Team) {
         super.init(texture: texture, size: size, team: team)
         

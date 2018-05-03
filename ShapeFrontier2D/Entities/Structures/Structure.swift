@@ -72,7 +72,16 @@ class Structure : GKEntity {
         }
     }
     
+    func select() {
+        // Create the range indicator
+        
+    }
     
+    func deselect() {
+        // Deselect our structure
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        spriteComponent!.deselect()
+    }
     
     func setupStructure() {
         
@@ -244,6 +253,8 @@ class Structure : GKEntity {
             moveComponent.position = float2(spriteComponent.node.position)
         }
         
+        // Deselect our man
+        deselect()
     }
     
     init(texture: SKTexture, size: CGSize, team: Team) {
