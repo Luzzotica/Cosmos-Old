@@ -117,6 +117,8 @@ extension GameScene {
         
         // Reset the building, connecting, and validity
         toBuild = nil
+        toBuildNode = nil
+        toBuildSprite = nil
         isValidSpot = true
         isBuilding = false
     }

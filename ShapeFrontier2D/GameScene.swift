@@ -147,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // And change color based on current location validity
             var color: SKAction
             // Check impediments
-            if toBuild!.mySprite.physicsBody!.allContactedBodies().count > 0
+            if toBuildNode!.physicsBody!.allContactedBodies().count > 0
             {
 //                print("Colliding")
                 isValidSpot = false
@@ -165,7 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 color = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.0)
             }
             
-            toBuild?.mySprite.run(color)
+            toBuildSprite!.run(color)
         }
         
         // Enemy updating
