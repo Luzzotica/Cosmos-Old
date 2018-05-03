@@ -13,7 +13,7 @@ extension GameScene {
     
     // Mark: - Construction
     
-    func startConstructionMode(structure: Structure) {
+    func startConstructionMode(structure: Structure, location: CGPoint) {
         toBuild = structure
         
         toBuild!.isDisabled = true
@@ -24,6 +24,7 @@ extension GameScene {
         toBuildSprite = spriteComponent!.spriteNode
         
         // Update position
+        toBuildNode!.position = location
         toBuildNode!.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
         
         // Update name and physics body
@@ -33,12 +34,12 @@ extension GameScene {
         toBuildNode!.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
         
         // Add connection range
-        toBuildSprite!.addChild(UIHandler.shared.createRangeIndicator(
+        toBuildNode!.addChild(UIHandler.shared.createRangeIndicator(
             range: Structure.connection_length,
             color: .yellow))
         
         // Add to game scene
-        addChild(toBuildSprite!)
+        addChild(toBuildNode!)
         
         // Make sure the scene knows we are currently building
         isBuilding = true

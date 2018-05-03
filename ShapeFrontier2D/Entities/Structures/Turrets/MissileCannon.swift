@@ -45,7 +45,7 @@ class MissileCannon : Turret {
         
         range = sceneWidth * 0.8
         
-        spriteComponent!.node.name! += "_Missle Cannon"
+        spriteComponent!.node.name! += "_missileCannon"
         
         // Set up low power overlay
         power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)

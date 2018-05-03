@@ -22,7 +22,8 @@ class SpriteComponent: GKComponent {
     
     func deselect() {
         for i in stride(from: node.children.count - 1, through: 0, by: -1) {
-            if node.children[i].name!.contains("selection") {
+            if node.children[i].name != nil &&
+                node.children[i].name!.contains("selection") {
                 node.children[i].removeFromParent()
             }
         }

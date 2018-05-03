@@ -102,8 +102,8 @@ class EntityManager {
     
     func remove(_ entity: GKEntity) {
         
-        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.spriteNode {
-            spriteNode.removeFromParent()
+        if let node = entity.component(ofType: SpriteComponent.self)?.node {
+            node.removeFromParent()
         }
         
         toRemove.insert(entity)

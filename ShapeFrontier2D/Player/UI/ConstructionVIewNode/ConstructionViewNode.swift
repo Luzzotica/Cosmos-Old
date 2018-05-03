@@ -61,6 +61,7 @@ class ConstructionViewNode : SKNode {
     func startStructureCreation(name: String, location: CGPoint) {
         var structure : Structure!
         
+        print(name)
         if name.contains("constructor") {
             if name.contains("reactor") {
                 let reactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
@@ -91,7 +92,7 @@ class ConstructionViewNode : SKNode {
             }
         }
         
-        gameScene.startConstructionMode(structure: structure)
+        gameScene.startConstructionMode(structure: structure, location: location)
     }
     
     required init?(coder aDecoder: NSCoder) {

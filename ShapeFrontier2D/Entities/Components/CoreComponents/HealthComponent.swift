@@ -101,6 +101,9 @@ class HealthComponent: GKComponent {
             let deathAnim = SKEmitterNode(fileNamed: "StructureDeath")
             deathAnim?.particlePositionRange = CGVector(dx: healthBarFullWidth, dy: healthBarFullWidth)
             
+            // Move it to where the structure is
+            deathAnim?.position = healthBar.parent!.position
+            
             // Add the particle to the root
             root.addChild(deathAnim!)
             

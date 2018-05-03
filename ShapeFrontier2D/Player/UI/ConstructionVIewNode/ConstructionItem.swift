@@ -21,9 +21,11 @@ class ConstructionItem: NSObject {
         // Get his spriteComponent and name!
         let spriteComponent = structure.component(ofType: SpriteComponent.self)
         buildingSprite = spriteComponent?.spriteNode
+        buildingSprite.removeFromParent()
         
         // Set his name, this is how we recognize him!
-        buildingSprite.name! = spriteComponent!.node.name! + "_constructor"
+        print(buildingSprite.name, spriteComponent!.node.name)
+        buildingSprite.name = spriteComponent!.node.name! + "_constructor"
     }
     
     required init?(coder aDecoder: NSCoder) {
