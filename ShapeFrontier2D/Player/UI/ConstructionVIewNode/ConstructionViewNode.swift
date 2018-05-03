@@ -79,7 +79,7 @@ class ConstructionViewNode : SKNode {
             }
             else if name.contains("missileCannon") {
                 let turret = MissileCannon(texture: Structures.missileCannonLevel1, team: .team1)
-                turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .red))
+                turret.mySprite.addChild(UIHandler.shared.createRangeIndicator(range: turret.range, color: .rcoloed))
                 structure = turret
                 structure.constructionCost = StructureCost.MissileTurret
             }

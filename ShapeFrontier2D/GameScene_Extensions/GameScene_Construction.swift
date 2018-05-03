@@ -25,7 +25,7 @@ extension GameScene {
         
         // Add connection range
         toBuildSprite!.addChild(UIHandler.shared.createRangeIndicator(
-            range: connection_length,
+            range: Structure.connection_length,
             color: .yellow))
         
         // Add to game scene

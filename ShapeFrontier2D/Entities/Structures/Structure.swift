@@ -19,6 +19,8 @@ class Structure : GKEntity {
     
     var damage : Int = 0
     
+    static let connection_length : CGFloat = sceneWidth * 0.225
+    
     // Recursive searching variables
     static var dontLookAtID = 0
     static let dontLookAtID_max = 10000
