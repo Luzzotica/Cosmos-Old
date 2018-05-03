@@ -38,7 +38,7 @@ extension GameScene {
     
     func updateConstruction(translation: CGPoint) {
         // Move the structure
-        toBuildNode!.position + translation
+        toBuildNode!.position += translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
@@ -77,13 +77,6 @@ extension GameScene {
             
             // Make him enabled
             toBuild?.isDisabled = false
-            
-            // Remove his range indicator
-            for i in stride(from: toBuildSprite!.children.count - 1, through: 0, by: -1) {
-                if toBuildSprite!.children[i].name == "rangeIndicator" {
-                    toBuildSprite!.children[i].removeFromParent()
-                }
-            }
             
             // Mineral Cost
             minerals_current -= toBuild!.constructionCost
@@ -136,7 +129,7 @@ extension GameScene {
             if isSupplier {
                 if withinDistance(point1: targetSprite.position,
                                   point2: toBuildNode!.position,
-                                  distance: connection_length).0 {
+                                  distance: Structure.connection_length).0 {
                     if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
                         inRange.append(targetStructure)
                     }
@@ -150,7 +143,7 @@ extension GameScene {
             else if targetStructure.isSupplier {
                 let values = withinDistance(point1: targetSprite.position,
                                             point2: toBuildNode!.position,
-                                            distance: connection_length)
+                                            distance: Structure.connection_length)
                 if values.0 {
                     if currentRange > values.1! {
                         currentRange = values.1!
