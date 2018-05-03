@@ -32,7 +32,7 @@ class ConstructionItem: NSObject {
         
         // Make sure he can't get hit
         building.removeComponent(ofType: HealthComponent.self)
-        buildingSprite = building.mySprite
+        buildingSprite = building.getComponent(ofType: SpriteComponent.self)
         buildingSprite.removeFromParent()
         
         buildingSprite.name = building.myNode.name! + "_constructor"
