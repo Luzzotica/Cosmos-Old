@@ -35,8 +35,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isValidSpot = false
     var touchMoved = false
     
-    var connection_length : CGFloat = sceneWidth * 0.225
-    
     // Asteroids
     var asteroidCluster : [Asteroid] = []
     
