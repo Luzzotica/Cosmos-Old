@@ -23,7 +23,7 @@ class ConstructionItem: NSObject {
         buildingSprite = spriteComponent?.spriteNode
         
         // Set his name, this is how we recognize him!
-        buildingSprite.name! = spriteComponent!.node.name! + "_constructor"
+        spriteComponent!.node.name! += "_constructor"
     }
     
     required init?(coder aDecoder: NSCoder) {
