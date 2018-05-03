@@ -58,7 +58,8 @@ class EnemyManager : NSObject {
         let enemy = GenericEnemy(texture: Enemies.fighter, size: size, team: .team2)
         
         // Move him to the proper point
-        enemy.position = atPoint
+        let spriteComponent = enemy.component(ofType: SpriteComponent.self)
+        spriteComponent!.node.position = atPoint
         
         return enemy
     }

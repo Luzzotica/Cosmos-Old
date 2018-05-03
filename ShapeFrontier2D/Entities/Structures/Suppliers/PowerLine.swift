@@ -85,8 +85,11 @@ class PowerLine : NSObject {
             return
         }
         
-        if withinDistance(point1: structureOne!.myNode.position,
-                          point2: structureTwo!.myNode.position,
+        let structOneSprite = structureOne!.component(ofType: SpriteComponent.self)
+        let structTwoSprite = structureTwo!.component(ofType: SpriteComponent.self)
+        
+        if withinDistance(point1: structOneSprite!.node.position,
+                          point2: structTwoSprite!.node.position,
                           distance: PowerLine.range_max).0
         {
             // update the size of the power line
