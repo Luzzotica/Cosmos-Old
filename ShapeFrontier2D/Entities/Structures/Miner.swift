@@ -126,15 +126,19 @@ class Miner : Structure {
         
         super.init(texture: texture, size: StructureSize.small, team: team)
         
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(mySprite!.size.width * 0.5), name: "Miner"))
-        addComponent(HealthComponent(parentNode: myNode, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Miner"))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node,
+                                     barWidth: spriteComponent!.spriteNode.size.width * 0.5,
+                                     barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
-        myNode.name! += "_miner"
+        spriteComponent!.node.name! += "_miner"
         
-        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: mySprite.size)
+        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
         setupStructure()

@@ -12,20 +12,15 @@ import GameplayKit
 
 class GenericEnemy : GKEntity {
     
-    var mySprite : SKSpriteNode!
-    var myNode : SKNode!
-    
     init(texture: SKTexture, size: CGSize, team: Team) {
         super.init()
         
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
         addComponent(spriteComponent)
-        mySprite = spriteComponent.spriteNode
-        myNode = spriteComponent.node
-        myNode.name = "entity"
+        spriteComponent.node.name = "entity"
         
         addComponent(MoveComponent(maxSpeed: 100, maxAcceleration: 500, radius: Float(size.width * 0.5), name: "Enemy"))
-        addComponent(HealthComponent(parentNode: mySprite, barWidth: size.width, barOffset: size.height * 0.5, health: 50))
+        addComponent(HealthComponent(parentNode: spriteComponent.node, barWidth: size.width, barOffset: size.height * 0.5, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 666))
         addComponent(EntityTypeComponent(type: Type.ship))
@@ -36,11 +31,11 @@ class GenericEnemy : GKEntity {
         addComponent(weapon)
         
         // Update his physics body
-        myNode.physicsBody?.categoryBitMask = CollisionType.Enemy
-        myNode.physicsBody?.contactTestBitMask = CollisionType.Structure
-        myNode.physicsBody?.collisionBitMask = CollisionType.Nothing
+        spriteComponent.node.physicsBody?.categoryBitMask = CollisionType.Enemy
+        spriteComponent.node.physicsBody?.contactTestBitMask = CollisionType.Structure
+        spriteComponent.node.physicsBody?.collisionBitMask = CollisionType.Nothing
         
-        mySprite.zPosition = Layer.Enemies
+        spriteComponent.spriteNode.zPosition = Layer.Enemies
         
     }
     

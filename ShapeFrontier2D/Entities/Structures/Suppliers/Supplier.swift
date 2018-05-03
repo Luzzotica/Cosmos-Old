@@ -307,9 +307,11 @@ class Supplier : Structure {
     override init(texture: SKTexture, size: CGSize, team: Team) {
         super.init(texture: texture, size: size, team: team)
         
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        
         isSupplier = true
         
-        myNode.name! += "_supplier"
+        spriteComponent!.node.name! += "_supplier"
     }
     
     required init?(coder aDecoder: NSCoder) {

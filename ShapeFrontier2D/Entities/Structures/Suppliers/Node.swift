@@ -30,23 +30,23 @@ class Node : Supplier {
         power_toBuild = 1
         power_toUse = 0
         
-        
-        
     }
     
     init(texture: SKTexture, team: Team) {
         super.init(texture: texture, size: StructureSize.node, team: team)
         
-        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(mySprite!.size.width * 0.5), name: "Node"))
-        addComponent(HealthComponent(parentNode: mySprite, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
+        let spriteComponent = component(ofType: SpriteComponent.self)
+        
+        addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Node"))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
-        myNode.name! += "_node"
+        spriteComponent!.node.name! += "_node"
         
         // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: mySprite.size)
+        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
         setupStructure()

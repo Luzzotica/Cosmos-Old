@@ -9,22 +9,16 @@
 import SpriteKit
 import GameplayKit
 
-//class EntityNode: SKSpriteNode {
-//  weak var entity: GKEntity!
-//}
-
 class SpriteComponent: GKComponent {
-    //
-    //  // A node that gives an entity a visual sprite
-    //  let node: EntityNode
+    
     let spriteNode: SKSpriteNode
     let node: SKNode
 
     init(entity: GKEntity, texture: SKTexture, size: CGSize) {
         node = SKNode()
-        
         spriteNode = SKSpriteNode(texture: texture,
                         color: SKColor.white, size: size)
+        
         super.init()
         node.entity = entity
         spriteNode.entity = entity
@@ -38,6 +32,7 @@ class SpriteComponent: GKComponent {
     init(entity: GKEntity, size: CGSize) {
         node = SKNode()
         spriteNode = SKSpriteNode(color: SKColor.red, size: size)
+        
         super.init()
         node.entity = entity
         spriteNode.entity = entity

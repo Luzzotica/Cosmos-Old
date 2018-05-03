@@ -19,9 +19,6 @@ class Structure : GKEntity {
     
     var damage : Int = 0
     
-    var mySprite : SKSpriteNode!
-    var myNode : SKNode!
-    
     // Recursive searching variables
     static var dontLookAtID = 0
     static let dontLookAtID_max = 10000
@@ -164,8 +161,9 @@ class Structure : GKEntity {
         // Have no master or If we are out of power
         if power_lowOverlay.parent == nil
             && (connection_master == nil
-                || gameScene.player_powerCurrent < power_toUse) {
-            mySprite.addChild(power_lowOverlay)
+                || gameScene.player_powerCurrent < power_toUse),
+            let spriteComponent = component(ofType: SpriteComponent.self) {
+            spriteComponent.spriteNode.addChild(power_lowOverlay)
         }
             // Removes the power overlay if
             // We have a master, and we have power
@@ -241,8 +239,9 @@ class Structure : GKEntity {
         power_handleOverlay()
         
         // Update the positioning of the move component, and GKGraphNode
-        if let moveComponent = component(ofType: MoveComponent.self) {
-            moveComponent.position = float2(myNode.position)
+        if let moveComponent = component(ofType: MoveComponent.self),
+            let spriteComponent = component(ofType: SpriteComponent.self) {
+            moveComponent.position = float2(spriteComponent.node.position)
         }
         
     }
@@ -251,18 +250,16 @@ class Structure : GKEntity {
         super.init()
         
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
-        mySprite = spriteComponent.spriteNode
-        myNode = spriteComponent.node
-        myNode.name = "entity"
+        spriteComponent.node.name = "entity"
         addComponent(spriteComponent)
         
-        myNode.physicsBody?.categoryBitMask = CollisionType.Structure
-        myNode.physicsBody?.contactTestBitMask = CollisionType.Structure
-        myNode.physicsBody?.collisionBitMask = CollisionType.Nothing
+        spriteComponent.node.physicsBody?.categoryBitMask = CollisionType.Structure
+        spriteComponent.node.physicsBody?.contactTestBitMask = CollisionType.Structure
+        spriteComponent.node.physicsBody?.collisionBitMask = CollisionType.Nothing
         
-        mySprite.zPosition = Layer.Player
+        spriteComponent.spriteNode.zPosition = Layer.Player
         
-        myNode.name! += "_structure"
+        spriteComponent.node.name! += "_structure"
     }
     
     required init?(coder aDecoder: NSCoder) {
