@@ -29,7 +29,7 @@ extension GameScene {
             color: .yellow))
         
         // Add to game scene
-        addChild(spriteComponent!.spriteNode)
+        addChild(toBuildSprite!)
         
         // Make sure the scene knows we are currently building
         isBuilding = true
@@ -37,10 +37,8 @@ extension GameScene {
     }
     
     func updateConstruction(translation: CGPoint) {
-        let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
-        
         // Move the structure
-        spriteComponent!.node.position = spriteComponent!.node.position + translation
+        toBuildNode!.position + translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
@@ -64,27 +62,26 @@ extension GameScene {
     
     func endConstructionMode() {
         if isValidSpot {
-            let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
             
             // Turn him to normal color
             let color = SKAction.colorize(with: .white, colorBlendFactor: 1.0, duration: 0.0)
-            spriteComponent!.spriteNode.run(color)
+            toBuildSprite!.run(color)
             
             // Made it, remove the name identifier
             for _ in 0...17 {
-                spriteComponent!.node.name?.removeLast()
+                toBuildNode!.name?.removeLast()
             }
             
             // Make him be a structure
-            spriteComponent!.node.physicsBody?.categoryBitMask = CollisionType.Structure
+            toBuildNode!.physicsBody?.categoryBitMask = CollisionType.Structure
             
             // Make him enabled
             toBuild?.isDisabled = false
             
             // Remove his range indicator
-            for i in stride(from: spriteComponent!.spriteNode.children.count - 1, through: 0, by: -1) {
-                if spriteComponent!.spriteNode.children[i].name == "rangeIndicator" {
-                    spriteComponent!.spriteNode.children[i].removeFromParent()
+            for i in stride(from: toBuildSprite!.children.count - 1, through: 0, by: -1) {
+                if toBuildSprite!.children[i].name == "rangeIndicator" {
+                    toBuildSprite!.children[i].removeFromParent()
                 }
             }
             
@@ -115,7 +112,7 @@ extension GameScene {
             
         }
         else {
-            spriteComponent!.node.removeFromParent()
+            toBuildNode!.removeFromParent()
         }
         
         // Reset the building, connecting, and validity
@@ -125,9 +122,6 @@ extension GameScene {
     }
     
     func searchStructuresInRange(isSupplier: Bool) -> [Structure] {
-        // Get the toBuild sprites
-        let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
-        
         var inRange : [Structure] = []
         var currentRange : CGFloat = sceneWidth
         
@@ -139,7 +133,7 @@ extension GameScene {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetSprite.position,
-                                  point2: spriteComponent!.node.position,
+                                  point2: toBuildNode!.position,
                                   distance: connection_length).0 {
                     if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
                         inRange.append(targetStructure)
@@ -153,7 +147,7 @@ extension GameScene {
                 // Otherwise, get the closest supplier
             else if targetStructure.isSupplier {
                 let values = withinDistance(point1: targetSprite.position,
-                                            point2: spriteComponent!.node.position,
+                                            point2: toBuildNode!.position,
                                             distance: connection_length)
                 if values.0 {
                     if currentRange > values.1! {
