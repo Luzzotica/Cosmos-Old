@@ -93,7 +93,7 @@ class Supplier : Structure {
     }
     
     func connection_updateMasters(dontLookAt: Supplier, distance: Int) {
-        print("Updating masters for: \(mySprite.name!)")
+        //print("Updating masters for: \(mySprite.name!)")
         
         // If the updated master is already in my masters, stop the recursion
         if connection_containsMaster(supplier: dontLookAt) {
@@ -112,7 +112,7 @@ class Supplier : Structure {
         //if distance passed is less than current distance, update it
         if (distance < connection_distance || connection_distance == -1)
         {
-            print("Updating Distance: \(distance) for \(mySprite.name!)")
+            //print("Updating Distance: \(distance) for \(mySprite.name!)")
             connection_distance = distance
         }
         
@@ -126,7 +126,6 @@ class Supplier : Structure {
     }
     
     override func connection_findMasters() {
-        print("Finding Masters for \(myNode.name!)")
         // if the target structure has no master, make his master this supplier
         for structure in connection_toStructures {
             if !structure.0.isSupplier && structure.0.connection_master == nil  {
@@ -156,7 +155,7 @@ class Supplier : Structure {
         // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
         if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
-                print("connected to: \(structure.0.mySprite.name!)")
+                print("connected to: \(structure.0.component(ofType: SpriteComponent.self)!.node.name!)")
                 if structure.0.isSupplier {
                     let supplier = structure.0 as! Supplier
                     supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
@@ -175,7 +174,7 @@ class Supplier : Structure {
                 }
                 
                 // Tell everone else we are connected to about all the great things we are doing with life.
-                print("connected to: \(structure.0.mySprite.name!)")
+                print("connected to: \(structure.0.component(ofType: SpriteComponent.self)!.node.name!)")
                 if structure.0.isSupplier {
                     let supplier = structure.0 as! Supplier
                     supplier.connection_updateMasters(dontLookAt: self, distance: connection_distance + 1)
