@@ -111,7 +111,6 @@ extension GameScene {
             if toBuild! is Miner {
                 player_miners.append(toBuild as! Miner)
             }
-            
         }
         else {
             toBuildNode!.removeFromParent()
