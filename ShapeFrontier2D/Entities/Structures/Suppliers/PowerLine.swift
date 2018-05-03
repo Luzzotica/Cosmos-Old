@@ -148,18 +148,21 @@ class PowerLine : NSObject {
         structureOne = structOne
         structureTwo = structTwo
         
+        let nodeOne = structureOne!.component(ofType: SpriteComponent.self)!.node
+        let nodeTwo = structureTwo!.component(ofType: SpriteComponent.self)!.node
+        
         // Set his size to the linewidth and the distance between the two structures
-        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.myNode.position, point2: structureTwo!.myNode.position))
+        let size = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: nodeOne.position, point2: nodeTwo.position))
         
         // Create the powerline based on the size and correct color
         powerLine = SKSpriteNode(color: PowerLine.colorNormal, size: size)
         powerLine.name = "power_line"
         
         // Rotate him to the proper angle
-        let angleBetweenStructures = atan2(structureOne!.myNode.position.x
-            - structureTwo!.myNode.position.x,
-                                           structureTwo!.myNode.position.y
-                                            - structureOne!.myNode.position.y)
+        let angleBetweenStructures = atan2(nodeOne.position.x
+            - nodeTwo.position.x,
+                                           nodeOne.position.y
+                                            - nodeTwo.position.y)
         powerLine.zRotation = angleBetweenStructures
         
         // Set its anchor point to 0.0 so it is centered on structure one
@@ -172,7 +175,7 @@ class PowerLine : NSObject {
         powerLine.physicsBody?.collisionBitMask = CollisionType.Nothing
         
         // Add the line to the target structure
-        structureOne!.mySprite.addChild(powerLine)
+        structureOne!.component(ofType: SpriteComponent.self)!.spriteNode.addChild(powerLine)
         
         super.init()
     }
