@@ -87,16 +87,30 @@ class HealthComponent: GKComponent {
 
         // Kill him if he is dead
         if health_current == 0 {
-            if let entity = entity {
-                EntityManager.shared.remove(entity)
-            }
+            death()
         }
 
         // Return the current health of the target
         return health_current == 0
     }
     
-    func suicide() {
+    func death() {
+        // If we can get a root node
+        if let root = healthBar.parent?.parent {
+            // Get the death animation, and change it's size
+            let deathAnim = SKEmitterNode(fileNamed: "StructureDeath")
+            deathAnim?.particlePositionRange = CGVector(dx: healthBarFullWidth, dy: healthBarFullWidth)
+            
+            // Add the particle to the root
+            root.addChild(deathAnim!)
+            
+            // Wait for half a second, then remove it
+            deathAnim?.run(SKAction.wait(forDuration: 0.5)) {
+                deathAnim?.removeFromParent()
+            }
+        }
+        
+        // Remove the entity from the lists! We track him no longer.
         if let entity = entity {
             EntityManager.shared.remove(entity)
         }

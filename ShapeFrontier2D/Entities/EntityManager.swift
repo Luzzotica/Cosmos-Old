@@ -28,11 +28,16 @@ class EntityManager {
     var entitiesForPlayer : [Int:Set<GKEntity>] = [:]
     var toRemove : Set<GKEntity> = Set()
     
+    // Obstacle graph
+    var obstacles : [GKObstacle] = []
+    
     lazy var componentSystems: [GKComponentSystem] = {
         let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
-        let meleeSystem = GKComponentSystem(componentClass: MeleeComponent.self)
-        let firingSystem = GKComponentSystem(componentClass: FiringComponent.self)
-        return [moveSystem, meleeSystem, firingSystem]
+        let contactSystem = GKComponentSystem(componentClass: ContactComponent.self)
+        let rocketSystem_Linear = GKComponentSystem(componentClass: RocketLauncher_Linear.self)
+        let rocketSystem_Tracer = GKComponentSystem(componentClass: RocketLauncher_Tracer.self)
+        let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
+        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem]
     }()
     
     func addPlayer(_ player: PlayerEntity) {
@@ -48,30 +53,56 @@ class EntityManager {
             componentSystem.addComponent(foundIn: entity)
         }
         
-        // If this was a sprite on the screen, add that sprite to the screen
-        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
-            if spriteNode.parent == nil {
-                gameScene.addChild(spriteNode)
-            }
+        // Get all of the necessary components from the entity
+        let entityNode = entity.component(ofType: SpriteComponent.self)?.node
+        let playerComponent = entity.component(ofType: PlayerComponent.self)
+        let moveComponent = entity.component(ofType: MoveComponent.self)
+        
+        // Add the sprite node to our gamescene!
+        if entityNode != nil && entityNode!.parent == nil {
+            gameScene.addChild(entityNode!)
+        }
+        
+        // Update the move component to match the position of the sprite
+        if entityNode != nil && moveComponent != nil {
+            moveComponent?.position = float2(entityNode!.position)
         }
         
         // If they have a player component, add them to that specific playerEntity group
         // This will handle asteroids as well, they are player 0, neutral
-        if let playerComponent = entity.component(ofType: PlayerComponent.self) {
+        if playerComponent != nil {
             // If this is the first time an entity has been added for this player
             // Create a new set for him
-            if entitiesForPlayer[playerComponent.player] == nil {
-                entitiesForPlayer[playerComponent.player] = Set<GKEntity>()
+            if entitiesForPlayer[playerComponent!.player] == nil {
+                entitiesForPlayer[playerComponent!.player] = Set<GKEntity>()
             }
             
             // Add the entity to the player's set
-            entitiesForPlayer[playerComponent.player]?.insert(entity)
+            entitiesForPlayer[playerComponent!.player]?.insert(entity)
+            
+            // Tell all the entities to update their pathing!
+            for enemy in AllianceManager.shared.getPlayerEnemies(player: playerComponent!.player) {
+                if entitiesForPlayer[enemy] == nil {
+                    continue
+                }
+                for entity in entitiesForPlayer[enemy]! {
+                    if let eMoveComponent = entity.component(ofType: MoveComponent.self) {
+                        eMoveComponent.updatePathing()
+                    }
+                }
+            }
         }
+        
+        // If the have an obstacle component, add it to our obstacles
+        if let obstacleComp = entity.component(ofType: ObstacleComponent.self) {
+            obstacles.append(obstacleComp.obstacle)
+        }
+        
     }
     
     func remove(_ entity: GKEntity) {
         
-        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
+        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.spriteNode {
             spriteNode.removeFromParent()
         }
         
@@ -88,9 +119,21 @@ class EntityManager {
             // loop through all of the player entities, update the HUD for each of them if this
             // person was their enemy
             for player in players {
-                print(playerComponent.player)
+//                print(playerComponent.player)
                 if player.enemies.contains(playerComponent.player) {
                     player.enemyDied(entity)
+                }
+            }
+            
+            // Tell all the entities to update their pathing!
+            for enemy in AllianceManager.shared.getPlayerEnemies(player: playerComponent.player) {
+                if entitiesForPlayer[enemy] == nil {
+                    continue
+                }
+                for entity in entitiesForPlayer[enemy]! {
+                    if let moveComponent = entity.component(ofType: MoveComponent.self) {
+                        moveComponent.updatePathing()
+                    }
                 }
             }
         }
@@ -120,21 +163,6 @@ class EntityManager {
         
         // Return the agents of the player
         return moveComponents
-    }
-    
-    func obstacles() -> [GKObstacle] {
-        var obstacles : [GKObstacle] = []
-        
-        // Might want to change this...
-        // Just make a list with all of the obstacles in the game. Would make this much faster
-        // Especially since this will be running a LOT
-        for entity in entities {
-            if let obstacleComponent = entity.component(ofType: ObstacleComponent.self) {
-                obstacles.append(obstacleComponent.obstacle)
-            }
-        }
-        
-        return obstacles
     }
     
     func update(_ deltaTime: CFTimeInterval) {

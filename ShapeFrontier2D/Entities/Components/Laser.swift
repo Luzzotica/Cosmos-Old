@@ -18,24 +18,9 @@ class Laser : NSObject {
     
     var laser : SKShapeNode?
     
-    var toDestroy = false
-    
-    func update() {
-        if entityOne == nil || entityTwo == nil {
-            destroySelf()
-            return
-        }
-        
-        let path: CGMutablePath = CGMutablePath()
-        path.move(to: CGPoint.zero)
-        path.addLine(to: entityOne!.position - entityTwo!.position)
-        
-        laser?.path = path
-    }
-    
     func destroySelf() {
         laser?.removeFromParent()
-        toDestroy = true
+        laser = nil
         entityOne = nil
         entityTwo = nil
     }
@@ -50,8 +35,8 @@ class Laser : NSObject {
     init(entOne: GKEntity, entTwo: GKEntity, color: UIColor, width: CGFloat) {
         super.init()
         
-        entityOne = entOne.component(ofType: SpriteComponent.self)?.node
-        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.node
+        entityOne = entOne.component(ofType: SpriteComponent.self)?.spriteNode
+        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.spriteNode
         
         // Create a path
         let path: CGMutablePath = CGMutablePath()
@@ -82,8 +67,8 @@ class Laser : NSObject {
         // Add the line to the target structure
         entityOne?.addChild(laser!)
         
-        laser?.run(Laser.laserAnimations[0]!) {
-            self.destroySelf()
+        laser?.run(Laser.laserAnimations[0]!) { [weak self] in
+            self?.destroySelf()
         }
     }
     

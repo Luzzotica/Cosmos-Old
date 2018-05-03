@@ -38,6 +38,10 @@
 		B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5546E2C204B135400E3DC68 /* Dying Angel.wav */; };
 		B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */; };
 		B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DC729202FB37C002F21E2 /* Laser.swift */; };
+		B574203920916D8B00160F61 /* RocketLauncher_Tracer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574203820916D8B00160F61 /* RocketLauncher_Tracer.swift */; };
+		B574203B20916EF800160F61 /* Missile_Tracer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574203A20916EF800160F61 /* Missile_Tracer.swift */; };
+		B574203D20916FF800160F61 /* TraceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574203C20916FF800160F61 /* TraceComponent.swift */; };
+		B574203F2091753A00160F61 /* WeaponComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574203E2091753A00160F61 /* WeaponComponent.swift */; };
 		B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501771FFF1018009C2F65 /* AppDelegate.swift */; };
 		B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585017D1FFF1018009C2F65 /* GameScene.swift */; };
 		B58501801FFF1018009C2F65 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585017F1FFF1018009C2F65 /* GameViewController.swift */; };
@@ -74,11 +78,16 @@
 		B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */; };
 		B58501E1200033FB009C2F65 /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E0200033FB009C2F65 /* Supplier.swift */; };
 		B58501E32000397A009C2F65 /* PowerLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58501E22000397A009C2F65 /* PowerLine.swift */; };
-		B589E994206738F80083FAC5 /* FiringComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E992206738F80083FAC5 /* FiringComponent.swift */; };
-		B589E995206738F80083FAC5 /* MeleeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E993206738F80083FAC5 /* MeleeComponent.swift */; };
-		B589E99720673AB70083FAC5 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99620673AB70083FAC5 /* Missile.swift */; };
+		B589E994206738F80083FAC5 /* RocketLauncher_Linear.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E992206738F80083FAC5 /* RocketLauncher_Linear.swift */; };
+		B589E995206738F80083FAC5 /* ContactComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E993206738F80083FAC5 /* ContactComponent.swift */; };
+		B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99620673AB70083FAC5 /* Missile_Linear.swift */; };
 		B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99820686A450083FAC5 /* EntityTypeComponent.swift */; };
-		B58A0884207C67880038F616 /* ObstacleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A0883207C67880038F616 /* ObstacleComponent.swift */; };
+		B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCCF2094F766001CA502 /* StructureDeath.sks */; };
+		B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCD02094F766001CA502 /* Assets.xcassets */; };
+		B5A8CCD420950E9A001CA502 /* DeathComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD320950E9A001CA502 /* DeathComponent.swift */; };
+		B5A8CCD62095108F001CA502 /* LaserTurret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* LaserTurret.swift */; };
+		B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */; };
+		B5DEEDDE2083116C002D5FCC /* ObstacleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */; };
 		ED9182E23A44DACA0E4F769C /* Pods_ShapeFrontier2D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */; };
 		F5D04B474599FB60BF3BB1FA /* Pods_ShapeFrontier2DTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */; };
 /* End PBXBuildFile section */
@@ -138,6 +147,10 @@
 		B5546E2C204B135400E3DC68 /* Dying Angel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Dying Angel.wav"; sourceTree = "<group>"; };
 		B56DC727202F7476002F21E2 /* PlayerHUDExt_Decor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHUDExt_Decor.swift; sourceTree = "<group>"; };
 		B56DC729202FB37C002F21E2 /* Laser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laser.swift; sourceTree = "<group>"; };
+		B574203820916D8B00160F61 /* RocketLauncher_Tracer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketLauncher_Tracer.swift; sourceTree = "<group>"; };
+		B574203A20916EF800160F61 /* Missile_Tracer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missile_Tracer.swift; sourceTree = "<group>"; };
+		B574203C20916FF800160F61 /* TraceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceComponent.swift; sourceTree = "<group>"; };
+		B574203E2091753A00160F61 /* WeaponComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponComponent.swift; sourceTree = "<group>"; };
 		B58501741FFF1018009C2F65 /* ShapeFrontier2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeFrontier2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58501771FFF1018009C2F65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B585017D1FFF1018009C2F65 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -172,11 +185,16 @@
 		B58501DE1FFFE7A0009C2F65 /* ConstructionViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructionViewNode.swift; sourceTree = "<group>"; };
 		B58501E0200033FB009C2F65 /* Supplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplier.swift; sourceTree = "<group>"; };
 		B58501E22000397A009C2F65 /* PowerLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerLine.swift; sourceTree = "<group>"; };
-		B589E992206738F80083FAC5 /* FiringComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiringComponent.swift; sourceTree = "<group>"; };
-		B589E993206738F80083FAC5 /* MeleeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeComponent.swift; sourceTree = "<group>"; };
-		B589E99620673AB70083FAC5 /* Missile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
+		B589E992206738F80083FAC5 /* RocketLauncher_Linear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLauncher_Linear.swift; sourceTree = "<group>"; };
+		B589E993206738F80083FAC5 /* ContactComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactComponent.swift; sourceTree = "<group>"; };
+		B589E99620673AB70083FAC5 /* Missile_Linear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile_Linear.swift; sourceTree = "<group>"; };
 		B589E99820686A450083FAC5 /* EntityTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTypeComponent.swift; sourceTree = "<group>"; };
-		B58A0883207C67880038F616 /* ObstacleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleComponent.swift; sourceTree = "<group>"; };
+		B5A8CCCF2094F766001CA502 /* StructureDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StructureDeath.sks; sourceTree = "<group>"; };
+		B5A8CCD02094F766001CA502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5A8CCD320950E9A001CA502 /* DeathComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathComponent.swift; sourceTree = "<group>"; };
+		B5A8CCD52095108F001CA502 /* LaserTurret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaserTurret.swift; sourceTree = "<group>"; };
+		B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllianceManager.swift; sourceTree = "<group>"; };
+		B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleComponent.swift; sourceTree = "<group>"; };
 		CA5A2AECA7A7BA6BA00E1F16 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
 		FE1F563E7BE2189287ECCB76 /* Pods-ShapeFrontier2DTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -286,16 +304,11 @@
 		B51FBC77204B8395001BFFB4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				B589E992206738F80083FAC5 /* FiringComponent.swift */,
-				B589E993206738F80083FAC5 /* MeleeComponent.swift */,
-				B589E99620673AB70083FAC5 /* Missile.swift */,
-				B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */,
-				B51FBC73204B824C001BFFB4 /* MoveComponent.swift */,
-				B51FBC6F204B7D00001BFFB4 /* SpriteComponent.swift */,
-				B5321F462054B02D00C7580B /* PlayerComponent.swift */,
-				B51FBC78204B8597001BFFB4 /* TeamComponent.swift */,
-				B51FBC75204B838F001BFFB4 /* HealthComponent.swift */,
-				B589E99820686A450083FAC5 /* EntityTypeComponent.swift */,
+				B574203620916AAC00160F61 /* WeaponComponents */,
+				B574203520916A8D00160F61 /* CoreComponents */,
+				B589E99620673AB70083FAC5 /* Missile_Linear.swift */,
+				B574203A20916EF800160F61 /* Missile_Tracer.swift */,
+				B56DC729202FB37C002F21E2 /* Laser.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -327,6 +340,35 @@
 				B5546E2C204B135400E3DC68 /* Dying Angel.wav */,
 			);
 			path = BackgroundMusic;
+			sourceTree = "<group>";
+		};
+		B574203520916A8D00160F61 /* CoreComponents */ = {
+			isa = PBXGroup;
+			children = (
+				B589E99820686A450083FAC5 /* EntityTypeComponent.swift */,
+				B51FBC75204B838F001BFFB4 /* HealthComponent.swift */,
+				B5A8CCD320950E9A001CA502 /* DeathComponent.swift */,
+				B51FBC6F204B7D00001BFFB4 /* SpriteComponent.swift */,
+				B5321F462054B02D00C7580B /* PlayerComponent.swift */,
+				B51FBC78204B8597001BFFB4 /* TeamComponent.swift */,
+				B51FBC73204B824C001BFFB4 /* MoveComponent.swift */,
+				B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */,
+				B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */,
+			);
+			path = CoreComponents;
+			sourceTree = "<group>";
+		};
+		B574203620916AAC00160F61 /* WeaponComponents */ = {
+			isa = PBXGroup;
+			children = (
+				B574203E2091753A00160F61 /* WeaponComponent.swift */,
+				B589E992206738F80083FAC5 /* RocketLauncher_Linear.swift */,
+				B574203820916D8B00160F61 /* RocketLauncher_Tracer.swift */,
+				B574203C20916FF800160F61 /* TraceComponent.swift */,
+				B589E993206738F80083FAC5 /* ContactComponent.swift */,
+				B5A8CCD52095108F001CA502 /* LaserTurret.swift */,
+			);
+			path = WeaponComponents;
 			sourceTree = "<group>";
 		};
 		B585016B1FFF1018009C2F65 = {
@@ -400,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				B51FBC71204B81F5001BFFB4 /* EntityManager.swift */,
+				B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */,
 				B51FBC77204B8395001BFFB4 /* Components */,
 				B51FBC26204B2B35001BFFB4 /* Enemies */,
 				B58501CB1FFF45FD009C2F65 /* Structures */,
@@ -413,11 +456,10 @@
 			children = (
 				B58501C41FFF1DCF009C2F65 /* AsteroidManager.swift */,
 				B58501B61FFF1C9A009C2F65 /* Asteroid.swift */,
-				B51F5ACF2073240600071751 /* AsteroidComponent.swift */,
-				B58A0883207C67880038F616 /* ObstacleComponent.swift */,
 				B58501BB1FFF1CE8009C2F65 /* AsteroidSmall.swift */,
 				B58501D01FFF62E2009C2F65 /* AsteroidMedium.swift */,
 				B58501BF1FFF1D05009C2F65 /* AsteroidBig.swift */,
+				B51F5ACF2073240600071751 /* AsteroidComponent.swift */,
 			);
 			path = Asteroids;
 			sourceTree = "<group>";
@@ -440,6 +482,8 @@
 				B58501D21FFF6932009C2F65 /* Miner.swift */,
 				B58501E4200049D9009C2F65 /* Suppliers */,
 				B58501E5200049E4009C2F65 /* Turrets */,
+				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
+				B5A8CCD02094F766001CA502 /* Assets.xcassets */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -450,7 +494,6 @@
 				B58501E0200033FB009C2F65 /* Supplier.swift */,
 				B58501CE1FFF4F6C009C2F65 /* Reactor.swift */,
 				B58501D41FFF6CE0009C2F65 /* Node.swift */,
-				B56DC729202FB37C002F21E2 /* Laser.swift */,
 				B58501E22000397A009C2F65 /* PowerLine.swift */,
 			);
 			path = Suppliers;
@@ -601,9 +644,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */,
 				B51FBC6C204B3ADE001BFFB4 /* Menu Ambience1.mp3 in Resources */,
 				B58501831FFF1018009C2F65 /* Main.storyboard in Resources */,
 				B5546E2D204B135400E3DC68 /* Dying Angel.wav in Resources */,
+				B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */,
 				B58501851FFF1018009C2F65 /* Assets.xcassets in Resources */,
 				B58501881FFF1018009C2F65 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -783,18 +828,19 @@
 				B51FBC6A204B30F4001BFFB4 /* GenericEnemy.swift in Sources */,
 				B5321F412054AC8800C7580B /* GameScene_Construction.swift in Sources */,
 				07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */,
-				B589E995206738F80083FAC5 /* MeleeComponent.swift in Sources */,
+				B589E995206738F80083FAC5 /* ContactComponent.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
+				B5A8CCD420950E9A001CA502 /* DeathComponent.swift in Sources */,
 				B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */,
 				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
 				B51FBC74204B824C001BFFB4 /* MoveComponent.swift in Sources */,
 				B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */,
-				B58A0884207C67880038F616 /* ObstacleComponent.swift in Sources */,
 				B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
 				B51FBC7B204B89F3001BFFB4 /* StructureSizes.swift in Sources */,
 				07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */,
+				B5A8CCD62095108F001CA502 /* LaserTurret.swift in Sources */,
 				B51FBC28204B2B46001BFFB4 /* EnemyManager.swift in Sources */,
 				B58501CA1FFF453B009C2F65 /* UsefulFunctions.swift in Sources */,
 				B51FBC70204B7D00001BFFB4 /* SpriteComponent.swift in Sources */,
@@ -803,7 +849,11 @@
 				B51D8AFE203B9E06000959B6 /* UI_SliderButton.swift in Sources */,
 				B51F5AD02073240600071751 /* AsteroidComponent.swift in Sources */,
 				B5546E29204B112300E3DC68 /* SoundHandler.swift in Sources */,
+				B574203F2091753A00160F61 /* WeaponComponent.swift in Sources */,
+				B574203B20916EF800160F61 /* Missile_Tracer.swift in Sources */,
+				B574203920916D8B00160F61 /* RocketLauncher_Tracer.swift in Sources */,
 				B51FBC79204B8597001BFFB4 /* TeamComponent.swift in Sources */,
+				B5DEEDDE2083116C002D5FCC /* ObstacleComponent.swift in Sources */,
 				B512A92E206F3785005645B2 /* EnemyIndicator.swift in Sources */,
 				B56DC72A202FB37C002F21E2 /* Laser.swift in Sources */,
 				B58501BC1FFF1CE8009C2F65 /* AsteroidSmall.swift in Sources */,
@@ -815,12 +865,13 @@
 				B58501E32000397A009C2F65 /* PowerLine.swift in Sources */,
 				B58501D71FFF79BD009C2F65 /* MissileCannon.swift in Sources */,
 				B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */,
+				B574203D20916FF800160F61 /* TraceComponent.swift in Sources */,
 				B58501D91FFF7A44009C2F65 /* PulseLaser.swift in Sources */,
 				B58501D31FFF6932009C2F65 /* Miner.swift in Sources */,
-				B589E99720673AB70083FAC5 /* Missile.swift in Sources */,
+				B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */,
 				B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */,
 				B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */,
-				B589E994206738F80083FAC5 /* FiringComponent.swift in Sources */,
+				B589E994206738F80083FAC5 /* RocketLauncher_Linear.swift in Sources */,
 				B51FBC72204B81F5001BFFB4 /* EntityManager.swift in Sources */,
 				B58501B71FFF1C9A009C2F65 /* Asteroid.swift in Sources */,
 				B58501AF1FFF1435009C2F65 /* PlayerHUD.swift in Sources */,
@@ -829,6 +880,7 @@
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,
 				B58501C51FFF1DCF009C2F65 /* AsteroidManager.swift in Sources */,
 				B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */,
+				B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */,
 				B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */,
 				B58501AE1FFF1435009C2F65 /* PlayerHUDExt_Buttons.swift in Sources */,
 				07C2CC4C1FFFEE6E0015EFD3 /* ResourceViewNode.swift in Sources */,

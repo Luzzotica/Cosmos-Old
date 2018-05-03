@@ -16,7 +16,6 @@ class EnemyManager : NSObject {
     
     // Our enemies!
     var enemies : [GKEntity] = []
-    private var lastUpdateTime : TimeInterval = 0
     
     // Wave system variables
     var wave_current = 0
@@ -40,7 +39,7 @@ class EnemyManager : NSObject {
         var waveToSpawn : [GenericEnemy] = []
         
         // Just make 10 enemies for now
-        for _ in 0...10 {
+        for _ in 0...8 {
             // Get random angle and distance from center
             let radius = Double(arc4random_uniform(UInt32(sceneWidth * 0.6)))
             let angle = Double(arc4random_uniform(361))
@@ -50,7 +49,7 @@ class EnemyManager : NSObject {
             waveToSpawn.append(createEnemy(atPoint: spawnPoint))
         }
         
-        // Return out beautiful wave of fresh enemies
+        // Return our beautiful wave of fresh enemies
         return waveToSpawn
     }
     
@@ -59,27 +58,9 @@ class EnemyManager : NSObject {
         let enemy = GenericEnemy(texture: Enemies.fighter, size: size, team: .team2)
         
         // Move him to the proper point
-        enemy.mySprite.position = atPoint
+        enemy.myNode.position = atPoint
         
         return enemy
-    }
-    
-    func update(_ currentTime: TimeInterval) {
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for enemy in self.enemies {
-//            print("updating the GKEntity")
-            enemy.update(deltaTime: dt)
-        }
-        
-        self.lastUpdateTime = currentTime
     }
     
     func startGame() {

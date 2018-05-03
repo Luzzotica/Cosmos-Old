@@ -126,7 +126,7 @@ class Supplier : Structure {
     }
     
     override func connection_findMasters() {
-        print("Finding Masters for \(mySprite.name!)")
+        print("Finding Masters for \(myNode.name!)")
         // if the target structure has no master, make his master this supplier
         for structure in connection_toStructures {
             if !structure.0.isSupplier && structure.0.connection_master == nil  {
@@ -309,7 +309,7 @@ class Supplier : Structure {
         
         isSupplier = true
         
-        mySprite.name! += "_supplier"
+        myNode.name! += "_supplier"
     }
     
     required init?(coder aDecoder: NSCoder) {

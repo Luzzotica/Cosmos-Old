@@ -16,7 +16,7 @@ class Turret : Structure {
     override init(texture: SKTexture, size: CGSize, team: Team) {
         super.init(texture: texture, size: size, team: team)
         
-        mySprite.name! += "_turret"
+        myNode.name! += "_turret"
     }
     
     required init?(coder aDecoder: NSCoder) {

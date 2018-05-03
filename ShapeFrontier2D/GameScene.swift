@@ -45,6 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Mineral variables
     var minerals_current : Int = 10000
     
+    // Update time!
+    var lastUpdateTime : TimeInterval = 0
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
@@ -55,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Add the first player reactor
         let firstReactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
         firstReactor.didFinishConstruction()
-        firstReactor.mySprite.position = playerCamera!.position
+        firstReactor.myNode.position = playerCamera!.position
         
         // Add everything to structures
         player_structures.append(firstReactor)
@@ -164,8 +167,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Enemy updating
-        EnemyManager.shared.update(currentTime)
-        EntityManager.shared.update(currentTime)
+        if lastUpdateTime == 0 {
+            lastUpdateTime = currentTime
+        }
+        
+        // Need to pass in delta, not the current time!
+        let delta = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+        EntityManager.shared.update(delta)
     }
     
     func tick() {
@@ -263,7 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         EntityManager.shared.addPlayer(player)
         
         // Setup asteroids
-        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 1000000)
+        asteroidCluster = AsteroidManager.shared.createAsteroidCluster(atPoint: playerCamera!.position, mineralCap: 100000)
         for asteroid in asteroidCluster {
             EntityManager.shared.add(asteroid)
         }

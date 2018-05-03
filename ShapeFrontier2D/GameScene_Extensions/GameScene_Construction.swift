@@ -15,7 +15,7 @@ extension GameScene {
     
     func startConstructionMode(structure: Structure) {
         toBuild = structure
-        toBuild!.mySprite.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
+        toBuild!.myNode.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
         
         // Add connection range
         toBuild!.mySprite?.addChild(UIHandler.shared.createRangeIndicator(
@@ -32,7 +32,7 @@ extension GameScene {
     
     func updateConstruction(translation: CGPoint) {
         // Move the structure
-        toBuild!.mySprite.position = toBuild!.mySprite!.position + translation
+        toBuild!.myNode.position = toBuild!.mySprite!.position + translation
         
         // Get structures we can draw to
         let drawTo = searchStructuresInRange(isSupplier: toBuild!.isSupplier)
@@ -62,11 +62,11 @@ extension GameScene {
             
             // Made it, remove the name identifier
             for _ in 0...17 {
-                toBuild!.mySprite.name?.removeLast()
+                toBuild!.myNode.name?.removeLast()
             }
             
             // Make him be a structure
-            toBuild!.mySprite.physicsBody?.categoryBitMask = CollisionType.Structure
+            toBuild!.myNode.physicsBody?.categoryBitMask = CollisionType.Structure
             
             // Make him enabled
             toBuild?.isDisabled = false
@@ -105,7 +105,7 @@ extension GameScene {
             
         }
         else {
-            toBuild!.mySprite.removeFromParent()
+            toBuild!.myNode.removeFromParent()
         }
         
         // Reset the building, connecting, and validity
@@ -125,7 +125,7 @@ extension GameScene {
             // If he is a supplier, he can link to all people in range
             if isSupplier {
                 if withinDistance(point1: targetSprite.position,
-                                  point2: toBuild!.mySprite.position,
+                                  point2: toBuild!.myNode.position,
                                   distance: connection_length).0 {
                     if !targetStructure.isSupplier && targetStructure.connection_powerLine == nil {
                         inRange.append(targetStructure)
@@ -139,7 +139,7 @@ extension GameScene {
                 // Otherwise, get the closest supplier
             else if targetStructure.isSupplier {
                 let values = withinDistance(point1: targetSprite.position,
-                                            point2: toBuild!.mySprite.position,
+                                            point2: toBuild!.myNode.position,
                                             distance: connection_length)
                 if values.0 {
                     if currentRange > values.1! {

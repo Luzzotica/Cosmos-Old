@@ -17,16 +17,15 @@ struct Layer {
     static let UI: CGFloat = 100
     static let Powerup: CGFloat = 8
     static let Player: CGFloat = 25
-    static let PlayerBullets: CGFloat = 6
     static let Enemies: CGFloat = 50
     static let Asteroids: CGFloat = 5
-    static let EnemyBullets: CGFloat = 55
+    static let Projectiles: CGFloat = 75
 }
 
 struct CollisionType {
     static let Nothing: UInt32 = 1
     static let Structure: UInt32 = 2
-    static let StructureMissile: UInt32 = 4
+    static let Missile: UInt32 = 4
     static let Construction: UInt32 = 8
     static let PowerLine: UInt32 = 16
     static let Enemy: UInt32 = 32

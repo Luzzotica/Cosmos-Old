@@ -43,7 +43,7 @@ class Node : Supplier {
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
-        mySprite.name! += "_node"
+        myNode.name! += "_node"
         
         // Set up low power overlay
         power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: mySprite.size)

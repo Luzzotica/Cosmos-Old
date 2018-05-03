@@ -92,11 +92,11 @@ class ConstructionViewNode : SKNode {
         }
         
         structure.isDisabled = true
-        structure.mySprite.position = location
-        structure.mySprite.name?.append("_underConstruction")
+        structure.myNode.position = location
+        structure.myNode.name?.append("_underConstruction")
         
-        structure.mySprite.physicsBody?.categoryBitMask = CollisionType.Construction
-        structure.mySprite.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
+        structure.myNode.physicsBody?.categoryBitMask = CollisionType.Construction
+        structure.myNode.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.PowerLine | CollisionType.Asteroid
         
         gameScene.startConstructionMode(structure: structure)
     }

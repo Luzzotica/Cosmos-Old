@@ -21,11 +21,16 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         
         super.init()
         self.delegate = self
-        self.maxSpeed = maxSpeed * 0.000005
-        self.maxAcceleration = maxAcceleration * 0.001
+        self.maxSpeed = maxSpeed
+        self.maxAcceleration = maxAcceleration
         self.radius = radius
         self.mass = 1
         
+        // Update our pathing! We want to chase down all the peoples
+        // If we have no behavior, then update our pathing!
+        if maxSpeed != 0 && behavior == nil {
+            updatePathing()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +43,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
             return
         }
-//        print("got here")
+        
         position = float2(spriteComponent.node.position)
         
     }
@@ -52,7 +57,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         
         spriteComponent.node.position = CGPoint(position)
         spriteComponent.node.physicsBody!.velocity = CGVector(velocity)
-        spriteComponent.node.zRotation = CGFloat(rotation - .pi/2.0)
+        spriteComponent.spriteNode.zRotation = CGFloat(rotation - .pi/2.0)
     }
     
     func closestAgentInGroup(agents: [MoveComponent]) -> MoveComponent? {
@@ -88,28 +93,20 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         
     }
     
+//    func getGraphNodes() -> [GKGraphNode2D] {
+//        EntityManager.shared.obstacleGraph.nod
+//    }
+    
     func getAgentsForPlayer() -> [MoveComponent] {
         return EntityManager.shared.agentComponentsForPlayer(target)
     }
     
-    func getObstacles() -> [GKAgent] {
-        return EntityManager.shared.agentComponentsForPlayer(0)
-    }
-    
-    override func update(deltaTime seconds: TimeInterval) {
-        
-        // If we have no speed... do nothing
+    func updatePathing() {
+        // If we can't move, no need giving outselves a path...
         if maxSpeed == 0 {
-            // Update the GKAgents position
-            guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-                return
-            }
-            position = float2(spriteComponent.node.position)
             return
         }
-//        print(maxSpeed)
-        super.update(deltaTime: seconds)
-
+        
         // Get the targets I will want to chase
         let toAttack = getAgentsForPlayer()
         
@@ -117,16 +114,26 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
         let targetMoveComponent = closestAgentInGroup(agents: toAttack)
         
         if targetMoveComponent == nil {
-            behavior = MoveBehavior()
-        }
-        else {
-            behavior = MoveBehavior(targetSpeed: maxSpeed,
-                                    seek: targetMoveComponent!,
-                                    avoid: getObstacles())
+            return
         }
         
+        behavior = MoveBehavior(targetSpeed: maxSpeed,
+                                seek: targetMoveComponent!,
+                                toAvoid: EntityManager.shared.obstacles)
+
         
     }
     
+    override func update(deltaTime seconds: TimeInterval) {
+        
+        // If we have no speed... do nothing
+        if maxSpeed == 0 {
+            
+            return
+        }
+//        print(maxSpeed)
+        super.update(deltaTime: seconds)
+        
+    }
 }
 

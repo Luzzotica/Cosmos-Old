@@ -18,7 +18,7 @@ class EnemyIndicatorManager : SKNode {
     }
     
     func removeEnemy(_ enemy: GKEntity) {
-        print("Got here")
+//        print("Got here")
         
         // Remove the line
         enemyIndicators[enemy]?.removeFromParent()

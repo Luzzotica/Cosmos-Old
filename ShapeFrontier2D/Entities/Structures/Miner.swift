@@ -59,7 +59,8 @@ class Miner : Structure {
         }
         
         // If the asteroid is at 0 minerals or if the miner doesn't have an asteroid
-        if asteroid_current?.health_current == 0 || asteroid_current == nil {
+        let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
+        if asteroidComponent == nil || asteroidComponent!.minerals_current == 0 || asteroid_current == nil {
             // And we can't find another asteroid
             if !getAsteroid() {
                 print("Couldn't find an asteroid in range!")
@@ -78,19 +79,20 @@ class Miner : Structure {
         // Get asteroid in range
         for asteroid in gameScene.asteroidCluster {
             // Make sure he has minerals, if he doesn't, skip him
-            if asteroid.health_current == 0 {
+            let asteroidComponent = asteroid.component(ofType: AsteroidComponent.self)
+            if asteroidComponent!.minerals_current == 0 {
                 continue
             }
             
             // Otherwise, we continue!
-            let values = withinDistance(point1: mySprite.position, point2: asteroid.mySprite.position, distance: miningRange)
+            let values = withinDistance(point1: myNode.position, point2: asteroid.myNode.position, distance: miningRange)
             
             // If in range, make sure he is the closest
             if values.0 {
                 if (values.1)! < asteroid_distance {
                     foundAsteroid = true
                     // If he is, set him up for mining!
-                    asteroid_current = asteroid as? Asteroid
+                    asteroid_current = asteroid
                     asteroid_distance = (values.1)!
                 }
             }
@@ -125,12 +127,12 @@ class Miner : Structure {
         super.init(texture: texture, size: StructureSize.small, team: team)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(mySprite!.size.width * 0.5), name: "Miner"))
-        addComponent(HealthComponent(parentNode: mySprite, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
+        addComponent(HealthComponent(parentNode: myNode, barWidth: mySprite!.size.width * 0.5, barOffset: mySprite!.size.height * 0.61, health: 50))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
-        mySprite.name! += "_miner"
+        myNode.name! += "_miner"
         
         power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: mySprite.size)
         power_lowOverlay.zPosition = 1

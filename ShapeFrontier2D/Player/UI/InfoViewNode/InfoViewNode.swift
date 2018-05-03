@@ -62,7 +62,7 @@ class InfoViewNode : SKNode {
         
         // Set the new entity!
         currentEntity = entity
-        currentSprite = currentEntity.component(ofType: SpriteComponent.self)!.node
+        currentSprite = currentEntity.component(ofType: SpriteComponent.self)!.spriteNode
         
         // Show or hide buttons depending on the type of the the entity we tapped on
         if !(currentEntity is Structure)
@@ -117,7 +117,7 @@ class InfoViewNode : SKNode {
         }
         
         // When we have attack components, this will help
-        if let attackComponent = currentEntity.component(ofType: FiringComponent.self) {
+        if let attackComponent = currentEntity.component(ofType: RocketLauncher_Linear.self) {
             damageLabel.text = "Damage: \(attackComponent.damage)"
             
             if currentRange == nil {
