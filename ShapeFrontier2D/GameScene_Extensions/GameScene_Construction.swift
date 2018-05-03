@@ -18,11 +18,13 @@ extension GameScene {
         
         // Get the sprite components
         let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
+        toBuildNode = spriteComponent!.node
+        toBuildSprite = spriteComponent!.spriteNode
         
-        spriteComponent!.node.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
+        toBuildNode!.position.y += sceneHeight * 0.2 * PlayerHUD.shared.yScale
         
         // Add connection range
-        spriteComponent!.spriteNode.addChild(UIHandler.shared.createRangeIndicator(
+        toBuildSprite!.addChild(UIHandler.shared.createRangeIndicator(
             range: connection_length,
             color: .yellow))
         

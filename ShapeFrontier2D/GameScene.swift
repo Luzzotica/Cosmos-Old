@@ -29,6 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Construction Mode variables
     var toBuild : Structure?
+    var toBuildSprite : SKSpriteNode?
+    var toBuildNode : SKNode?
     var isBuilding = false
     var isValidSpot = false
     var touchMoved = false
@@ -59,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstReactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
         firstReactor.didFinishConstruction()
         // Move the reactor to the center of the screen
-        firstReactor.component(ofType: SpriteComponent.self).node.position = playerCamera!.position
+        firstReactor.component(ofType: SpriteComponent.self)?.node.position = playerCamera!.position
         
         // Add everything to structures
         player_structures.append(firstReactor)
@@ -107,6 +109,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    SWAGGGGGGWAGGSGSGWSWAG!
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if isBuilding {
@@ -145,7 +149,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // And change color based on current location validity
             var color: SKAction
             // Check impediments
-            
             if toBuild!.mySprite.physicsBody!.allContactedBodies().count > 0
             {
 //                print("Colliding")
