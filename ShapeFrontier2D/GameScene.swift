@@ -109,8 +109,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    SWAGGGGGGWAGGSGSGWSWAG!
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if isBuilding {
