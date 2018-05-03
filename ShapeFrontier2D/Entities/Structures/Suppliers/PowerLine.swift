@@ -93,13 +93,13 @@ class PowerLine : NSObject {
                           distance: PowerLine.range_max).0
         {
             // update the size of the power line
-            let newSize = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structureOne!.myNode.position, point2: structureTwo!.myNode.position))
+            let newSize = CGSize(width: PowerLine.lineWidth, height: getDistance(point1: structOneSprite!.node.position, point2: structTwoSprite!.node.position))
             let updateSize = SKAction.scale(to: newSize, duration: 0.0)
             powerLine.run(updateSize)
             
             // Rotate powerline
 //            let angleBetweenStructures = atan2(structureOne!.mySprite.position.x - structureTwo!.mySprite.position.x, structureTwo!.mySprite.position.y - structureOne!.mySprite.position.y)
-            let angleBetweenStructures = angleBetweenPoints(point1: structureOne!.myNode.position, point2: structureTwo!.myNode.position)
+            let angleBetweenStructures = angleBetweenPoints(point1: structOneSprite!.node.position, point2: structTwoSprite!.node.position)
             powerLine.zRotation = angleBetweenStructures
             
             collisionCheck()
