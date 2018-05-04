@@ -12,6 +12,7 @@
 		07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CC50200013C50015EFD3 /* ResourceViewMinerals.swift */; };
 		07D9DE031FFF621300D973BA /* ConstructionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D9DE021FFF621200D973BA /* ConstructionItem.swift */; };
 		3E51B8552BCA4D0D27DC1FB5 /* Pods_ShapeFrontier2DUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */; };
+		6FC859E2209C15200049606F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC859E1209C15200049606F /* Settings.swift */; };
 		B512A929206F2E6E005645B2 /* EnemyIndicatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512A928206F2E6E005645B2 /* EnemyIndicatorManager.swift */; };
 		B512A92C206F2F83005645B2 /* PlayerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512A92B206F2F83005645B2 /* PlayerEntity.swift */; };
 		B512A92E206F3785005645B2 /* EnemyIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512A92D206F3785005645B2 /* EnemyIndicator.swift */; };
@@ -116,6 +117,7 @@
 		35F15813B3CD4E6D834DF659 /* Pods-ShapeFrontier2DTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.release.xcconfig"; sourceTree = "<group>"; };
 		43370460BFAF11501C3F48B2 /* Pods_ShapeFrontier2DUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeFrontier2DTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FC859E1209C15200049606F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		740EF0DF7A3B0E10EADB72B0 /* Pods-ShapeFrontier2DUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DUITests/Pods-ShapeFrontier2DUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7E51DAEF21EC438F1B90F833 /* Pods-ShapeFrontier2DUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DUITests/Pods-ShapeFrontier2DUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8574490085407833AE3396D8 /* Pods-ShapeFrontier2D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.release.xcconfig"; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				B58501771FFF1018009C2F65 /* AppDelegate.swift */,
 				B585017F1FFF1018009C2F65 /* GameViewController.swift */,
 				B585017D1FFF1018009C2F65 /* GameScene.swift */,
+				6FC859E1209C15200049606F /* Settings.swift */,
 				B5321F3F2054AC7500C7580B /* GameScene_Extensions */,
 				B58501AB1FFF1421009C2F65 /* Player */,
 				B58501BA1FFF1CD1009C2F65 /* Entities */,
@@ -890,6 +893,7 @@
 				07C2CC4C1FFFEE6E0015EFD3 /* ResourceViewNode.swift in Sources */,
 				B512A92C206F2F83005645B2 /* PlayerEntity.swift in Sources */,
 				B58501C01FFF1D05009C2F65 /* AsteroidBig.swift in Sources */,
+				6FC859E2209C15200049606F /* Settings.swift in Sources */,
 				B51FBC76204B838F001BFFB4 /* HealthComponent.swift in Sources */,
 				B5321F432054AC9700C7580B /* GameScene_Power.swift in Sources */,
 			);
