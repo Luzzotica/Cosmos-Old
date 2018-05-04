@@ -22,15 +22,7 @@ class MissileCannon : Turret {
     
     override func setupStructure() {
         super.setupStructure()
-        
-        // setup health variables
-        health_max = 8
-        health_current = health_max
-        
-        // Missile turret
-        power_priority = 0
-        power_toBuild = 1
-        power_toUse = 8
+        power_toUse = 4
     }
     
     init(texture: SKTexture, team: Team) {
@@ -39,12 +31,10 @@ class MissileCannon : Turret {
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Missile Cannon"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: 50))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: MissileCannonValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
-        
-        range = sceneWidth * 0.8
         
         spriteComponent!.node.name! += "_missileCannon"
         
@@ -54,7 +44,7 @@ class MissileCannon : Turret {
         
         setupStructure()
         
-        let weapon = MissileCannonComponent(range: range, damage: 10.0, damageRate: 1.0, player: 1, targetPlayers: [666])
+        let weapon = MissileCannonComponent(range: MissileCannonValues.range, damage: MissileCannonValues.damage, damageRate: MissileCannonValues.damageRate, player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)
