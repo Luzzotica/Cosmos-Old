@@ -157,7 +157,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lastUpdateTime = currentTime
         if touches_disabled_timer > 0
         {
-            print(touches_disabled_timer)
             touches_disabled_timer -= delta
         }
         
