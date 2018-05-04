@@ -107,7 +107,12 @@ class Structure : GKEntity {
     
     func recycle() {
         gameScene.minerals_current += Int(CGFloat(constructionCost) * 0.75)
-        EntityManager.shared.remove(self)
+        
+        // Get his health component
+        if let healthComponent = component(ofType: HealthComponent.self) {
+            // Call death on it
+            healthComponent.death()
+        }
     }
     
     func tick() {
@@ -186,9 +191,7 @@ class Structure : GKEntity {
         }
     }
     
-    /*
-    CONNECTION FUNCTIONS
-    */
+    // MARK: - Connection Functions
     
     func connection_findMasters() {
 //        print("Finding wrong master")
@@ -270,7 +273,7 @@ class Structure : GKEntity {
         spriteComponent.node.physicsBody?.contactTestBitMask = CollisionType.Structure
         spriteComponent.node.physicsBody?.collisionBitMask = CollisionType.Nothing
         
-        spriteComponent.spriteNode.zPosition = Layer.Player
+        spriteComponent.node.zPosition = Layer.Player
         
         spriteComponent.node.name! += "_structure"
     }

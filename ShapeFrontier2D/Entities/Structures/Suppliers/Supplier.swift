@@ -289,6 +289,9 @@ class Supplier : Structure {
         }
         
         connection_findMasters()
+        
+        // Deselect our man
+        deselect()
     }
     
     // This function is called by the powerline

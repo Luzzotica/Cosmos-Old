@@ -11,7 +11,7 @@ import GameplayKit
 
 class LaserTurret : WeaponComponent {
     
-    let width : CGFloat = 10.0
+    let width : CGFloat = 3.0
     
     override init(range: CGFloat, damage: CGFloat, damageRate: CGFloat, player: Int, targetPlayers: [Int]) {
         super.init(range: range, damage: damage, damageRate: damageRate, player: player, targetPlayers: targetPlayers)
@@ -43,7 +43,6 @@ class LaserTurret : WeaponComponent {
             }
             
             // Create a lazer!
-            print("LASER")
             let _ = Laser(entOne: entity!, entTwo: targetEntity!, color: .yellow, width: width)
         }
         

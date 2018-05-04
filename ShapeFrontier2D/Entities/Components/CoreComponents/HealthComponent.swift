@@ -103,6 +103,7 @@ class HealthComponent: GKComponent {
             
             // Move it to where the structure is
             deathAnim?.position = healthBar.parent!.position
+            deathAnim?.zPosition = Layer.DeathAnimation
             
             // Add the particle to the root
             root.addChild(deathAnim!)

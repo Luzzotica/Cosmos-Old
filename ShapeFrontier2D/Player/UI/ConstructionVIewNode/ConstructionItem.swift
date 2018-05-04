@@ -21,10 +21,11 @@ class ConstructionItem: NSObject {
         // Get his spriteComponent and name!
         let spriteComponent = structure.component(ofType: SpriteComponent.self)
         buildingSprite = spriteComponent?.spriteNode
+        buildingSprite.zPosition = Layer.UI
         buildingSprite.removeFromParent()
         
         // Set his name, this is how we recognize him!
-        print(buildingSprite.name, spriteComponent!.node.name)
+//        print(buildingSprite.name, spriteComponent!.node.name)
         buildingSprite.name = spriteComponent!.node.name! + "_constructor"
     }
     

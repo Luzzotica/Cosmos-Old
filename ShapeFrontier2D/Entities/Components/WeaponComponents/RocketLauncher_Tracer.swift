@@ -68,7 +68,6 @@ class RocketLauncher_Tracer: WeaponComponent {
             let direction = (enemySpriteComponent.node.position - spriteComponent.node.position).normalized()
             
             missileSpriteComponent.spriteNode.zRotation = direction.angle
-            missileSpriteComponent.spriteNode.zPosition = 1
             
             EntityManager.shared.add(missile)
         }

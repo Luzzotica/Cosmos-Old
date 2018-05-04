@@ -52,10 +52,11 @@ class Laser : NSObject {
         laser = SKShapeNode(path: path)
         laser?.strokeColor = color
         laser?.lineWidth = width
+        laser?.zPosition = 5
         
         // Put a ball at the end of the line
-        let ball = SKShapeNode(circleOfRadius: width * 2.0)
-        ball.fillColor = .green
+        let ball = SKShapeNode(circleOfRadius: width * 1.5)
+        ball.fillColor = color
         ball.strokeColor = .clear
         ball.position = pointTwo - pointOne
         laser?.addChild(ball)

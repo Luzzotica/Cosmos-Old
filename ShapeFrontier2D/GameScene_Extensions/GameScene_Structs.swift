@@ -20,6 +20,7 @@ struct Layer {
     static let Enemies: CGFloat = 50
     static let Asteroids: CGFloat = 5
     static let Projectiles: CGFloat = 75
+    static let DeathAnimation: CGFloat = 70
 }
 
 struct CollisionType {

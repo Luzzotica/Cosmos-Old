@@ -121,7 +121,7 @@ extension GameScene {
         toBuild = nil
         toBuildNode = nil
         toBuildSprite = nil
-        isValidSpot = true
+        isValidSpot = false
         isBuilding = false
     }
     
@@ -132,7 +132,7 @@ extension GameScene {
         for targetStructure in player_structures {
             // Get the target structure sprite
             let targetSpriteComponent = targetStructure.component(ofType: SpriteComponent.self)
-            let targetSprite = targetSpriteComponent!.spriteNode
+            let targetSprite = targetSpriteComponent!.node
             
             // If he is a supplier, he can link to all people in range
             if isSupplier {

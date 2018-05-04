@@ -28,8 +28,6 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
         if self.target != nil {
             behavior.setWeight(1, for: GKGoal(toInterceptAgent: target, maxPredictionTime: 0.0))
             behavior.setWeight(5, for: GKGoal(toReachTargetSpeed: maxSpeed))
-            
-            
         }
         
         // Add the behavior to our agent
@@ -43,7 +41,6 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
         }
         
         position = float2(spriteComponent.node.position)
-        
     }
     
     func agentDidUpdate(_ agent: GKAgent) {
@@ -57,6 +54,9 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
         spriteComponent.spriteNode.zRotation = CGFloat(rotation - .pi/2.0)
         
         // Get target sprite component
+        if target == nil {
+            return
+        }
         guard let targetSprite = target?.entity?.component(ofType: SpriteComponent.self) else {
             return
         }

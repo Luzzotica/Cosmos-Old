@@ -64,7 +64,6 @@ class RocketLauncher_Linear: WeaponComponent {
             let duration = missileDistance / missilePointsPerSecond
             
             missileSpriteComponent.spriteNode.zRotation = direction.angle
-            missileSpriteComponent.spriteNode.zPosition = 1
             
             missileSpriteComponent.node.run(SKAction.sequence([
                 SKAction.moveBy(x: targetPosition.x, y: targetPosition.y, duration: TimeInterval(duration)),
