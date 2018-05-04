@@ -26,6 +26,11 @@ extension PlayerHUD {
     }
     
     func buttonPressedUp(_ touchedNodes: [SKNode], location: CGPoint) {
+        if touchedNodes.count == 0 {
+            print("Got here? Not really possible...")
+            return
+        }
+        
         var functionToRun: (() -> Void)?
         var tappedEntity: GKEntity?
         

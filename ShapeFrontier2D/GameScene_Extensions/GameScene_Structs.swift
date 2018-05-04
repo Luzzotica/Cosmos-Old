@@ -14,6 +14,7 @@ struct Layer {
     static let Background2: CGFloat = -4
     static let Background3: CGFloat = -3
     static let Overlay: CGFloat = 150
+    static let InGameUI: CGFloat = 90
     static let UI: CGFloat = 100
     static let Powerup: CGFloat = 8
     static let Player: CGFloat = 25

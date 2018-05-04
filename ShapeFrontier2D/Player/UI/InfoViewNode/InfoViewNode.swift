@@ -105,15 +105,15 @@ class InfoViewNode : SKNode {
             structureImageTwo.texture = nil
             
         }
-        else if let asteroid = currentEntity.component(ofType: AsteroidComponent.self) {
-            healthLabel.text = "Minerals: \(asteroid.minerals_current)/\(asteroid.minerals_max)"
+        else if let asteroidComponent = currentEntity.component(ofType: AsteroidComponent.self) {
+            healthLabel.text = "Minerals: \(asteroidComponent.minerals_current)/\(asteroidComponent.minerals_max)"
             // If our currentEntity has no child, and he is an asteroid
-            let gas = currentSprite.children[0] as! SKSpriteNode
+            let gas = asteroidComponent.gasSprite
             structureImageTwo.texture = gas.texture
             
             structureImageTwo.alpha =
-                CGFloat(asteroid.minerals_current) /
-                CGFloat(asteroid.minerals_current)
+                CGFloat(asteroidComponent.minerals_current) /
+                CGFloat(asteroidComponent.minerals_current)
         }
         
         // When we have attack components, this will help

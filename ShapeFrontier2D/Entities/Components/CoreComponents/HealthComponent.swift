@@ -38,7 +38,7 @@ class HealthComponent: GKComponent {
         healthBar.fillColor = UIColor.green
         healthBar.strokeColor = UIColor.green
         healthBar.position = CGPoint(x: 0, y: barOffset)
-        healthBar.zPosition = 2
+        healthBar.zPosition = Layer.InGameUI - parentNode.zPosition
         healthBarShow = showHealth
         
         // Add him to the parent and hide him
