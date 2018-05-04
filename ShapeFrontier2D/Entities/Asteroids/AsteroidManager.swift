@@ -16,7 +16,6 @@ class AsteroidManager : NSObject {
     
     func createAsteroidCluster(atPoint: CGPoint, mineralCap: Int) -> [Asteroid] {
         var cluster : [Asteroid] = []
-        var clusterSprites : [SKNode] = []
         
         let clusterRadius = Int(sceneWidth * 2.0)
         
@@ -33,9 +32,7 @@ class AsteroidManager : NSObject {
             let y = atPoint.y + CGFloat((sin(angle) * Double(radius)))
             
             // Create the asteroid at the point, add it to the cluster
-            let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y))
-            asteroid.mySprite.zRotation = CGFloat(angle)
-            clusterSprites.append(asteroid.mySprite)
+            let asteroid = createAsteroid(minerals: minerals, atPoint: CGPoint(x: x, y: y), withAngle: CGFloat(angle))
             
             // Add it to the clusternode
             cluster.append(asteroid)
@@ -47,7 +44,7 @@ class AsteroidManager : NSObject {
         return cluster
     }
     
-    func createAsteroid(minerals: Int, atPoint: CGPoint) -> Asteroid {
+    func createAsteroid(minerals: Int, atPoint: CGPoint, withAngle: CGFloat) -> Asteroid {
         
         let smallThreshold = 2000
         let mediumThreshold = 4000
@@ -55,25 +52,34 @@ class AsteroidManager : NSObject {
         let textures = getRandomAsteroid()
         if minerals < smallThreshold {
             let asteroid = AsteroidSmall(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.myNode.position = atPoint
+            
+            let spriteComponent = asteroid.component(ofType: SpriteComponent.self)
+            spriteComponent!.node.position = atPoint
+            spriteComponent!.spriteNode.zRotation = withAngle
             if let obstacleComponent = asteroid.component(ofType: ObstacleComponent.self) {
-                obstacleComponent.obstacle.position = float2(asteroid.myNode.position)
+                obstacleComponent.obstacle.position = float2(spriteComponent!.node.position)
             }
             return asteroid
         }
         else if minerals < mediumThreshold {
             let asteroid = AsteroidMedium(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.myNode.position = atPoint
+            
+            let spriteComponent = asteroid.component(ofType: SpriteComponent.self)
+            spriteComponent!.node.position = atPoint
+            spriteComponent!.spriteNode.zRotation = withAngle
             if let obstacleComponent = asteroid.component(ofType: ObstacleComponent.self) {
-                obstacleComponent.obstacle.position = float2(asteroid.myNode.position)
+                obstacleComponent.obstacle.position = float2(spriteComponent!.node.position)
             }
             return asteroid
         }
         else {
             let asteroid = AsteroidBig(texture: textures.asteroidTexture, gasTexture: textures.gasTexture, minerals: minerals)
-            asteroid.myNode.position = atPoint
+            
+            let spriteComponent = asteroid.component(ofType: SpriteComponent.self)
+            spriteComponent!.node.position = atPoint
+            spriteComponent!.spriteNode.zRotation = withAngle
             if let obstacleComponent = asteroid.component(ofType: ObstacleComponent.self) {
-                obstacleComponent.obstacle.position = float2(asteroid.myNode.position)
+                obstacleComponent.obstacle.position = float2(spriteComponent!.node.position)
             }
             return asteroid
         }

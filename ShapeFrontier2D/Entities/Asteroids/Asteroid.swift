@@ -12,31 +12,27 @@ import GameplayKit
 
 class Asteroid : GKEntity {
     
-    var mySprite: SKSpriteNode!
-    var myNode: SKNode!
     var gasSprite : SKSpriteNode?
     
     init(texture: SKTexture, gasTexture: SKTexture, size: CGSize, minerals: Int) {
         super.init()
         
         let spriteComponent = SpriteComponent(entity: self, texture: texture, size: size)
-        mySprite = spriteComponent.spriteNode
-        myNode = spriteComponent.node
         
-        myNode.physicsBody?.isDynamic = false
-        myNode.physicsBody?.categoryBitMask = CollisionType.Asteroid
-        myNode.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.Enemy
-        myNode.physicsBody?.collisionBitMask = CollisionType.Nothing
+        spriteComponent.node.physicsBody?.isDynamic = false
+        spriteComponent.node.physicsBody?.categoryBitMask = CollisionType.Asteroid
+        spriteComponent.node.physicsBody?.contactTestBitMask = CollisionType.Structure | CollisionType.Enemy
+        spriteComponent.node.physicsBody?.collisionBitMask = CollisionType.Nothing
         
-        mySprite.zPosition = Layer.Asteroids
+        spriteComponent.node.zPosition = Layer.Asteroids
         
-        myNode.name = "entity"
-        myNode.name! += "_asteroid"
+        spriteComponent.node.name = "entity"
+        spriteComponent.node.name! += "_asteroid"
         
-        let gasSpriteSize = CGSize(width: mySprite.size.width * 0.9, height: mySprite.size.height * 0.9)
+        let gasSpriteSize = CGSize(width: spriteComponent.spriteNode.size.width * 0.9, height: spriteComponent.spriteNode.size.height * 0.9)
         gasSprite = SKSpriteNode(texture: gasTexture, color: .clear, size: gasSpriteSize)
         gasSprite?.zPosition = -1
-        mySprite.addChild(gasSprite!)
+        spriteComponent.node.addChild(gasSprite!)
         
         addComponent(spriteComponent)
         addComponent(AsteroidComponent(minerals: minerals, gasSprite: gasSprite!))
@@ -46,7 +42,7 @@ class Asteroid : GKEntity {
         addComponent(EntityTypeComponent(type: Type.asteroid))
         
         // Obstacle component so that the unit will avoid it!
-        addComponent(ObstacleComponent(position: float2(mySprite!.position),
+        addComponent(ObstacleComponent(position: float2(spriteComponent.node.position),
                                        radius: Float(size.width * 0.5)))
     }
     

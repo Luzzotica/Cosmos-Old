@@ -53,6 +53,9 @@ extension PlayerHUD {
             else if touchedNodes[i].name == "button_destroy" {
                 functionToRun = destroySelectedStructure
             }
+            else if touchedNodes[i].name == "button_new_wave" {
+                functionToRun = spawnWave
+            }
             else if touchedNodes[i].name!.contains("entity") && !(touchedNodes[i].name!.contains("constructor")) {
                 //print("touched a node! Function is: \(functionToRun)")
                 // Check if we tapped on an entity
@@ -73,6 +76,10 @@ extension PlayerHUD {
             // If we tapped on nothing, display the construction view on the bottom
             displayConstruction()
         }
+    }
+    
+    func spawnWave() {
+        gameScene.spawnWave()
     }
     
     func pauseGame() {

@@ -66,17 +66,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player_suppliers.append(firstReactor)
         EntityManager.shared.add(firstReactor)
         
-        let enemies = EnemyManager.shared.spawnWave()
-
-        for enemy in enemies {
-            EntityManager.shared.add(enemy)
-        }
+        spawnWave()
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
         view.addGestureRecognizer(pinch)
     }
     
+    func spawnWave() {
+        let enemies = EnemyManager.shared.spawnWave()
+        
+        for enemy in enemies {
+            EntityManager.shared.add(enemy)
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
