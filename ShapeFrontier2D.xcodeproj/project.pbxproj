@@ -83,6 +83,8 @@
 		B589E995206738F80083FAC5 /* ContactComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E993206738F80083FAC5 /* ContactComponent.swift */; };
 		B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99620673AB70083FAC5 /* Missile_Linear.swift */; };
 		B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99820686A450083FAC5 /* EntityTypeComponent.swift */; };
+		B58A49DE209C165300EA3A9F /* BuildComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A49DD209C165300EA3A9F /* BuildComponent.swift */; };
+		B58A49E0209C1AAD00EA3A9F /* StructureValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */; };
 		B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCCF2094F766001CA502 /* StructureDeath.sks */; };
 		B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCD02094F766001CA502 /* Assets.xcassets */; };
 		B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */; };
@@ -190,6 +192,8 @@
 		B589E993206738F80083FAC5 /* ContactComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactComponent.swift; sourceTree = "<group>"; };
 		B589E99620673AB70083FAC5 /* Missile_Linear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile_Linear.swift; sourceTree = "<group>"; };
 		B589E99820686A450083FAC5 /* EntityTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTypeComponent.swift; sourceTree = "<group>"; };
+		B58A49DD209C165300EA3A9F /* BuildComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildComponent.swift; sourceTree = "<group>"; };
+		B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureValues.swift; sourceTree = "<group>"; };
 		B5A8CCCF2094F766001CA502 /* StructureDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StructureDeath.sks; sourceTree = "<group>"; };
 		B5A8CCD02094F766001CA502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseCannonComponent.swift; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 		B58501CB1FFF45FD009C2F65 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				B58A49DD209C165300EA3A9F /* BuildComponent.swift */,
 				B51FBC7A204B89F3001BFFB4 /* StructureSizes.swift */,
 				B58501CC1FFF4612009C2F65 /* Structure.swift */,
 				B58501D21FFF6932009C2F65 /* Miner.swift */,
@@ -491,6 +496,7 @@
 				B58501E5200049E4009C2F65 /* Turrets */,
 				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
 				B5A8CCD02094F766001CA502 /* Assets.xcassets */,
+				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -846,6 +852,7 @@
 				B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
 				B51FBC7B204B89F3001BFFB4 /* StructureSizes.swift in Sources */,
+				B58A49DE209C165300EA3A9F /* BuildComponent.swift in Sources */,
 				07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */,
 				B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */,
 				B51FBC28204B2B46001BFFB4 /* EnemyManager.swift in Sources */,
@@ -867,6 +874,7 @@
 				B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */,
 				B5321F472054B02D00C7580B /* PlayerComponent.swift in Sources */,
 				B512A929206F2E6E005645B2 /* EnemyIndicatorManager.swift in Sources */,
+				B58A49E0209C1AAD00EA3A9F /* StructureValues.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,
 				B5546E28204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift in Sources */,
 				B58501E32000397A009C2F65 /* PowerLine.swift in Sources */,
