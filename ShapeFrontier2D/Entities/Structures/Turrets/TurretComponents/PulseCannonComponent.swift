@@ -34,6 +34,11 @@ class PulseCannonComponent : StructureWeaponComponent {
         
         // If we have a target, attack him!
         if targetEntity != nil {
+            // Check if we have power, if we don't stop
+            if !structureHasPower() {
+                return
+            }
+            
             // Update last time
             lastDamageTime = CACurrentMediaTime()
             

@@ -11,7 +11,7 @@ import GameplayKit
 
 class TraceComponent : GKAgent2D, GKAgentDelegate {
     
-    weak var target : GKAgent2D?
+    var target : GKAgent2D?
     
     init(maxSpeed: Float, maxAcceleration: Float, radius: Float, target: GKAgent2D) {
         self.target = target
@@ -55,14 +55,12 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
         spriteComponent.spriteNode.zRotation = CGFloat(rotation - .pi/2.0)
         
         // Get target sprite component
-        if target == nil {
-            return
-        }
         guard let targetSprite = target?.entity?.component(ofType: SpriteComponent.self) else {
             return
         }
         
         if targetSprite.node.parent == nil {
+            target = nil
             EntityManager.shared.remove(entity!)
         }
         

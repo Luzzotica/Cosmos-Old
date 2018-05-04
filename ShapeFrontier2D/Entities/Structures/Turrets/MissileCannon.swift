@@ -30,7 +30,7 @@ class MissileCannon : Turret {
         // Missile turret
         power_priority = 0
         power_toBuild = 1
-        power_toUse = 1
+        power_toUse = 8
     }
     
     init(texture: SKTexture, team: Team) {

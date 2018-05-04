@@ -29,8 +29,7 @@ class PulseLaser : Turret {
         // Reactor power priority is low, doesn't need power...
         power_priority = 0
         power_toBuild = 1
-        power_toUse = 1
-        
+        power_toUse = 4
     }
     
     init(texture: SKTexture, team: Team) {

@@ -19,7 +19,7 @@ class StructureWeaponComponent : GKComponent {
     let player : Int
     let targetPlayers : [Int]
     
-    var power_toUse : Int
+    var targetTypes : Set<Type> = Set()
     
     weak var targetEntity : GKEntity?
     
@@ -40,8 +40,15 @@ class StructureWeaponComponent : GKComponent {
         }
     }
     
-    func canShoot() -> Bool {
-        
+    func structureHasPower() -> Bool {
+        // Cast our entity to a turret
+        if let structure = entity as? Turret {
+            // Make sure it has power
+            return structure.canShoot()
+        }
+        else {
+            return false
+        }
     }
     
     func currentTargetValid(currentPos: CGPoint) -> Bool {
