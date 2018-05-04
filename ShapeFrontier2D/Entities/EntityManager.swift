@@ -37,7 +37,8 @@ class EntityManager {
         let rocketSystem_Linear = GKComponentSystem(componentClass: RocketLauncher_Linear.self)
         let rocketSystem_Tracer = GKComponentSystem(componentClass: RocketLauncher_Tracer.self)
         let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
-        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem]
+        let pulseCannonSystem = GKComponentSystem(componentClass: LaserTurret.self)
+        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem]
     }()
     
     func addPlayer(_ player: PlayerEntity) {

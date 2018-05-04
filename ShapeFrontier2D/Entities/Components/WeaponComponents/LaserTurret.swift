@@ -43,6 +43,7 @@ class LaserTurret : WeaponComponent {
             }
             
             // Create a lazer!
+            print("LASER")
             let _ = Laser(entOne: entity!, entTwo: targetEntity!, color: .yellow, width: width)
         }
         
