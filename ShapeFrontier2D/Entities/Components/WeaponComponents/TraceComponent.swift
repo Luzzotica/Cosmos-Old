@@ -44,6 +44,9 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
     }
     
     func agentDidUpdate(_ agent: GKAgent) {
+        if target == nil {
+            return
+        }
         
         // Need to update the sprite after the agent has executed his actions
         guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
