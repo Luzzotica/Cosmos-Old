@@ -9,13 +9,19 @@
 import Foundation
 import SpriteKit
 
+struct StructureSize {
+    static let large = CGSize(width: sceneWidth * 0.09, height: sceneWidth * 0.09)
+    static let small = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.05)
+    static let node = CGSize(width: sceneWidth * 0.015, height: sceneWidth * 0.03)
+}
+
 struct MinerValues {
     static let maxHealth : CGFloat = 25
     static let power_toBuild : Int = 1
     static let power_toUse : Int = 5
     
     static let range : CGFloat = sceneWidth * 0.2
-    static let damage : CGFloat = 10
+    static let damage : Int = 10
     static let damageRate : CGFloat = 1.0
 }
 

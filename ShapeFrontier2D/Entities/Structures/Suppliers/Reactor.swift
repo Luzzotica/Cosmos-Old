@@ -19,14 +19,14 @@ class Reactor : Supplier {
             return
         }
         
-        if power_current < power_capacity
+        if power_current < ReactorValues.power_capacity
         {
             power_current += powerProvided
             // If the power is greater than his capacity, then we cap it, and add to the game scene what was added
-            if power_current > power_capacity {
-                let powerOver = power_current - power_capacity
+            if power_current > ReactorValues.power_capacity {
+                let powerOver = power_current - ReactorValues.power_capacity
                 gameScene.power_add(toAdd: powerProvided - powerOver)
-                power_current = power_capacity
+                power_current = ReactorValues.power_capacity
             }
             else {
                 gameScene.power_add(toAdd: powerProvided)
@@ -58,7 +58,7 @@ class Reactor : Supplier {
         super.didDied()
         
         // Make sure the game scene power is updated when a reactor is destroyed
-        gameScene.player_powerCapacity -= power_capacity
+        gameScene.player_powerCapacity -= ReactorValues.power_capacity
         gameScene.player_powerCurrent -= power_current
     }
     

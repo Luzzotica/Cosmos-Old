@@ -28,7 +28,6 @@
 		B51FBC74204B824C001BFFB4 /* MoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC73204B824C001BFFB4 /* MoveComponent.swift */; };
 		B51FBC76204B838F001BFFB4 /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC75204B838F001BFFB4 /* HealthComponent.swift */; };
 		B51FBC79204B8597001BFFB4 /* TeamComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC78204B8597001BFFB4 /* TeamComponent.swift */; };
-		B51FBC7B204B89F3001BFFB4 /* StructureSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC7A204B89F3001BFFB4 /* StructureSizes.swift */; };
 		B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */; };
 		B5321F412054AC8800C7580B /* GameScene_Construction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5321F402054AC8800C7580B /* GameScene_Construction.swift */; };
 		B5321F432054AC9700C7580B /* GameScene_Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5321F422054AC9700C7580B /* GameScene_Power.swift */; };
@@ -139,7 +138,6 @@
 		B51FBC73204B824C001BFFB4 /* MoveComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveComponent.swift; sourceTree = "<group>"; };
 		B51FBC75204B838F001BFFB4 /* HealthComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
 		B51FBC78204B8597001BFFB4 /* TeamComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamComponent.swift; sourceTree = "<group>"; };
-		B51FBC7A204B89F3001BFFB4 /* StructureSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureSizes.swift; sourceTree = "<group>"; };
 		B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveBehavior.swift; sourceTree = "<group>"; };
 		B5321F402054AC8800C7580B /* GameScene_Construction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene_Construction.swift; sourceTree = "<group>"; };
 		B5321F422054AC9700C7580B /* GameScene_Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene_Power.swift; sourceTree = "<group>"; };
@@ -489,14 +487,13 @@
 			isa = PBXGroup;
 			children = (
 				B58A49DD209C165300EA3A9F /* BuildComponent.swift */,
-				B51FBC7A204B89F3001BFFB4 /* StructureSizes.swift */,
+				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 				B58501CC1FFF4612009C2F65 /* Structure.swift */,
 				B58501D21FFF6932009C2F65 /* Miner.swift */,
 				B58501E4200049D9009C2F65 /* Suppliers */,
 				B58501E5200049E4009C2F65 /* Turrets */,
 				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
 				B5A8CCD02094F766001CA502 /* Assets.xcassets */,
-				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -851,7 +848,6 @@
 				B58501DD1FFFD1FA009C2F65 /* TextureManager.swift in Sources */,
 				B56DC728202F7476002F21E2 /* PlayerHUDExt_Decor.swift in Sources */,
 				B58501CF1FFF4F6C009C2F65 /* Reactor.swift in Sources */,
-				B51FBC7B204B89F3001BFFB4 /* StructureSizes.swift in Sources */,
 				B58A49DE209C165300EA3A9F /* BuildComponent.swift in Sources */,
 				07C2CC51200013C50015EFD3 /* ResourceViewMinerals.swift in Sources */,
 				B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */,

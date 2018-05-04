@@ -47,7 +47,7 @@ class Miner : Structure {
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
                     let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
-                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: damage)
+                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: MinerValues.damage)
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
                 }
                 else {
