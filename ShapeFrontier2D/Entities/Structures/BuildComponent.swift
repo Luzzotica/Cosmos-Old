@@ -24,8 +24,22 @@ class BuildComponent: GKComponent {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        currentTime += seconds
+        // Call the super update
+        super.update(deltaTime: seconds)
         
+        // Keep track of time passed
+        // If its been our tick time, we update!
+        currentTime += seconds
+        if currentTime < GameValues.TickTime {
+            return
+        }
+        currentTime = 0
+        
+        // Build our structure!
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }

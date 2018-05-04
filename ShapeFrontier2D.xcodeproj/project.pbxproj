@@ -84,6 +84,7 @@
 		B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99620673AB70083FAC5 /* Missile_Linear.swift */; };
 		B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99820686A450083FAC5 /* EntityTypeComponent.swift */; };
 		B58A49DE209C165300EA3A9F /* BuildComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A49DD209C165300EA3A9F /* BuildComponent.swift */; };
+		B58A49E0209C1AAD00EA3A9F /* StructureValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */; };
 		B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCCF2094F766001CA502 /* StructureDeath.sks */; };
 		B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCD02094F766001CA502 /* Assets.xcassets */; };
 		B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */; };
@@ -192,6 +193,7 @@
 		B589E99620673AB70083FAC5 /* Missile_Linear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile_Linear.swift; sourceTree = "<group>"; };
 		B589E99820686A450083FAC5 /* EntityTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTypeComponent.swift; sourceTree = "<group>"; };
 		B58A49DD209C165300EA3A9F /* BuildComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildComponent.swift; sourceTree = "<group>"; };
+		B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureValues.swift; sourceTree = "<group>"; };
 		B5A8CCCF2094F766001CA502 /* StructureDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StructureDeath.sks; sourceTree = "<group>"; };
 		B5A8CCD02094F766001CA502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseCannonComponent.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				B58501E5200049E4009C2F65 /* Turrets */,
 				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
 				B5A8CCD02094F766001CA502 /* Assets.xcassets */,
+				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -871,6 +874,7 @@
 				B58501DF1FFFE7A0009C2F65 /* ConstructionViewNode.swift in Sources */,
 				B5321F472054B02D00C7580B /* PlayerComponent.swift in Sources */,
 				B512A929206F2E6E005645B2 /* EnemyIndicatorManager.swift in Sources */,
+				B58A49E0209C1AAD00EA3A9F /* StructureValues.swift in Sources */,
 				B58501B11FFF1440009C2F65 /* UIHandler.swift in Sources */,
 				B5546E28204B112300E3DC68 /* SoundHandler_BackgroundMusic.swift in Sources */,
 				B58501E32000397A009C2F65 /* PowerLine.swift in Sources */,

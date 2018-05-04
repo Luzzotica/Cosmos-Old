@@ -63,15 +63,8 @@ class Structure : GKEntity {
     }
     
     func build() {
-        // Current way is to add to health the powerToBuild
-        health_current += power_toBuild
-        
-        // Once health is full, cap it, and make it done building
-        if health_current >= health_max {
-            health_current = health_max
-            underConstruction = false
-            
-        }
+        // 1. Draw power, if it exists
+        // 2. Add health based on tick percentage
     }
     
     func select() {

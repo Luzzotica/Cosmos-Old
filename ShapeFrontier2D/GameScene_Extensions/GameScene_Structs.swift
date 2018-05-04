@@ -38,4 +38,5 @@ struct CollisionType {
 
 struct GameValues {
     static let TouchDelay: TimeInterval = 0.25
+    static let TickTime: TimeInterval = 0.5
 }
