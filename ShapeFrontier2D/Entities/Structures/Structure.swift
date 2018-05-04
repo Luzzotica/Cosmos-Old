@@ -119,9 +119,7 @@ class Structure : GKEntity {
         power_handleOverlay()
     }
     
-     /*
-     POWERRRR FUNCTIONS
-     */
+    // MARK: - POWERRRR FUNCTIONS
     
     func power_update() {
         if power_current < power_toUse {

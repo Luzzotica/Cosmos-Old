@@ -88,6 +88,12 @@ class PowerLine : NSObject {
         let structOneSprite = structureOne!.component(ofType: SpriteComponent.self)
         let structTwoSprite = structureTwo!.component(ofType: SpriteComponent.self)
         
+        // Check and see if the target has no parent
+        if structOneSprite!.node.parent == nil || structTwoSprite!.node.parent == nil  {
+            destroySelf()
+            return
+        }
+        
         if withinDistance(point1: structOneSprite!.node.position,
                           point2: structTwoSprite!.node.position,
                           distance: PowerLine.range_max).0

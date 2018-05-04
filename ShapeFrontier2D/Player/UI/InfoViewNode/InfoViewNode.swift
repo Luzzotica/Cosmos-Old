@@ -49,12 +49,6 @@ class InfoViewNode : SKNode {
         }
     }
     
-    func selectEntity() {
-        if currentEntity != nil {
-            
-        }
-    }
-    
     func displayInfo(entity: GKEntity) {
         
         // If there was a node before we tapped, then we should color him back to normal...
