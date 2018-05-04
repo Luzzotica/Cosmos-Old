@@ -9,7 +9,7 @@
 import Foundation
 import GameplayKit
 
-class WeaponComponent : GKComponent {
+class StructureWeaponComponent : GKComponent {
     
     let range : CGFloat
     let damage : CGFloat
@@ -19,7 +19,7 @@ class WeaponComponent : GKComponent {
     let player : Int
     let targetPlayers : [Int]
     
-    var targetTypes : Set<Type> = Set()
+    var power_toUse : Int
     
     weak var targetEntity : GKEntity?
     
@@ -38,6 +38,10 @@ class WeaponComponent : GKComponent {
         for type in types {
             targetTypes.insert(type)
         }
+    }
+    
+    func canShoot() -> Bool {
+        
     }
     
     func currentTargetValid(currentPos: CGPoint) -> Bool {

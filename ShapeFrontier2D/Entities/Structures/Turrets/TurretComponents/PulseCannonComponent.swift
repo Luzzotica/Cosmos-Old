@@ -9,7 +9,7 @@
 import Foundation
 import GameplayKit
 
-class LaserTurret : WeaponComponent {
+class PulseCannonComponent : StructureWeaponComponent {
     
     let width : CGFloat = 3.0
     

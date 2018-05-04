@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class RocketLauncher_Linear: WeaponComponent {
+class RocketLauncher_Linear: StructureWeaponComponent {
     
     override init(range: CGFloat, damage: CGFloat, damageRate: CGFloat, player: Int, targetPlayers: [Int]) {
         super.init(range: range, damage: damage, damageRate: damageRate, player: player, targetPlayers: targetPlayers)

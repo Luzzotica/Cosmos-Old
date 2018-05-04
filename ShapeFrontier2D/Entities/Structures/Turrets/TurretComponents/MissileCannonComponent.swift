@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class RocketLauncher_Tracer: WeaponComponent {
+class MissileCannonComponent: StructureWeaponComponent {
     
     let missileSpeed : Float = 100
     let missileAccel : Float = 1000

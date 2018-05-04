@@ -54,7 +54,7 @@ class PulseLaser : Turret {
         
         setupStructure()
         
-        let weapon = LaserTurret(range: range, damage: 5.0, damageRate: 0.5, player: 1, targetPlayers: [666])
+        let weapon = PulseCannonComponent(range: range, damage: 5.0, damageRate: 0.5, player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)

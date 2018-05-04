@@ -35,9 +35,9 @@ class EntityManager {
         let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
         let contactSystem = GKComponentSystem(componentClass: ContactComponent.self)
         let rocketSystem_Linear = GKComponentSystem(componentClass: RocketLauncher_Linear.self)
-        let rocketSystem_Tracer = GKComponentSystem(componentClass: RocketLauncher_Tracer.self)
+        let rocketSystem_Tracer = GKComponentSystem(componentClass: MissileCannonComponent.self)
         let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
-        let pulseCannonSystem = GKComponentSystem(componentClass: LaserTurret.self)
+        let pulseCannonSystem = GKComponentSystem(componentClass: PulseCannonComponent.self)
         return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem]
     }()
     

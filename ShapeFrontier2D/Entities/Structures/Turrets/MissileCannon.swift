@@ -16,6 +16,7 @@ class MissileCannon : Turret {
         super.build()
         
         if !underConstruction {
+            
         }
     }
     
@@ -26,7 +27,7 @@ class MissileCannon : Turret {
         health_max = 8
         health_current = health_max
         
-        // Reactor power priority is low, doesn't need power...
+        // Missile turret
         power_priority = 0
         power_toBuild = 1
         power_toUse = 1
@@ -53,7 +54,7 @@ class MissileCannon : Turret {
         
         setupStructure()
         
-        let weapon = RocketLauncher_Tracer(range: range, damage: 10.0, damageRate: 1.0, player: 1, targetPlayers: [666])
+        let weapon = MissileCannonComponent(range: range, damage: 10.0, damageRate: 1.0, player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)
