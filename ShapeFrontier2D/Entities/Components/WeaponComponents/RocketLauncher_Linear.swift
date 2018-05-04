@@ -32,7 +32,7 @@ class RocketLauncher_Linear: WeaponComponent {
         
         // If the current target is invalid, then we get a new one
         if !currentTargetValid(currentPos: spriteComponent.node.position) {
-            getClosestEnemy()
+            getClosestEnemyInRange()
         }
         
         // If we have a target, attack him!

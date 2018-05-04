@@ -11,8 +11,8 @@ import SpriteKit
 
 class ConstructionItem: NSObject {
     
-	private var nameLabel : SKLabelNode = SKLabelNode()
-	
+    private var nameLabel : SKLabelNode = SKLabelNode()
+    
     var buildingSprite : SKSpriteNode!
     
     init(_ structure: Structure) {

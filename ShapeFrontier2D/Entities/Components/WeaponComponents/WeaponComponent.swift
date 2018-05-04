@@ -21,7 +21,7 @@ class WeaponComponent : GKComponent {
     
     var targetTypes : Set<Type> = Set()
     
-    var targetEntity : GKEntity?
+    weak var targetEntity : GKEntity?
     
     init(range: CGFloat, damage: CGFloat, damageRate: CGFloat, player: Int, targetPlayers: [Int]) {
         self.range = range
@@ -51,26 +51,27 @@ class WeaponComponent : GKComponent {
             let wiggleRoom = CGFloat(5)
             // If it's still within the correct distance, stop, don't get a new target
             if CGFloat(abs(distance)) <= range + wiggleRoom {
+//                print("Target Valid")
                 return true
             }
+        }
+        
+        // Remove him as a target
+        if targetEntity != nil {
+            targetEntity = nil
         }
         
         return false
     }
     
-    func getClosestEnemy() {
+    func getClosestEnemyInRange() {
         // Get required components
         guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
             return
         }
         
-        // If the current target is valid, then we are happy, and stop
-        if currentTargetValid(currentPos: spriteComponent.node.position) {
-            return
-        }
-        
         var target : GKEntity?
-        var minDistance : CGFloat = -1.0
+        var minDistance : CGFloat = range
         
         // Loop through the players we want to target
         for enemyPlayer in targetPlayers {
@@ -92,8 +93,7 @@ class WeaponComponent : GKComponent {
                 
                 // Get the closest target
                 let distance = (spriteComponent.node.position - enemySpriteComponent.node.position).length()
-                let wiggleRoom = CGFloat(5)
-                if CGFloat(abs(distance)) <= range + wiggleRoom || minDistance == -1.0 {
+                if distance <= minDistance {
                     target = enemyEntity
                     minDistance = distance
                 }

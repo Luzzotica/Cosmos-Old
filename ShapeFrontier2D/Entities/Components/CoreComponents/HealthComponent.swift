@@ -107,8 +107,8 @@ class HealthComponent: GKComponent {
             // Add the particle to the root
             root.addChild(deathAnim!)
             
-            // Wait for half a second, then remove it
-            deathAnim?.run(SKAction.wait(forDuration: 0.5)) {
+            // Wait for a second, then remove it
+            deathAnim?.run(SKAction.wait(forDuration: 1.0)) {
                 deathAnim?.removeFromParent()
             }
         }

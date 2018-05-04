@@ -84,7 +84,6 @@
 		B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589E99820686A450083FAC5 /* EntityTypeComponent.swift */; };
 		B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCCF2094F766001CA502 /* StructureDeath.sks */; };
 		B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCD02094F766001CA502 /* Assets.xcassets */; };
-		B5A8CCD420950E9A001CA502 /* DeathComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD320950E9A001CA502 /* DeathComponent.swift */; };
 		B5A8CCD62095108F001CA502 /* LaserTurret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* LaserTurret.swift */; };
 		B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */; };
 		B5DEEDDE2083116C002D5FCC /* ObstacleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */; };
@@ -191,7 +190,6 @@
 		B589E99820686A450083FAC5 /* EntityTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTypeComponent.swift; sourceTree = "<group>"; };
 		B5A8CCCF2094F766001CA502 /* StructureDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StructureDeath.sks; sourceTree = "<group>"; };
 		B5A8CCD02094F766001CA502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B5A8CCD320950E9A001CA502 /* DeathComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathComponent.swift; sourceTree = "<group>"; };
 		B5A8CCD52095108F001CA502 /* LaserTurret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaserTurret.swift; sourceTree = "<group>"; };
 		B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllianceManager.swift; sourceTree = "<group>"; };
 		B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleComponent.swift; sourceTree = "<group>"; };
@@ -347,7 +345,6 @@
 			children = (
 				B589E99820686A450083FAC5 /* EntityTypeComponent.swift */,
 				B51FBC75204B838F001BFFB4 /* HealthComponent.swift */,
-				B5A8CCD320950E9A001CA502 /* DeathComponent.swift */,
 				B51FBC6F204B7D00001BFFB4 /* SpriteComponent.swift */,
 				B5321F462054B02D00C7580B /* PlayerComponent.swift */,
 				B51FBC78204B8597001BFFB4 /* TeamComponent.swift */,
@@ -831,7 +828,6 @@
 				B589E995206738F80083FAC5 /* ContactComponent.swift in Sources */,
 				B58501CD1FFF4612009C2F65 /* Structure.swift in Sources */,
 				B585017E1FFF1018009C2F65 /* GameScene.swift in Sources */,
-				B5A8CCD420950E9A001CA502 /* DeathComponent.swift in Sources */,
 				B58501DB1FFF7A5F009C2F65 /* Turret.swift in Sources */,
 				B58501D51FFF6CE0009C2F65 /* Node.swift in Sources */,
 				B51FBC74204B824C001BFFB4 /* MoveComponent.swift in Sources */,

@@ -13,8 +13,8 @@ class Laser : NSObject {
     
     static var laserAnimations : [Int:SKAction] = [:]
     
-    var entityOne : SKSpriteNode?
-    var entityTwo : SKSpriteNode?
+    var entityOne : SKNode?
+    var entityTwo : SKNode?
     
     var laser : SKShapeNode?
     
@@ -35,8 +35,8 @@ class Laser : NSObject {
     init(entOne: GKEntity, entTwo: GKEntity, color: UIColor, width: CGFloat) {
         super.init()
         
-        entityOne = entOne.component(ofType: SpriteComponent.self)?.spriteNode
-        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.spriteNode
+        entityOne = entOne.component(ofType: SpriteComponent.self)?.node
+        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.node
         
         // Create a path
         let path: CGMutablePath = CGMutablePath()

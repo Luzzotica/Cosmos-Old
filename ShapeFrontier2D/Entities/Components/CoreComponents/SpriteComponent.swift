@@ -68,3 +68,16 @@ class SpriteComponent: GKComponent {
   
 }
 
+class entityNode : SKNode {
+    override var name: String? {
+        didSet {
+            self.setSpriteName(name: name!)
+        }
+    }
+    
+    func setSpriteName(name: String) {
+        
+    }
+    
+}
+
