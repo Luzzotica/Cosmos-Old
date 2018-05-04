@@ -119,22 +119,6 @@ class Miner : Structure {
         spriteComponent!.select(toAdd: [range])
     }
     
-    override func setupStructure() {
-        super.setupStructure()
-        
-        // setup health variables
-        health_max = 8
-        health_current = health_max
-        
-        // Damage = mining amount
-        damage = 10
-        
-        // Reactor power priority is low, doesn't need power...
-        power_priority = 0
-        power_toBuild = 1
-        power_toUse = 5
-    }
-    
     init(texture: SKTexture, team: Team) {
         
         super.init(texture: texture, size: StructureSize.small, team: team)
@@ -144,7 +128,8 @@ class Miner : Structure {
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Miner"))
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
-                                     barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: 50))
+                                     barOffset: spriteComponent!.spriteNode.size.height * 0.61,
+                                     health: MinerValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -154,7 +139,7 @@ class Miner : Structure {
         power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        setupStructure()
+        power_toUse = MinerValues.power_toUse
     }
     
     required init?(coder aDecoder: NSCoder) {

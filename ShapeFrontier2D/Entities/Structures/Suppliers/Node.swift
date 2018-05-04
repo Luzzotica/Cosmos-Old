@@ -18,27 +18,16 @@ class Node : Supplier {
         
     }
     
-    override func setupStructure() {
-        super.setupStructure()
-        
-        // setup health variables
-        health_max = 8
-        health_current = health_max
-        
-        // Reactor power priority is low, doesn't need power...
-        power_priority = 1
-        power_toBuild = 1
-        power_toUse = 0
-        
-    }
-    
     init(texture: SKTexture, team: Team) {
         super.init(texture: texture, size: StructureSize.node, team: team)
         
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Node"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: 50))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node,
+                                     barWidth: spriteComponent!.spriteNode.size.width * 0.5,
+                                     barOffset: spriteComponent!.spriteNode.size.height * 0.61,
+                                     health: NodeValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -49,7 +38,6 @@ class Node : Supplier {
         power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        setupStructure()
     }
     
     required init?(coder aDecoder: NSCoder) {

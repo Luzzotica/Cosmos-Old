@@ -14,10 +14,7 @@ class Structure : GKEntity {
     
     var level : Int = 1
     
-    var health_max : Int = 0
-    var health_current : Int = 0
-    
-    var damage : Int = 0
+    var power_toUse : Int = 0
     
     static let connection_length : CGFloat = sceneWidth * 0.225
     
@@ -39,9 +36,6 @@ class Structure : GKEntity {
     var connection_powerLine : PowerLine?
     
     // Power variables
-    var power_priority : Int = 0
-    var power_toBuild : Int = 0
-    var power_toUse : Int = 0
     var power_current : Int = 0
     
     var isSupplier = false
@@ -54,13 +48,6 @@ class Structure : GKEntity {
     
     // If we want to disable it, we can. This makes it unable to connect or do anything. Mostly used for the building objects
     var isDisabled = false
-    
-    func takeDamage(amount: Int) {
-        health_current -= amount
-        if health_current < 0 {
-            didDied()
-        }
-    }
     
     func build() {
         // 1. Draw power, if it exists
@@ -86,13 +73,6 @@ class Structure : GKEntity {
         level += 1
     }
     
-    func heal(amount: Int) {
-        health_current += amount
-        if health_current > health_max {
-            health_current = health_max
-        }
-    }
-    
     func didDied() {
         //Remove self from global structures list and individual type list
         connection_powerLine?.destroySelf()
@@ -113,16 +93,6 @@ class Structure : GKEntity {
     }
     
     // MARK: - POWERRRR FUNCTIONS
-    
-    func power_update() {
-        if power_current < power_toUse {
-            let mySprite = component(ofType: SpriteComponent.self)!.spriteNode
-            mySprite.addChild(power_lowOverlay)
-        }
-        else {
-            power_lowOverlay.removeFromParent()
-        }
-    }
     
     static func power_prepareFind() -> Int {
         // Prepares the static variables for a new find, returns the dontLookAtID after prep

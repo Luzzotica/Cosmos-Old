@@ -15,8 +15,6 @@ class Supplier : Structure {
     var connection_masters : [(Supplier, Int)] = []
     var connection_distance: Int = -1
     
-    var power_capacity : Int = 0
-    
     func power_use(amount: Int) {
         power_current -= amount
         
