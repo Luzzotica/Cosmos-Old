@@ -48,6 +48,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Update time!
     var lastUpdateTime : TimeInterval = 0
     
+    //Touch Variables
+    var touches_disabled_timer : TimeInterval = 0
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
@@ -111,7 +114,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches_disabled_timer <= 0 {
+            touches_disabled_timer = GameValues.TouchDelay
+        }
+        else {
+            return
+        }
         
+        print("touch!")
         if isBuilding {
             // If building, end construction mode on touchup
             endConstructionMode()
@@ -137,6 +147,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if currentTime - tick_last > tick_speed {
             tick_last = currentTime
             tick()
+        }
+        
+        //Handle touch disabling timer
+        if lastUpdateTime == 0 {
+            lastUpdateTime = currentTime
+        }
+        let delta = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+        if touches_disabled_timer > 0
+        {
+            touches_disabled_timer -= delta
         }
         
         // Update player hud instantly
@@ -169,14 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             toBuildSprite!.run(color)
         }
         
-        // Enemy updating
-        if lastUpdateTime == 0 {
-            lastUpdateTime = currentTime
-        }
-        
         // Need to pass in delta, not the current time!
-        let delta = currentTime - lastUpdateTime
-        lastUpdateTime = currentTime
         EntityManager.shared.update(delta)
     }
     

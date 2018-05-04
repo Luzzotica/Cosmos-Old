@@ -35,3 +35,7 @@ struct CollisionType {
     static let Asteroid: UInt32 = 128
     static let Ground: UInt32 = 256
 }
+
+struct GameValues {
+    static let TouchDelay: TimeInterval = 0.25
+}
