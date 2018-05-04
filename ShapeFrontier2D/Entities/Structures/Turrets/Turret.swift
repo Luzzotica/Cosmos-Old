@@ -11,6 +11,8 @@ import SpriteKit
 
 class Turret : Structure {
     
+    var range : CGFloat = 0
+    
     func canShoot() -> Bool {
         
         power_handleOverlay()

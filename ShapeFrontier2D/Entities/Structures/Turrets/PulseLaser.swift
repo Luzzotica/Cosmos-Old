@@ -27,6 +27,8 @@ class PulseLaser : Turret {
     init(texture: SKTexture, team: Team) {
         super.init(texture: texture, size: StructureSize.large, team: team)
         
+        self.range = PulseCannonValues.range
+        
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Pulse Laser"))
