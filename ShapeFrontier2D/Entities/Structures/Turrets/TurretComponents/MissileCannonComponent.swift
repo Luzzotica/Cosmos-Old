@@ -61,7 +61,8 @@ class MissileCannonComponent: StructureWeaponComponent {
                                          maxSpeed: missileSpeed,
                                          maxAcceleration: missileAccel,
                                          target: enemyMoveComponent)
-            guard let missileSpriteComponent = missile.component(ofType: SpriteComponent.self) else {
+            guard let missileSpriteComponent = missile.component(ofType: SpriteComponent.self),
+                let missileTraceComponent = missile.component(ofType: TraceComponent.self) else {
                 return
             }
             
@@ -72,7 +73,9 @@ class MissileCannonComponent: StructureWeaponComponent {
             // Get the direction to fire, the tracing agent should do the rest for us
             let direction = (enemySpriteComponent.node.position - spriteComponent.node.position).normalized()
             
+            // Make them start facing the right way
             missileSpriteComponent.spriteNode.zRotation = direction.angle
+            missileTraceComponent.rotation = Float(direction.angle)
             
             EntityManager.shared.add(missile)
         }

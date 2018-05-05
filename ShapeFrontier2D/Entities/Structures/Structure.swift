@@ -107,6 +107,11 @@ class Structure : GKEntity {
     
     // Traces to a power source with power
     func power_find(amount: Int, distance: Int, dontLookAtID: Int) -> Int {
+        // If our master is not built, we want to stop
+        if !connection_master!.isBuilt {
+            return -1
+        }
+        
         // If we have energy globaly, use it
         if gameScene.player_powerCurrent >= amount {
             let distance = connection_master!.power_find(amount: amount, distance: distance + 1, dontLookAtID: dontLookAtID)
@@ -128,7 +133,7 @@ class Structure : GKEntity {
         
         // Adds the out of power overlay if we
         // Have no master or If we are out of power
-        if isDisabled ||
+        if isDisabled || !isBuilt ||
             (power_lowOverlay.parent == nil
             && (connection_master == nil
                 || gameScene.player_powerCurrent < power_toUse)),

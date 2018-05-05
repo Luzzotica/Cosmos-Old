@@ -51,12 +51,12 @@ class PowerLine : NSObject {
         
         // If we are a non-supplier structure, then we make sure whoever we just connected to knows we are here
         if !structureTwo!.isSupplier && structureOne!.isSupplier {
-            print("Added structure to my list")
+//            print("Added structure to my list")
             let supplier = structureOne as! Supplier
             supplier.connection_toStructures.append((structureTwo!, self))
         }
         else if !structureOne!.isSupplier && structureTwo!.isSupplier {
-            print("Added structure to my list")
+//            print("Added structure to my list")
             let supplier = structureTwo as! Supplier
             supplier.connection_toStructures.append((structureOne!, self))
         }

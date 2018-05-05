@@ -103,11 +103,11 @@ class Supplier : Structure {
         // Otherwise, add the node to not look at into masters
         connection_masters.append((dontLookAt, distance))
         connection_masters.sort(by: {$0.1 < $1.1})
-        var listOfDistances = "List of distances:"
-        for master in connection_masters {
-            listOfDistances.append(" \(master.1)")
-        }
-        print(listOfDistances)
+//        var listOfDistances = "List of distances:"
+//        for master in connection_masters {
+//            listOfDistances.append(" \(master.1)")
+//        }
+//        print(listOfDistances)
         
         //if distance passed is less than current distance, update it
         if (distance < connection_distance || connection_distance == -1)
@@ -116,30 +116,36 @@ class Supplier : Structure {
             connection_distance = distance
         }
         
-        // And loop through all other suppliers, telling them to update themselves with myself
-        for structure in connection_toStructures {
-            if structure.0.isSupplier && !structure.0.isEqual(dontLookAt) {
-                let supplier = structure.0 as! Supplier
-                supplier.connection_updateMasters(dontLookAt: self, distance: distance + 1)
+        // If I'm fully built
+        if isBuilt {
+            // Loop through all other suppliers, telling them to update themselves with myself
+            for structure in connection_toStructures {
+                if structure.0.isSupplier && !structure.0.isEqual(dontLookAt) {
+                    let supplier = structure.0 as! Supplier
+                    supplier.connection_updateMasters(dontLookAt: self, distance: distance + 1)
+                }
             }
         }
     }
     
     override func connection_findMasters() {
-        
-    }
-    
-    func connection_setMasterForChildren() {
-        // if the target structure has no master, make his master this supplier
+        // Loop through all the people we are connected to
         for structure in connection_toStructures {
+            // If the target structure is NOT a supplier and has no master, make his master ourself
             if !structure.0.isSupplier && structure.0.connection_master == nil  {
                 structure.0.connection_master = self
                 structure.0.connection_powerLine = structure.1
             }
+                // If they are a supplier, do different things!
             else if structure.0.isSupplier {
                 // Add myself to their connections, this might cause their list to have lots of me...
                 let supplier = structure.0 as! Supplier
                 supplier.connection_toStructures.append((self, structure.1))
+                
+                // If he is not built, he can't be out master so we want to stop
+                if !supplier.isBuilt {
+                    continue
+                }
                 
                 // If he is a supplier, check to see if he is a master or a reactor
                 // Make him one of our masters
@@ -155,8 +161,10 @@ class Supplier : Structure {
         
         // Sort the masters based on distance
         connection_masters.sort(by: {$0.1 < $1.1})
-        
-        // Loop through again if I am a master, tell all the suppliers I am connected to that I am a master
+    }
+    
+    func connection_setMasterForChildren() {
+        // Loop through if I am a master, tell all the suppliers I am connected to that I am a master
         if connection_masters.count > 1 || self is Reactor {
             for structure in connection_toStructures {
                 //                print("connected to: \(structure.0.component(ofType: SpriteComponent.self)!.node.name!)")
@@ -285,7 +293,7 @@ class Supplier : Structure {
     override func didFinishConstruction() {
         super.didFinishConstruction()
         
-        
+        connection_setMasterForChildren()
     }
     
     override func didDied() {

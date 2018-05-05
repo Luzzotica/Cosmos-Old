@@ -54,7 +54,7 @@ class BuildComponent: GKComponent {
             // If we are a supplier, we check our list of masters
             if structure is Supplier {
                 let supplier = structure as? Supplier
-                print("Master Count:", supplier!.connection_masters.count)
+//                print("Master Count:", supplier!.connection_masters.count)
                 if supplier!.connection_masters.count == 0 {
                     return
                 }
@@ -71,7 +71,7 @@ class BuildComponent: GKComponent {
             // Find power!
             if structure.power_find(amount: build_power, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
                 guard let healthComponent = structure.component(ofType: HealthComponent.self) else {
-                    print("No health component!")
+//                    print("No health component!")
                     return
                 }
                 
@@ -96,7 +96,7 @@ class BuildComponent: GKComponent {
                 }
             }
             else {
-                print("No power found")
+//                print("No power found")
                 return
             }
             

@@ -139,11 +139,9 @@ class InfoViewNode : SKNode {
         
     }
     
-    func destroySelectedStructure()
-    {
+    func destroySelectedStructure() {
         // This should never be run if it isn't a structure. But sanity check anyways
         if currentEntity is Structure {
-            print("test")
             (currentEntity as! Structure).recycle()
         }
     }

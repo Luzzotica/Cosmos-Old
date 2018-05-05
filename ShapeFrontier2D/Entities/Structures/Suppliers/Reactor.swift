@@ -98,7 +98,7 @@ class Reactor : Supplier {
         
         connection_distance = 0
         
-        power_current = 100
+        power_current = 0
         
         power_toUse = Structure.ReactorValues.power_toUse
         powerProvided = Structure.ReactorValues.power_provided

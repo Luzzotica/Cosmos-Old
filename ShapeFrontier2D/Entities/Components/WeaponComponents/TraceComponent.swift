@@ -11,10 +11,12 @@ import GameplayKit
 
 class TraceComponent : GKAgent2D, GKAgentDelegate {
     
-    var target : GKAgent2D?
+    weak var target : GKAgent2D?
+    weak var targetEntity : GKEntity?
     
     init(maxSpeed: Float, maxAcceleration: Float, radius: Float, target: GKAgent2D) {
         self.target = target
+        self.targetEntity = target.entity
         
         super.init()
         self.delegate = self
@@ -44,7 +46,10 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
     }
     
     func agentDidUpdate(_ agent: GKAgent) {
-        if target == nil {
+        if target == nil || targetEntity == nil {
+            target = nil
+            targetEntity = nil
+            EntityManager.shared.remove(entity!)
             return
         }
         
@@ -57,15 +62,14 @@ class TraceComponent : GKAgent2D, GKAgentDelegate {
         spriteComponent.node.physicsBody!.velocity = CGVector(velocity)
         spriteComponent.spriteNode.zRotation = CGFloat(rotation - .pi/2.0)
         
-        // Get target sprite component
-        guard let targetSprite = target?.entity?.component(ofType: SpriteComponent.self) else {
-            return
-        }
-        
-        if targetSprite.node.parent == nil {
-            target = nil
-            EntityManager.shared.remove(entity!)
-        }
+//        // Get target sprite component
+//        guard let targetSprite = targetEntity!.component(ofType: SpriteComponent.self) else {
+//            return
+//        }
+//        
+//        if targetSprite.node.parent == nil {
+//            
+//        }
         
     }
     

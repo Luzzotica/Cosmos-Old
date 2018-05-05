@@ -64,7 +64,7 @@ extension PlayerHUD {
             else if touchedNodes[i].name!.contains("entity") && !(touchedNodes[i].name!.contains("constructor")) {
                 //print("touched a node! Function is: \(functionToRun)")
                 // Check if we tapped on an entity
-                print(touchedNodes[i].name!)
+//                print(touchedNodes[i].name!)
                 tappedEntity = touchedNodes[i].entity
             }
         }
