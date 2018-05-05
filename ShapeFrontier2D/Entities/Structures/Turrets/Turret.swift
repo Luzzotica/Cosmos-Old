@@ -11,8 +11,6 @@ import SpriteKit
 
 class Turret : Structure {
     
-    var range : CGFloat = 0
-    
     func canShoot() -> Bool {
         
         power_handleOverlay()
@@ -40,11 +38,13 @@ class Turret : Structure {
     
     override func select() {
         // Create a range indicator for ourselves
-        let indicatorRange = UIHandler.shared.createRangeIndicator(range: range, color: .red)
-        
-        // Get the sprite component
-        let spriteComponent = component(ofType: SpriteComponent.self)
-        spriteComponent!.select(toAdd: [indicatorRange])
+        if let weaponComponent = component(ofType: StructureWeaponComponent.self) {
+            let indicatorRange = UIHandler.shared.createRangeIndicator(range: weaponComponent.range, color: .red)
+            
+            // Get the sprite component
+            let spriteComponent = component(ofType: SpriteComponent.self)
+            spriteComponent!.select(toAdd: [indicatorRange])
+        }
     }
     
     override init(texture: SKTexture, size: CGSize, team: Team) {

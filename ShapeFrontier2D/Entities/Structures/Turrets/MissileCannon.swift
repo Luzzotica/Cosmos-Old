@@ -20,36 +20,30 @@ class MissileCannon : Turret {
         }
     }
     
-    override func setupStructure() {
-        super.setupStructure()
-        power_toUse = 4
-    }
-    
     init(texture: SKTexture, team: Team) {
-        super.init(texture: texture, size: StructureSize.large, team: team)
-        
-        self.range = MissileCannonValues.range
+        super.init(texture: texture, size: Structure.Size.large, team: team)
         
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Missile Cannon"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: MissileCannonValues.maxHealth))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.MissileCannon.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
         spriteComponent!.node.name! += "_missileCannon"
         
+        let weapon = MissileCannonComponent(range: Structure.MissileCannon.range, damage: Structure.MissileCannon.damage, damageRate: Structure.MissileCannon.damageRate, player: 1, targetPlayers: [666])
+        weapon.setPossibleTargets(types: .ship)
+        
+        addComponent(weapon)
+        
         // Set up low power overlay
         power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        setupStructure()
+        power_toUse = Structure.PulseCannon.power_toUse
         
-        let weapon = MissileCannonComponent(range: MissileCannonValues.range, damage: MissileCannonValues.damage, damageRate: MissileCannonValues.damageRate, player: 1, targetPlayers: [666])
-        weapon.setPossibleTargets(types: .ship)
-        
-        addComponent(weapon)
     }
     
     required init?(coder aDecoder: NSCoder) {

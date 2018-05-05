@@ -70,7 +70,7 @@ class Reactor : Supplier {
     }
     
     init(texture: SKTexture, team: Team) {
-        super.init(texture: texture, size: StructureSize.large, team: team)
+        super.init(texture: texture, size: Structure.Size.large, team: team)
         
         let spriteComponent = component(ofType: SpriteComponent.self)
         
@@ -78,7 +78,7 @@ class Reactor : Supplier {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: ReactorValues.maxHealth))
+                                     health: Structure.Reactor.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -95,7 +95,7 @@ class Reactor : Supplier {
         
         power_current = 100
         
-        power_toUse = ReactorValues.power_toUse
+        power_toUse = Structure.Reactor.power_toUse
         
     }
     

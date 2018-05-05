@@ -47,7 +47,7 @@ class Miner : Structure {
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
                     let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
-                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: MinerValues.damage)
+                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.Miner.damage)
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
                 }
                 else {
@@ -121,7 +121,7 @@ class Miner : Structure {
     
     init(texture: SKTexture, team: Team) {
         
-        super.init(texture: texture, size: StructureSize.small, team: team)
+        super.init(texture: texture, size: Structure.Size.small, team: team)
         
         let spriteComponent = component(ofType: SpriteComponent.self)
         
@@ -129,7 +129,7 @@ class Miner : Structure {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: MinerValues.maxHealth))
+                                     health: Structure.Miner.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -139,7 +139,7 @@ class Miner : Structure {
         power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        power_toUse = MinerValues.power_toUse
+        power_toUse = Structure.Miner.power_toUse
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -19,7 +19,7 @@ class Node : Supplier {
     }
     
     init(texture: SKTexture, team: Team) {
-        super.init(texture: texture, size: StructureSize.node, team: team)
+        super.init(texture: texture, size: Structure.Size.node, team: team)
         
         let spriteComponent = component(ofType: SpriteComponent.self)
         
@@ -27,7 +27,7 @@ class Node : Supplier {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: NodeValues.maxHealth))
+                                     health: Structure.Node.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
