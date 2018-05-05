@@ -12,12 +12,11 @@ import SpriteKit
 
 class MissileCannon : Turret {
     
-    override func build() {
-        super.build()
+    override func didFinishPlacement() {
+        super.didFinishPlacement()
         
-        if !underConstruction {
-            
-        }
+        // Add a build component!
+        addComponent(BuildComponent(ticks: Structure.MissileCannonValues.build_ticks, power: Structure.MissileCannonValues.power_toBuild))
     }
     
     init(texture: SKTexture, team: Team) {
@@ -26,14 +25,14 @@ class MissileCannon : Turret {
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Missile Cannon"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.MissileCannon.maxHealth))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.MissileCannonValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
         spriteComponent!.node.name! += "_missileCannon"
         
-        let weapon = MissileCannonComponent(range: Structure.MissileCannon.range, damage: Structure.MissileCannon.damage, damageRate: Structure.MissileCannon.damageRate, player: 1, targetPlayers: [666])
+        let weapon = MissileCannonComponent(range: Structure.MissileCannonValues.range, damage: Structure.MissileCannonValues.damage, damageRate: Structure.MissileCannonValues.damageRate, player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)
@@ -42,7 +41,7 @@ class MissileCannon : Turret {
         power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        power_toUse = Structure.PulseCannon.power_toUse
+        power_toUse = Structure.PulseCannonValues.power_toUse
         
     }
     

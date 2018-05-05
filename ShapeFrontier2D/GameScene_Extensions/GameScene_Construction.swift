@@ -16,7 +16,7 @@ extension GameScene {
     func startConstructionMode(structure: Structure, location: CGPoint) {
         toBuild = structure
         
-        toBuild!.isDisabled = true
+        toBuild!.isBuilt = false
         
         // Get the sprite components
         let spriteComponent = toBuild!.component(ofType: SpriteComponent.self)
@@ -85,15 +85,12 @@ extension GameScene {
             // Make him be a structure
             toBuildNode!.physicsBody?.categoryBitMask = CollisionType.Structure
             
-            // Make him enabled
-            toBuild?.isDisabled = false
-            
             // Mineral Cost
             minerals_current -= toBuild!.constructionCost
             PlayerHUD.shared.update_resources()
             
             // Finish Construction
-            toBuild!.didFinishConstruction()
+            toBuild!.didFinishPlacement()
             
             // Add everything to structures
             player_structures.append(toBuild!)

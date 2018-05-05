@@ -11,11 +11,11 @@ import SpriteKit
 
 class Node : Supplier {
     
-    
-    
-    override func build() {
-        super.build()
+    override func didFinishPlacement() {
+        super.didFinishPlacement()
         
+        // Add a build component!
+        addComponent(BuildComponent(ticks: Structure.NodeValues.build_ticks, power: Structure.NodeValues.power_toBuild))
     }
     
     init(texture: SKTexture, team: Team) {
@@ -27,7 +27,7 @@ class Node : Supplier {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: Structure.Node.maxHealth))
+                                     health: Structure.NodeValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))

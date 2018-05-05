@@ -46,13 +46,8 @@ class Structure : GKEntity {
     
     var power_lowOverlay : SKSpriteNode!
     
-    // If we want to disable it, we can. This makes it unable to connect or do anything. Mostly used for the building objects
     var isDisabled = false
-    
-    func build() {
-        // 1. Draw power, if it exists
-        // 2. Add health based on tick percentage
-    }
+    var isBuilt = true
     
     func select() {
         // Create the range indicator
@@ -63,10 +58,6 @@ class Structure : GKEntity {
         // Deselect our structure
         let spriteComponent = component(ofType: SpriteComponent.self)
         spriteComponent!.deselect()
-    }
-    
-    func setupStructure() {
-        
     }
     
     func levelup() {
@@ -134,13 +125,17 @@ class Structure : GKEntity {
     }
     
     func power_handleOverlay() {
+        
         // Adds the out of power overlay if we
         // Have no master or If we are out of power
-        if power_lowOverlay.parent == nil
+        if isDisabled ||
+            (power_lowOverlay.parent == nil
             && (connection_master == nil
-                || gameScene.player_powerCurrent < power_toUse),
+                || gameScene.player_powerCurrent < power_toUse)),
             let spriteComponent = component(ofType: SpriteComponent.self) {
-            spriteComponent.spriteNode.addChild(power_lowOverlay)
+            if power_lowOverlay.parent == nil {
+                spriteComponent.spriteNode.addChild(power_lowOverlay)
+            }
         }
             // Removes the power overlay if
             // We have a master, and we have power
@@ -207,7 +202,7 @@ class Structure : GKEntity {
         }
     }
     
-    func didFinishConstruction() {
+    func didFinishPlacement() {
         connection_findMasters()
         connection_powerLine?.constructPowerLine()
         
@@ -221,6 +216,10 @@ class Structure : GKEntity {
         
         // Deselect our man
         deselect()
+    }
+    
+    func didFinishConstruction() {
+        
     }
     
     init(texture: SKTexture, size: CGSize, team: Team) {
@@ -241,6 +240,15 @@ class Structure : GKEntity {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func getName() -> String {
+        if let spriteName = component(ofType: SpriteComponent.self)?.node.name {
+            return spriteName
+        }
+        else {
+            return ""
+        }
     }
     
 }

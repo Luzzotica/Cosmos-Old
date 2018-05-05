@@ -17,45 +17,50 @@ extension Structure {
         static let node = CGSize(width: sceneWidth * 0.015, height: sceneWidth * 0.03)
     }
     
-    struct Miner {
+    struct MinerValues {
         static let maxHealth : CGFloat = 25
         static let power_toBuild : Int = 1
         static let power_toUse : Int = 5
+        static let build_ticks : Int = 6
         
         static let range : CGFloat = sceneWidth * 0.2
         static let damage : Int = 10
         static let damageRate : CGFloat = 1.0
     }
     
-    struct Reactor {
+    struct ReactorValues {
         static let maxHealth : CGFloat = 50
         static let power_toBuild : Int = 2
         static let power_toUse : Int = 0
+        static let build_ticks : Int = 8
         
         static let power_capacity : Int = 100
         static let power_provided : Int = 5
     }
     
-    struct Node {
+    struct NodeValues {
         static let maxHealth : CGFloat = 25
         static let power_toBuild : Int = 1
         static let power_toUse : Int = 0
+        static let build_ticks : Int = 4
     }
     
-    struct MissileCannon {
+    struct MissileCannonValues {
         static let maxHealth : CGFloat = 50
         static let power_toBuild : Int = 2
         static let power_toUse : Int = 8
+        static let build_ticks : Int = 7
         
         static let range : CGFloat = sceneWidth * 0.8
         static let damage : CGFloat = 10
         static let damageRate : CGFloat = 1.0
     }
     
-    struct PulseCannon {
+    struct PulseCannonValues {
         static let maxHealth : CGFloat = 50
         static let power_toBuild : Int = 2
         static let power_toUse : Int = 4
+        static let build_ticks : Int = 7
         
         static let range : CGFloat = sceneWidth * 0.5
         static let damage : CGFloat = 5

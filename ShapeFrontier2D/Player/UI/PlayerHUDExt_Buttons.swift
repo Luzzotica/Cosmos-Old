@@ -38,7 +38,7 @@ extension PlayerHUD {
             if touchedNodes[i].name == nil {
                 continue
             }
-            print(touchedNodes[i].name)
+//            print(touchedNodes[i].name)
             
             if touchedNodes[i].name!.contains("power_line") {
                 break

@@ -15,18 +15,19 @@ class Reactor : Supplier {
     
     override func tick() {
         super.tick()
-        if isDisabled {
+        
+        if isDisabled || !isBuilt {
             return
         }
         
-        if power_current < ReactorValues.power_capacity
+        if power_current < Structure.ReactorValues.power_capacity
         {
             power_current += powerProvided
             // If the power is greater than his capacity, then we cap it, and add to the game scene what was added
-            if power_current > ReactorValues.power_capacity {
-                let powerOver = power_current - ReactorValues.power_capacity
+            if power_current > Structure.ReactorValues.power_capacity {
+                let powerOver = power_current - Structure.ReactorValues.power_capacity
                 gameScene.power_add(toAdd: powerProvided - powerOver)
-                power_current = ReactorValues.power_capacity
+                power_current = Structure.ReactorValues.power_capacity
             }
             else {
                 gameScene.power_add(toAdd: powerProvided)
@@ -47,26 +48,32 @@ class Reactor : Supplier {
         }
     }
     
-    override func build() {
-        super.build()
-//        if !isBuilding {
-//            let normalTexture = SKTexture(image: #imageLiteral(resourceName: "ReactorStage1"))
-//        }
+    // MARK: - Lifetime Functions
+    
+    override func didFinishPlacement() {
+        super.didFinishPlacement()
+        
+        // Add a build component!
+        addComponent(BuildComponent(ticks: Structure.ReactorValues.build_ticks, power: Structure.ReactorValues.power_toBuild))
+    }
+    
+    override func didFinishConstruction() {
+        super.didFinishConstruction()
+        
+        // Update overall energy variables
+        gameScene.player_powerCapacity += Structure.ReactorValues.power_capacity
+        gameScene.player_powerCurrent += power_current
     }
     
     override func didDied() {
         super.didDied()
         
+        if !isBuilt {
+            return
+        }
         // Make sure the game scene power is updated when a reactor is destroyed
-        gameScene.player_powerCapacity -= ReactorValues.power_capacity
+        gameScene.player_powerCapacity -= Structure.ReactorValues.power_capacity
         gameScene.player_powerCurrent -= power_current
-    }
-    
-    override func didFinishConstruction() {
-        super.didFinishConstruction()
-        //Update overall energy variables
-        gameScene.player_powerCapacity += ReactorValues.power_capacity
-        gameScene.player_powerCurrent += power_current
     }
     
     init(texture: SKTexture, team: Team) {
@@ -78,7 +85,7 @@ class Reactor : Supplier {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: Structure.Reactor.maxHealth))
+                                     health: Structure.ReactorValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -89,13 +96,12 @@ class Reactor : Supplier {
         power_lowOverlay = SKSpriteNode(texture: Structures.reactorLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        setupStructure()
-        
         connection_distance = 0
         
         power_current = 100
         
-        power_toUse = Structure.Reactor.power_toUse
+        power_toUse = Structure.ReactorValues.power_toUse
+        powerProvided = Structure.ReactorValues.power_provided
         
     }
     

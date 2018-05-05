@@ -71,8 +71,36 @@ class HealthComponent: GKComponent {
         }
         
         // Update current health
-        health_current = max(health_current - damage, 0)
+        health_current = max(min(health_max, health_current - damage), 0)
 
+        updateHealthBar()
+
+        // Kill him if he is dead
+        if health_current == 0 {
+            death()
+        }
+
+        // Return the current health of the target
+        return health_current == 0
+    }
+    
+    func heal(_ amount: CGFloat) {
+        takeDamage(-amount)
+    }
+    
+    func setHealth(_ amount: CGFloat) {
+        // Clamp the health between 0 and max
+        health_current = max(min(health_max, amount), 0)
+        
+        updateHealthBar()
+        
+        // Kill him if he is dead
+        if health_current == 0 {
+            death()
+        }
+    }
+    
+    func updateHealthBar() {
         // If the health bar can be shown, show it
         if healthBarShow {
             // Unhide the bar and create an action to scale it
@@ -84,14 +112,6 @@ class HealthComponent: GKComponent {
             healthBar.removeAllActions()
             healthBar.run(SKAction.group([scaleAction, HealthComponent.showAction, HealthComponent.hideAction]))
         }
-
-        // Kill him if he is dead
-        if health_current == 0 {
-            death()
-        }
-
-        // Return the current health of the target
-        return health_current == 0
     }
     
     func death() {

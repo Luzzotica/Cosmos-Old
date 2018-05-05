@@ -13,6 +13,11 @@ class Turret : Structure {
     
     func canShoot() -> Bool {
         
+        
+        if isDisabled || !isBuilt {
+            return false
+        }
+        
         power_handleOverlay()
         // If we have no master, stop
         if connection_master == nil {
@@ -23,11 +28,13 @@ class Turret : Structure {
         if gameScene.player_powerCurrent < power_toUse {
             return false
         }
+        print(connection_master!.getName())
+        
         
         let ID = Structure.power_prepareFind()
         
         // Find power!
-        if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
+        if power_find(amount: power_toUse, distance: 0, dontLookAtID: ID) != -1 {
             
         }
         

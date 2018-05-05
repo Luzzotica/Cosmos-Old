@@ -36,7 +36,7 @@ class ConstructionViewNode : SKNode {
                                                             team: .team1)))
         constructionStructures.append(ConstructionItem(MissileCannon(texture: Structures.missileCannonLevel1,
                                                                      team: .team1)))
-        constructionStructures.append(ConstructionItem(PulseLaser(texture: Structures.pulseLaser,
+        constructionStructures.append(ConstructionItem(PulseCannon(texture: Structures.pulseLaser,
                                                                   team: .team1)))
         
         // Set the anchor point to the bottom left
@@ -85,7 +85,7 @@ class ConstructionViewNode : SKNode {
                 structure.constructionCost = StructureCost.MissileTurret
             }
             else if name.contains("pulseLaser") {
-                let turret = PulseLaser(texture: Structures.pulseLaser, team: .team1)
+                let turret = PulseCannon(texture: Structures.pulseLaser, team: .team1)
                 turret.select()
                 structure = turret
                 structure.constructionCost = StructureCost.PulseLaser

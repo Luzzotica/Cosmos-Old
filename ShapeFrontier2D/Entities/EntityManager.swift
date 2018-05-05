@@ -27,6 +27,7 @@ class EntityManager {
     var entities : Set<GKEntity> = Set()
     var entitiesForPlayer : [Int:Set<GKEntity>] = [:]
     var toRemove : Set<GKEntity> = Set()
+    var toRemoveComponent : Set<GKComponent> = Set()
     
     // Obstacle graph
     var obstacles : [GKObstacle] = []
@@ -38,7 +39,8 @@ class EntityManager {
         let rocketSystem_Tracer = GKComponentSystem(componentClass: MissileCannonComponent.self)
         let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
         let pulseCannonSystem = GKComponentSystem(componentClass: PulseCannonComponent.self)
-        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem]
+        let buildSystem = GKComponentSystem(componentClass: BuildComponent.self)
+        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem, buildSystem]
     }()
     
     func addPlayer(_ player: PlayerEntity) {
@@ -140,6 +142,10 @@ class EntityManager {
         }
     }
     
+    func removeComponent(component: GKComponent) {
+        toRemoveComponent.insert(component)
+    }
+    
     func runDiedAction(_ entity: GKEntity) {
         if entity is Structure {
             (entity as! Structure).didDied()
@@ -179,8 +185,20 @@ class EntityManager {
             }
         }
         
+        for curRemove in toRemoveComponent {
+            for componentSystem in componentSystems {
+                componentSystem.removeComponent(curRemove)
+            }
+        }
+        
         // Clear out the list for the next iteration
         toRemove.removeAll()
+        toRemoveComponent.removeAll()
+    }
+    
+    init() {
+        entitiesForPlayer[666] = Set<GKEntity>()
+        entitiesForPlayer[1] = Set<GKEntity>()
     }
     
 }

@@ -9,14 +9,13 @@
 import Foundation
 import SpriteKit
 
-class PulseLaser : Turret {
+class PulseCannon : Turret {
     
-    
-    override func build() {
-        super.build()
+    override func didFinishPlacement() {
+        super.didFinishPlacement()
         
-        if !underConstruction {
-        }
+        // Add a build component!
+        addComponent(BuildComponent(ticks: Structure.PulseCannonValues.build_ticks, power: Structure.PulseCannonValues.power_toBuild))
     }
     
     init(texture: SKTexture, team: Team) {
@@ -25,14 +24,14 @@ class PulseLaser : Turret {
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Pulse Laser"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.PulseCannon.maxHealth))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.PulseCannonValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
         spriteComponent!.node.name! += "_pulseLaser"
         
-        let weapon = PulseCannonComponent(range: Structure.PulseCannon.range, damage: Structure.PulseCannon.damage, damageRate: Structure.PulseCannon.damageRate, player: 1, targetPlayers: [666])
+        let weapon = PulseCannonComponent(range: Structure.PulseCannonValues.range, damage: Structure.PulseCannonValues.damage, damageRate: Structure.PulseCannonValues.damageRate, player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)
@@ -41,7 +40,7 @@ class PulseLaser : Turret {
         power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        power_toUse = Structure.MissileCannon.power_toUse
+        power_toUse = Structure.MissileCannonValues.power_toUse
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -17,7 +17,9 @@ class Miner : Structure {
     var asteroid_distance : CGFloat = sceneWidth * 0.2
     
     override func tick() {
-        if isDisabled {
+        super.tick()
+        
+        if isDisabled || !isBuilt {
             return
         }
         
@@ -26,8 +28,6 @@ class Miner : Structure {
         if tick_count <= tick_action {
             return
         }
-        
-        super.tick()
         
         // If we don't have enough power in the global power, show that we are out of power
         if gameScene.player_powerCurrent < power_toUse {
@@ -45,9 +45,9 @@ class Miner : Structure {
 //                print("Find ID is: \(ID)")
                 
                 // Find power!
-                if power_find(amount: power_toUse, distance: 0, dontLookAtID: Structure.dontLookAtID) != -1 {
+                if power_find(amount: power_toUse, distance: 0, dontLookAtID: ID) != -1 {
                     let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
-                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.Miner.damage)
+                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.MinerValues.damage)
                     let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
                 }
                 else {
@@ -105,11 +105,6 @@ class Miner : Structure {
         return foundAsteroid
     }
     
-    override func build() {
-        super.build()
-        
-    }
-    
     override func select() {
         // Create a range indicator for ourselves
         let range = UIHandler.shared.createRangeIndicator(range: miningRange, color: .green)
@@ -117,6 +112,13 @@ class Miner : Structure {
         // Get the sprite component
         let spriteComponent = component(ofType: SpriteComponent.self)
         spriteComponent!.select(toAdd: [range])
+    }
+    
+    override func didFinishPlacement() {
+        super.didFinishPlacement()
+        
+        // Add a build component!
+        addComponent(BuildComponent(ticks: Structure.MinerValues.build_ticks, power: Structure.MinerValues.power_toBuild))
     }
     
     init(texture: SKTexture, team: Team) {
@@ -129,7 +131,7 @@ class Miner : Structure {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: Structure.Miner.maxHealth))
+                                     health: Structure.MinerValues.maxHealth))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
@@ -139,7 +141,7 @@ class Miner : Structure {
         power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
-        power_toUse = Structure.Miner.power_toUse
+        power_toUse = Structure.MinerValues.power_toUse
     }
     
     required init?(coder aDecoder: NSCoder) {

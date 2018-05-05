@@ -60,16 +60,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Add the first player reactor
         let firstReactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
-        firstReactor.didFinishConstruction()
+        
         // Move the reactor to the center of the screen
         firstReactor.component(ofType: SpriteComponent.self)?.node.position = playerCamera!.position
+        
+        // Update the positioning of the move component
+        if let moveComponent = firstReactor.component(ofType: MoveComponent.self),
+            let spriteComponent = firstReactor.component(ofType: SpriteComponent.self) {
+            moveComponent.position = float2(spriteComponent.node.position)
+        }
+        firstReactor.didFinishConstruction()
         
         // Add everything to structures
         player_structures.append(firstReactor)
         player_suppliers.append(firstReactor)
         EntityManager.shared.add(firstReactor)
-        
-        spawnWave()
         
         // Pinch to zoom gesture recognizer
         let pinch : UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(zoom))
@@ -121,7 +126,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        print("touch!")
         if isBuilding {
             // If building, end construction mode on touchup
             endConstructionMode()
