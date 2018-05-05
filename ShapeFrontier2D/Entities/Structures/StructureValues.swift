@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 
+
 struct StructureSize {
     static let large = CGSize(width: sceneWidth * 0.09, height: sceneWidth * 0.09)
     static let small = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.05)
