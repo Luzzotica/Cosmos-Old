@@ -12,8 +12,6 @@ import SpriteKit
 class Turret : Structure {
     
     func canShoot() -> Bool {
-        
-        
         if isDisabled || !isBuilt {
             return false
         }
@@ -28,8 +26,6 @@ class Turret : Structure {
         if gameScene.player_powerCurrent < power_toUse {
             return false
         }
-        print(connection_master!.getName())
-        
         
         let ID = Structure.power_prepareFind()
         

@@ -48,7 +48,11 @@ class Miner : Structure {
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: ID) != -1 {
                     let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
                     gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.MinerValues.damage)
-                    let _ = Laser(entOne: self, entTwo: asteroid_current!, color: .green, width: sceneWidth * 0.005)
+                    let nodeOne = component(ofType: SpriteComponent.self)!.node
+                    let nodeTwo = asteroid_current?.component(ofType: SpriteComponent.self)!.node
+                    let laser = Laser(nodeOne: nodeOne, nodeTwo: nodeTwo!, color: .green, width: sceneWidth * 0.005)
+                    nodeOne.addChild(laser)
+                    laser.animate(animationType: 0)
                 }
                 else {
 //                    print("Current master: \(connection_master!.name)")
@@ -86,7 +90,7 @@ class Miner : Structure {
             
             // Otherwise, we continue!
             let spriteComponent = component(ofType: SpriteComponent.self)
-            let asteroidSpriteComponent = component(ofType: SpriteComponent.self)
+            let asteroidSpriteComponent = asteroid.component(ofType: SpriteComponent.self)
             let values = withinDistance(point1: spriteComponent!.node.position,
                                         point2: asteroidSpriteComponent!.node.position,
                                         distance: miningRange)

@@ -30,8 +30,6 @@ extension PlayerHUD {
             print("Got here? Not really possible...")
             return
         }
-        
-        var functionToRun: (() -> Void)?
         var tappedEntity: GKEntity?
         
         for i in stride(from: 0, to: touchedNodes.count, by: 1) {
@@ -44,24 +42,7 @@ extension PlayerHUD {
                 break
             }
             
-            if touchedNodes[i].name == "button_pause" {
-//                pauseGame()
-                functionToRun = pauseGame
-            }
-            else if touchedNodes[i].name == "button_restart" {
-//                restartGame()
-                functionToRun = restartGame
-            }
-            else if touchedNodes[i].name == "button_upgrade" {
-                
-            }
-            else if touchedNodes[i].name == "button_destroy" {
-                functionToRun = destroySelectedStructure
-            }
-            else if touchedNodes[i].name == "button_new_wave" {
-                functionToRun = spawnWave
-            }
-            else if touchedNodes[i].name!.contains("entity") && !(touchedNodes[i].name!.contains("constructor")) {
+            if touchedNodes[i].name!.contains("entity") && !(touchedNodes[i].name!.contains("constructor")) {
                 //print("touched a node! Function is: \(functionToRun)")
                 // Check if we tapped on an entity
 //                print(touchedNodes[i].name!)
@@ -69,11 +50,7 @@ extension PlayerHUD {
             }
         }
         
-        if functionToRun != nil {
-            // If we tapped a button,
-            functionToRun!()
-        }
-        else if tappedEntity != nil {
+        if tappedEntity != nil {
             // If we tapped an entity, display that entity in the info node
             displayInfo(entity: tappedEntity!)
         }

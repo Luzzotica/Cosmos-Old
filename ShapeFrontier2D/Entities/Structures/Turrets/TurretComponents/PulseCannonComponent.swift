@@ -47,8 +47,13 @@ class PulseCannonComponent : StructureWeaponComponent {
                 targetHealth.takeDamage(damage)
             }
             
+            let nodeOne = entity!.component(ofType: SpriteComponent.self)!.node
+            let nodeTwo = targetEntity!.component(ofType: SpriteComponent.self)!.node
+            
             // Create a lazer!
-            let _ = Laser(entOne: entity!, entTwo: targetEntity!, color: .yellow, width: width)
+            let laser = Laser(nodeOne: nodeOne, nodeTwo: nodeTwo, color: .yellow, width: width)
+            nodeOne.addChild(laser)
+            laser.animate(animationType: 0)
         }
         
         

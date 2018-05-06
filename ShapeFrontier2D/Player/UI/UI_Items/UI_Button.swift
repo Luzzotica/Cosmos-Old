@@ -11,8 +11,22 @@ import SpriteKit
 
 class UI_Button : SKNode {
     
+    var size : CGSize!
+    
     var node_text : SKLabelNode?
     var node_button : SKSpriteNode?
+    
+    var functionToRun: (() -> Void)?
+    
+    func setListener(function: @escaping () -> Void) {
+        functionToRun = function
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if functionToRun != nil {
+            functionToRun!()
+        }
+    }
     
     func setupText(text: String, textSize: CGFloat, name: String, fontColor: UIColor) {
         // Label Node
@@ -55,7 +69,14 @@ class UI_Button : SKNode {
                      fontSize: CGFloat = fontSizeN,
                      fontColor: UIColor = .black,
                      anchor: CGPoint = CGPoint(x: 0.0, y: 0.0)) {
+        
         self.init()
+        
+        // Save our size
+        self.size = size
+        
+        // Enable user interaction
+        self.isUserInteractionEnabled = true
         
         self.name = "button_" + name
         

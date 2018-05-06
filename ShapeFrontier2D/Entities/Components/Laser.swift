@@ -9,20 +9,21 @@
 import SpriteKit
 import GameplayKit
 
-class Laser : NSObject {
+class Laser : SKSpriteNode {
     
     static var laserAnimations : [Int:SKAction] = [:]
     
-    var entityOne : SKNode?
-    var entityTwo : SKNode?
+    var nodeOne : SKNode?
+    var nodeTwo : SKNode?
     
-    var laser : SKShapeNode?
+    var width : CGFloat = 10
+    
+    var laser_color : UIColor?
     
     func destroySelf() {
-        laser?.removeFromParent()
-        laser = nil
-        entityOne = nil
-        entityTwo = nil
+        removeFromParent()
+        nodeOne = nil
+        nodeTwo = nil
     }
     
     static func prepareLaserAnimation() {
@@ -32,45 +33,54 @@ class Laser : NSObject {
         Laser.laserAnimations[0] = sequence
     }
     
-    init(entOne: GKEntity, entTwo: GKEntity, color: UIColor, width: CGFloat) {
-        super.init()
+    init(nodeOne: SKNode, nodeTwo: SKNode, color: UIColor, width: CGFloat) {
+        super.init(texture: nil, color: color, size: CGSize.zero)
         
-        entityOne = entOne.component(ofType: SpriteComponent.self)?.node
-        entityTwo = entTwo.component(ofType: SpriteComponent.self)?.node
+        self.nodeOne = nodeOne
+        self.nodeTwo = nodeTwo
         
-        // Create a path
-        let path: CGMutablePath = CGMutablePath()
+        self.width = width
         
-        path.move(to: CGPoint.zero)
+        //Set color for everything
+        self.laser_color = color
         
-        let pointOne = entityOne!.position
-        let pointTwo = entityTwo!.position
-        path.addLine(to: pointTwo - pointOne)
-        path.addLine(to: CGPoint.zero)
+        self.zPosition = 5
         
-        // Create a line out of it
-        laser = SKShapeNode(path: path)
-        laser?.strokeColor = color
-        laser?.lineWidth = width
-        laser?.zPosition = 5
-        
-        // Put a ball at the end of the line
-        let ball = SKShapeNode(circleOfRadius: width * 1.5)
-        ball.fillColor = color
-        ball.strokeColor = .clear
-        ball.position = pointTwo - pointOne
-        laser?.addChild(ball)
-        
-        // powerLine?.physicsBody = SKPhysicsBody(
-        laser?.physicsBody?.categoryBitMask = CollisionType.PowerLine
-        laser?.physicsBody?.contactTestBitMask = CollisionType.Construction
-        
-        // Add the line to the target structure
-        entityOne?.addChild(laser!)
-        
-        laser?.run(Laser.laserAnimations[0]!) { [weak self] in
-            self?.destroySelf()
+        update()
+    }
+    
+    func animate(animationType: Int)
+    {
+        run(Laser.laserAnimations[animationType]!) {
+            self.destroySelf()
         }
+    }
+    
+    func update() {
+        // Get the distance and angle between the two nodes
+        let distance = (nodeOne!.position - nodeTwo!.position).length()
+        let angle = angleBetweenPoints(point1: nodeOne!.position, point2: nodeTwo!.position)
+        
+        // Anchor ourselves at 0 on the y
+        anchorPoint.y = 0.0
+        
+        // Rotate and stretch ourselves so we hit both nodes
+        size = CGSize(width: width, height: distance)
+        zRotation = angle
+        
+        // Add a ball at the beginning and the end
+        let ball = SKShapeNode(circleOfRadius: width * 1.5)
+        let start_ball = SKShapeNode(circleOfRadius: width)
+        
+        ball.fillColor = laser_color!
+        start_ball.fillColor = laser_color!
+        ball.strokeColor = laser_color!
+        start_ball.strokeColor = laser_color!
+        
+        ball.position = CGPoint(x: 0.0, y: distance)
+        
+        addChild(ball)
+        addChild(start_ball)
     }
     
     required init?(coder aDecoder: NSCoder) {

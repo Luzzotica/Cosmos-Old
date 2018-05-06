@@ -30,6 +30,7 @@
 		B51FBC79204B8597001BFFB4 /* TeamComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC78204B8597001BFFB4 /* TeamComponent.swift */; };
 		B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */; };
 		B52AA1D9209D64F300A33D9B /* Miner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA1D8209D64F300A33D9B /* Miner.swift */; };
+		B52AA1DB209E33EF00A33D9B /* MiningComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA1DA209E33EF00A33D9B /* MiningComponent.swift */; };
 		B5321F412054AC8800C7580B /* GameScene_Construction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5321F402054AC8800C7580B /* GameScene_Construction.swift */; };
 		B5321F432054AC9700C7580B /* GameScene_Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5321F422054AC9700C7580B /* GameScene_Power.swift */; };
 		B5321F452054ADA000C7580B /* GameScene_Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5321F442054ADA000C7580B /* GameScene_Structs.swift */; };
@@ -140,6 +141,7 @@
 		B51FBC78204B8597001BFFB4 /* TeamComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamComponent.swift; sourceTree = "<group>"; };
 		B51FBC81204BB879001BFFB4 /* MoveBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveBehavior.swift; sourceTree = "<group>"; };
 		B52AA1D8209D64F300A33D9B /* Miner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Miner.swift; sourceTree = "<group>"; };
+		B52AA1DA209E33EF00A33D9B /* MiningComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiningComponent.swift; sourceTree = "<group>"; };
 		B5321F402054AC8800C7580B /* GameScene_Construction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene_Construction.swift; sourceTree = "<group>"; };
 		B5321F422054AC9700C7580B /* GameScene_Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene_Power.swift; sourceTree = "<group>"; };
 		B5321F442054ADA000C7580B /* GameScene_Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene_Structs.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 				B58501CC1FFF4612009C2F65 /* Structure.swift */,
 				B52AA1D8209D64F300A33D9B /* Miner.swift */,
+				B52AA1DA209E33EF00A33D9B /* MiningComponent.swift */,
 				B58501E4200049D9009C2F65 /* Suppliers */,
 				B58501E5200049E4009C2F65 /* Turrets */,
 				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
@@ -890,6 +893,7 @@
 				B5321F452054ADA000C7580B /* GameScene_Structs.swift in Sources */,
 				B58501781FFF1018009C2F65 /* AppDelegate.swift in Sources */,
 				B58501C51FFF1DCF009C2F65 /* AsteroidManager.swift in Sources */,
+				B52AA1DB209E33EF00A33D9B /* MiningComponent.swift in Sources */,
 				B58501D11FFF62E2009C2F65 /* AsteroidMedium.swift in Sources */,
 				B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */,
 				B589E99920686A450083FAC5 /* EntityTypeComponent.swift in Sources */,

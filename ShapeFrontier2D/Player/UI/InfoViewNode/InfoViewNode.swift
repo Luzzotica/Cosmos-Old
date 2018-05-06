@@ -24,7 +24,7 @@ class InfoViewNode : SKNode {
     var damageLabel : SKLabelNode!
     var upgradeButton : UI_Button!
     var destroyButton : UI_Button!
-    var upgradeBar : SKSpriteNode!
+    var progressBar : SKSpriteNode!
     
     var currentEntity : GKEntity!
     var currentSprite : SKSpriteNode!
@@ -87,6 +87,47 @@ class InfoViewNode : SKNode {
     }
     
     func updateInfo() {
+        // If they are being built
+        if let buildComponent = currentEntity.component(ofType: BuildComponent.self) {
+            // Make the upgrade button a progress bar
+            var progress = upgradeButton.size
+            progress?.width = upgradeButton.size.width *
+                (CGFloat(buildComponent.build_ticksCurrent) / CGFloat(buildComponent.build_ticksToBuild))
+            
+            
+            if progressBar == nil {
+                // Create our progress bar anchored to the bottom left
+                progressBar = SKSpriteNode(color: .green, size: progress!)
+                progressBar.position = upgradeButton.position
+                progressBar.position.x -= upgradeButton.size.width
+                progressBar.position.y -= upgradeButton.size.height
+                progressBar.zPosition = 1
+                progressBar.anchorPoint = CGPoint.zero
+                
+                // Add him to the screen
+                infoView.addChild(progressBar)
+                
+                // Hide the upgrade button!
+                upgradeButton.isHidden = true
+            }
+            else {
+                // Update the progress!
+                progressBar.size = progress!
+            }
+        }
+        else {
+            // If we had a progress bar, remove it!
+            if progressBar != nil {
+                progressBar.removeFromParent()
+                progressBar = nil
+            }
+            
+            // Unhide the upgrade button!
+            if upgradeButton.isHidden {
+                upgradeButton.isHidden = false
+            }
+        }
+        
         // If they have a move component
         if let title = currentEntity.component(ofType: MoveComponent.self) {
             titleLabel.text = title.name
@@ -94,7 +135,7 @@ class InfoViewNode : SKNode {
         
         // If they have a health node
         if let health = currentEntity.component(ofType: HealthComponent.self) {
-            healthLabel.text = "Health: \(health.health_current)/\(health.health_max)"
+            healthLabel.text = "Health: \(Int(health.health_current))/\(Int(health.health_max))"
             
             structureImageTwo.texture = nil
             
@@ -111,7 +152,7 @@ class InfoViewNode : SKNode {
         }
         
         // When we have attack components, this will help
-        if let attackComponent = currentEntity.component(ofType: RocketLauncher_Linear.self) {
+        if let attackComponent = currentEntity.component(ofType: StructureWeaponComponent.self) {
             damageLabel.text = "Damage: \(attackComponent.damage)"
             
             if currentRange == nil {
@@ -126,16 +167,6 @@ class InfoViewNode : SKNode {
         else {
             damageLabel.text = "Damage: N/A"
         }
-        
-
-        // Testing values!
-//        if currentEntity is Structure {
-////            healthLabel.text = (currentEntity as! Structure).connection_master?.name
-//        }
-//
-//        if currentEntity is Supplier {
-//            healthLabel.text = "Master Count: \((currentEntity as! Supplier).connection_masters.count), Conn Count: \((currentEntity as! Supplier).connection_toStructures.count)"
-//        }
         
     }
     
@@ -242,7 +273,7 @@ class InfoViewNode : SKNode {
         infoView.addChild(titleLabel)
         infoView.addChild(healthLabel)
         infoView.addChild(damageLabel)
-//        infoView.addChild(upgradeButton)
+        infoView.addChild(upgradeButton)
         infoView.addChild(destroyButton)
     }
     

@@ -60,6 +60,9 @@ class PlayerHUD : SKCameraNode {
         
         displayConstruction()
         
+        // Setup button listeners
+        infoNode.destroyButton.setListener(function: destroySelectedStructure)
+        
         // Add the resource node to the bottom bar
         bottomBarNode.addChild(constructionNode)
         bottomBarNode.addChild(infoNode)
@@ -77,9 +80,10 @@ class PlayerHUD : SKCameraNode {
         addChild(enemyIndicatorManager)
         
         // Add a new wave button
-        let newWaveSize = CGSize(width: sceneWidth * 0.15, height: sceneHeight * 0.1)
+        let newWaveSize = CGSize(width: sceneWidth * 0.17, height: sceneHeight * 0.1)
         let newWave = UI_Button(size: newWaveSize, text: "New Wave", name: "new_wave", anchor: CGPoint(x: 1.0, y: 1.0))
         newWave.position = CGPoint(x: sceneWidth * 0.5, y: sceneHeight * 0.5)
+        newWave.setListener(function: spawnWave)
         
         addChild(newWave)
     }
