@@ -33,7 +33,8 @@ class Missile_Tracer: GKEntity {
         addComponent(ContactComponent(damage: damage,
                                       destroySelf: true,
                                       damageRate: 1.0,
-                                      aoe: false,
+                                      aoe: true,
+                                      aoeRange: size.width * 6,
                                       targets: targets))
         addComponent(EntityTypeComponent(type: Type.missile))
         
@@ -41,6 +42,7 @@ class Missile_Tracer: GKEntity {
                                     maxAcceleration: maxAcceleration,
                                     radius: Float(size.width),
                                     target: target))
+        addComponent(HealthComponent(parentNode: spriteComponent.node, barWidth: 0, barOffset: 0, health: 1, showHealth: false))
         
         mySprite = spriteComponent.spriteNode
         myNode = spriteComponent.node

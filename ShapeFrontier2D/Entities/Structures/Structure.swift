@@ -71,12 +71,6 @@ class Structure : GKEntity {
     
     func recycle() {
         gameScene.minerals_current += Int(CGFloat(constructionCost) * 0.75)
-        
-        // Get his health component
-        if let healthComponent = component(ofType: HealthComponent.self) {
-            // Call death on it
-            healthComponent.death()
-        }
     }
     
     func tick() {

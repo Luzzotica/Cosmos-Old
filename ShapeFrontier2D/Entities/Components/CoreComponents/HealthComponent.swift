@@ -77,7 +77,7 @@ class HealthComponent: GKComponent {
 
         // Kill him if he is dead
         if health_current == 0 {
-            death()
+            EntityManager.shared.remove(entity!)
         }
 
         // Return the current health of the target
@@ -96,7 +96,7 @@ class HealthComponent: GKComponent {
         
         // Kill him if he is dead
         if health_current == 0 {
-            death()
+            EntityManager.shared.remove(entity!)
         }
     }
     
@@ -132,11 +132,6 @@ class HealthComponent: GKComponent {
             deathAnim?.run(SKAction.wait(forDuration: 1.0)) {
                 deathAnim?.removeFromParent()
             }
-        }
-        
-        // Remove the entity from the lists! We track him no longer.
-        if let entity = entity {
-            EntityManager.shared.remove(entity)
         }
     }
     

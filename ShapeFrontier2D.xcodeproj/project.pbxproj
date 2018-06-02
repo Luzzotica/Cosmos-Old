@@ -90,6 +90,7 @@
 		B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */; };
 		B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */; };
 		B5DEEDDE2083116C002D5FCC /* ObstacleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */; };
+		B5E29D3D209EA08400633714 /* GenericWeaponComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E29D3C209EA08400633714 /* GenericWeaponComponent.swift */; };
 		ED9182E23A44DACA0E4F769C /* Pods_ShapeFrontier2D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935DC48821C8AAF5E0732203 /* Pods_ShapeFrontier2D.framework */; };
 		F5D04B474599FB60BF3BB1FA /* Pods_ShapeFrontier2DTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA53BB2FBF2E1658576D4C1 /* Pods_ShapeFrontier2DTests.framework */; };
 /* End PBXBuildFile section */
@@ -199,6 +200,7 @@
 		B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseCannonComponent.swift; sourceTree = "<group>"; };
 		B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllianceManager.swift; sourceTree = "<group>"; };
 		B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleComponent.swift; sourceTree = "<group>"; };
+		B5E29D3C209EA08400633714 /* GenericWeaponComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericWeaponComponent.swift; sourceTree = "<group>"; };
 		CA5A2AECA7A7BA6BA00E1F16 /* Pods-ShapeFrontier2D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2D/Pods-ShapeFrontier2D.debug.xcconfig"; sourceTree = "<group>"; };
 		FE1F563E7BE2189287ECCB76 /* Pods-ShapeFrontier2DTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeFrontier2DTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeFrontier2DTests/Pods-ShapeFrontier2DTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -374,6 +376,7 @@
 		B574203620916AAC00160F61 /* WeaponComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B5E29D3C209EA08400633714 /* GenericWeaponComponent.swift */,
 				B589E992206738F80083FAC5 /* RocketLauncher_Linear.swift */,
 				B574203C20916FF800160F61 /* TraceComponent.swift */,
 				B589E993206738F80083FAC5 /* ContactComponent.swift */,
@@ -882,6 +885,7 @@
 				B51D8AFF203B9E06000959B6 /* UI_Button.swift in Sources */,
 				B574203D20916FF800160F61 /* TraceComponent.swift in Sources */,
 				B58501D91FFF7A44009C2F65 /* PulseCannon.swift in Sources */,
+				B5E29D3D209EA08400633714 /* GenericWeaponComponent.swift in Sources */,
 				B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */,
 				B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */,
 				B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */,

@@ -17,14 +17,16 @@ class ContactComponent: GKComponent {
     let damageRate: CGFloat
     var lastDamageTime: TimeInterval
     let aoe: Bool
+    let aoeRange: CGFloat
     
     let targets : [Int]
   
-    init(damage: CGFloat, destroySelf: Bool, damageRate: CGFloat, aoe: Bool, targets: [Int]) {
+    init(damage: CGFloat, destroySelf: Bool, damageRate: CGFloat, aoe: Bool, aoeRange: CGFloat, targets: [Int]) {
         self.damage = damage
         self.destroySelf = destroySelf
         self.damageRate = damageRate
         self.aoe = aoe
+        self.aoeRange = aoeRange
         self.lastDamageTime = 0
         
         self.targets = targets
@@ -71,12 +73,26 @@ class ContactComponent: GKComponent {
                         
                         if (aoe) {
                             aoeDamageCaused = true
+                            //Explosion animation
+                            
+                            //Get all enemies within explosion radius
+                            for enemy in EntityManager.shared.agentComponentsForPlayers(targets)
+                            {
+                                if (CGPoint(enemy.position) - spriteComponent.node.position).length() < aoeRange
+                                {
+                                    // Subtract health
+                                    if let enemyHealthComponent = enemy.entity?.component(ofType: HealthComponent.self) {
+                                        enemyHealthComponent.takeDamage(damage * 0.75)
+                                    }
+                                }
+                            }
                         } else {
                             lastDamageTime = CACurrentMediaTime()
+                            // Subtract health
+                            enemyHealthComponent.takeDamage(damage)
                         }
                         
-                        // Subtract health
-                        enemyHealthComponent.takeDamage(damage)
+                        
                         
                         // Destroy self
                         if destroySelf {

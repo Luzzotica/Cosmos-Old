@@ -105,6 +105,11 @@ class EntityManager {
     
     func remove(_ entity: GKEntity) {
         
+        if let healthComponent = entity.component(ofType: HealthComponent.self)
+        {
+            healthComponent.death()
+        }
+        
         if let node = entity.component(ofType: SpriteComponent.self)?.node {
             node.removeFromParent()
         }
@@ -168,6 +173,26 @@ class EntityManager {
             }
         }
         
+        // Return the agents of the player
+        return moveComponents
+    }
+    
+    func agentComponentsForPlayers(_ players: [Int]) -> [MoveComponent]
+    {
+        var moveComponents : [MoveComponent] = []
+        for player in players
+        {
+            // Get the entities tied to this player
+            let entities = entitiesForPlayer[player]!
+            
+            // Get all of their move components, these are the agents that can be recognized by the AI
+            for entity in entities {
+                if let moveComponent = entity.component(ofType: MoveComponent.self) {
+                    moveComponents.append(moveComponent)
+                }
+            }
+            
+        }
         // Return the agents of the player
         return moveComponents
     }

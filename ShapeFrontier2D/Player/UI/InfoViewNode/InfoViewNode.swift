@@ -124,7 +124,9 @@ class InfoViewNode : SKNode {
             
             // Unhide the upgrade button!
             if upgradeButton.isHidden {
-                upgradeButton.isHidden = false
+                if currentEntity is Structure {
+                    upgradeButton.isHidden = false
+                }
             }
         }
         
@@ -160,9 +162,9 @@ class InfoViewNode : SKNode {
                 currentSprite.addChild(currentRange)
             }
             
-//            if currentEntity is Miner {
-//                damageLabel.text = "Mining POWERRRR!: \(attackComponent.damage)"
-//            }
+            if currentEntity is Miner {
+                damageLabel.text = "Mining POWERRRR!: \(attackComponent.damage)"
+            }
         }
         else {
             damageLabel.text = "Damage: N/A"
@@ -173,7 +175,9 @@ class InfoViewNode : SKNode {
     func destroySelectedStructure() {
         // This should never be run if it isn't a structure. But sanity check anyways
         if currentEntity is Structure {
-            (currentEntity as! Structure).recycle()
+            let toRecycle = (currentEntity as! Structure)
+            toRecycle.recycle()
+            EntityManager.shared.remove(toRecycle)
         }
     }
     

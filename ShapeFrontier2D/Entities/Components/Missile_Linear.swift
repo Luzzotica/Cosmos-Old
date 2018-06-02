@@ -34,6 +34,7 @@ class Missile_Linear: GKEntity {
                                     destroySelf: true,
                                     damageRate: 1.0,
                                     aoe: false,
+                                    aoeRange: 0,
                                     targets: targets))
         addComponent(EntityTypeComponent(type: Type.missile))
         

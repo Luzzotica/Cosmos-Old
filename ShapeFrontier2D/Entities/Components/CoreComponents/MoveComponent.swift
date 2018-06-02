@@ -81,13 +81,6 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
             }
         }
         
-        // If we are close enough, stop
-        let distanceCheck = closestAgentComponent!.radius + radius
-        if Float(closestDistance) < distanceCheck + Float(sceneWidth * 0.1) {
-//            print("Closest Dist: \(closestDistance), compared to \(closestAgentComponent!.radius * 1.3 + radius)")
-            return nil
-        }
-        
         // Return the closest agent from the target player that we found
         return closestAgentComponent
         
