@@ -263,28 +263,30 @@ class InfoViewNode : SKNode {
         damageLabel.verticalAlignmentMode = .top
         
         // Setup upgrade button
-        let buttonSize = CGSize(width: infoViewWidth * 0.4, height: bottomBar_height * 0.45)
+        let buttonSize = CGSize(width: infoViewWidth * 0.25 - bottomBar_buffer * 0.25,
+                                height: bottomBar_height * 0.9)
         
         yPosition = bottomBar_height + bottomBar_buffer * 0.5
+        var xPosition = infoViewWidth - bottomBar_buffer * 0.5
         upgradeButton = UI_Button(size: buttonSize,
                                   text: "Upgrade",
                                   name: "upgrade",
                                   backgroundColor: .green,
                                   fontSize: fontSizeS,
                                   anchor: CGPoint(x: 1.0, y: 1.0))
-        upgradeButton.position.x = infoViewWidth - bottomBar_buffer * 0.5
+        upgradeButton.position.x = xPosition
         upgradeButton.position.y = yPosition
         upgradeButton.zPosition = 1
         
         // Setup destroy button
-        yPosition -= buttonSize.height + bottomBar_height * 0.1
+        xPosition -= buttonSize.width + bottomBar_buffer * 0.5
         destroyButton = UI_Button(size: buttonSize,
                                   text: "Destroy",
                                   name: "destroy",
                                   backgroundColor: .red,
                                   fontSize: fontSizeS,
                                   anchor: CGPoint(x: 1.0, y: 1.0))
-        destroyButton.position.x = infoViewWidth - bottomBar_buffer * 0.5
+        destroyButton.position.x = xPosition
         destroyButton.position.y = yPosition
         destroyButton.zPosition = 1
         
