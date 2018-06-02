@@ -88,6 +88,7 @@
 		B5A8CCD12094F766001CA502 /* StructureDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCCF2094F766001CA502 /* StructureDeath.sks */; };
 		B5A8CCD22094F766001CA502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A8CCD02094F766001CA502 /* Assets.xcassets */; };
 		B5A8CCD62095108F001CA502 /* PulseCannonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */; };
+		B5C0E46B20C3081E008DB2B7 /* UpgradeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0E46A20C3081E008DB2B7 /* UpgradeComponent.swift */; };
 		B5DEEDDC20830A16002D5FCC /* AllianceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */; };
 		B5DEEDDE2083116C002D5FCC /* ObstacleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */; };
 		B5E29D3D209EA08400633714 /* GenericWeaponComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E29D3C209EA08400633714 /* GenericWeaponComponent.swift */; };
@@ -198,6 +199,7 @@
 		B5A8CCCF2094F766001CA502 /* StructureDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StructureDeath.sks; sourceTree = "<group>"; };
 		B5A8CCD02094F766001CA502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5A8CCD52095108F001CA502 /* PulseCannonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseCannonComponent.swift; sourceTree = "<group>"; };
+		B5C0E46A20C3081E008DB2B7 /* UpgradeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeComponent.swift; sourceTree = "<group>"; };
 		B5DEEDDB20830A16002D5FCC /* AllianceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllianceManager.swift; sourceTree = "<group>"; };
 		B5DEEDDD2083116C002D5FCC /* ObstacleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleComponent.swift; sourceTree = "<group>"; };
 		B5E29D3C209EA08400633714 /* GenericWeaponComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericWeaponComponent.swift; sourceTree = "<group>"; };
@@ -491,11 +493,10 @@
 		B58501CB1FFF45FD009C2F65 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
-				B58A49DD209C165300EA3A9F /* BuildComponent.swift */,
+				B5C0E46920C307F9008DB2B7 /* StructureComponents */,
 				B58A49DF209C1AAD00EA3A9F /* StructureValues.swift */,
 				B58501CC1FFF4612009C2F65 /* Structure.swift */,
 				B52AA1D8209D64F300A33D9B /* Miner.swift */,
-				B52AA1DA209E33EF00A33D9B /* MiningComponent.swift */,
 				B58501E4200049D9009C2F65 /* Suppliers */,
 				B58501E5200049E4009C2F65 /* Turrets */,
 				B5A8CCCF2094F766001CA502 /* StructureDeath.sks */,
@@ -543,6 +544,16 @@
 				B51D8AFC203B9E05000959B6 /* UI_SliderButton.swift */,
 			);
 			path = UI_Items;
+			sourceTree = "<group>";
+		};
+		B5C0E46920C307F9008DB2B7 /* StructureComponents */ = {
+			isa = PBXGroup;
+			children = (
+				B52AA1DA209E33EF00A33D9B /* MiningComponent.swift */,
+				B58A49DD209C165300EA3A9F /* BuildComponent.swift */,
+				B5C0E46A20C3081E008DB2B7 /* UpgradeComponent.swift */,
+			);
+			path = StructureComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -887,6 +898,7 @@
 				B58501D91FFF7A44009C2F65 /* PulseCannon.swift in Sources */,
 				B5E29D3D209EA08400633714 /* GenericWeaponComponent.swift in Sources */,
 				B589E99720673AB70083FAC5 /* Missile_Linear.swift in Sources */,
+				B5C0E46B20C3081E008DB2B7 /* UpgradeComponent.swift in Sources */,
 				B51D8AFB203B7DEA000959B6 /* InfoViewNode.swift in Sources */,
 				B51FBC82204BB87A001BFFB4 /* MoveBehavior.swift in Sources */,
 				B589E994206738F80083FAC5 /* RocketLauncher_Linear.swift in Sources */,

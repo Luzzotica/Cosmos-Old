@@ -33,6 +33,8 @@ class InfoViewNode : SKNode {
     let colorGreen = SKAction.colorize(with: .green, colorBlendFactor: 1.0, duration: 0.2)
     let colorNormal = SKAction.colorize(with: .green , colorBlendFactor: 0.0, duration: 0.2)
     
+    // MARK: - Info Display
+    
     func deselectEntity() {
         if currentEntity != nil {
             if let health = currentEntity.component(ofType: HealthComponent.self) {
@@ -68,6 +70,14 @@ class InfoViewNode : SKNode {
         {
             destroyButton.isHidden = false
             upgradeButton.isHidden = false
+            
+            // If the structure is at max level
+            if (currentEntity as! Structure).upgrade_isMaxLevel() {
+                upgradeButton.node_text?.text = "Maxed"
+            }
+            else {
+                upgradeButton.node_text?.text = "Upgrade"
+            }
         }
         
         // Show the health bar above him
@@ -172,6 +182,8 @@ class InfoViewNode : SKNode {
         
     }
     
+    // MARK: - Button Functions
+    
     func destroySelectedStructure() {
         // This should never be run if it isn't a structure. But sanity check anyways
         if currentEntity is Structure {
@@ -180,6 +192,14 @@ class InfoViewNode : SKNode {
             EntityManager.shared.remove(toRecycle)
         }
     }
+    
+    func upgradeSelectedStructure() {
+        if currentEntity is Structure {
+            (currentEntity as! Structure).upgrade_start()
+        }
+    }
+    
+    // MARK: - Lifetime Functions
     
     init(bottomBar_height: CGFloat, bottomBar_buffer: CGFloat) {
         super.init()

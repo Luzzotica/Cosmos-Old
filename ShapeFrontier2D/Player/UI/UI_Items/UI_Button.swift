@@ -11,18 +11,38 @@ import SpriteKit
 
 class UI_Button : SKNode {
     
+    var isDisabled = false
+    
     var size : CGSize!
     
     var node_text : SKLabelNode?
+    
     var node_button : SKSpriteNode?
+    var node_buttonColor : UIColor?
     
     var functionToRun: (() -> Void)?
+    
+    func setDisabled(disabled: Bool) {
+        isDisabled = disabled
+        
+        if isDisabled {
+            node_button?.color = .gray
+        }
+        else {
+            node_button?.color = node_buttonColor!
+        }
+    }
     
     func setListener(function: @escaping () -> Void) {
         functionToRun = function
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // If we are disabled, stop
+        if isDisabled {
+            return
+        }
+        
         if functionToRun != nil {
             functionToRun!()
         }

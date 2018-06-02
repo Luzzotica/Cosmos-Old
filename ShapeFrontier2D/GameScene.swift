@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupGame()
         
         // Add the first player reactor
-        let firstReactor = Reactor(texture: Structures.reactorLevel1, team: .team1)
+        let firstReactor = Reactor(texture: Structure.Textures.reactor[0], team: .team1)
         
         // Move the reactor to the center of the screen
         firstReactor.component(ofType: SpriteComponent.self)?.node.position = playerCamera!.position

@@ -40,7 +40,8 @@ class EntityManager {
         let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
         let pulseCannonSystem = GKComponentSystem(componentClass: PulseCannonComponent.self)
         let buildSystem = GKComponentSystem(componentClass: BuildComponent.self)
-        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem, buildSystem]
+        let upgradeSystem = GKComponentSystem(componentClass: UpgradeComponent.self)
+        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem, buildSystem, upgradeSystem]
     }()
     
     func addPlayer(_ player: PlayerEntity) {
@@ -149,6 +150,15 @@ class EntityManager {
     
     func removeComponent(component: GKComponent) {
         toRemoveComponent.insert(component)
+    }
+    
+    func addComponent(component: GKComponent) {
+        for componentSystem in componentSystems {
+            if type(of: component) == componentSystem.componentClass {
+                componentSystem.addComponent(component)
+                return
+            }
+        }
     }
     
     func runDiedAction(_ entity: GKEntity) {

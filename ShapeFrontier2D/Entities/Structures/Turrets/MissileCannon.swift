@@ -12,6 +12,50 @@ import SpriteKit
 
 class MissileCannon : Turret {
     
+    // MARK: - Upgrade Functions
+    
+    override func upgrade_start() {
+        super.upgrade_start()
+        
+        let upgradeComponent = UpgradeComponent(ticks: Structure.MissileCannonValues.upgrade_ticks[level],
+                                                power: Structure.MissileCannonValues.power_toUpgrade)
+        
+        // Add the component to ourselves
+        addComponent(upgradeComponent)
+        
+        // Add the component to the entity manager
+        EntityManager.shared.addComponent(component: upgradeComponent)
+    }
+    
+    override func upgrade_finish() {
+        super.upgrade_finish()
+    }
+    
+    override func upgrade_setLevel(level: Int) {
+        self.level = level
+        
+        // Change his health
+        if let healthComponent = component(ofType: HealthComponent.self) {
+            healthComponent.setMaxHealth(Structure.MissileCannonValues.maxHealth[level])
+        }
+        
+        // Change his sprite
+        if let spriteComponent = component(ofType: SpriteComponent.self) {
+            spriteComponent.setSpriteTexture(texture: Structure.Textures.missileCannon[level])
+        }
+        
+        // Change his damage
+        if let weaponComponent = component(ofType: MissileCannonComponent.self) {
+            weaponComponent.setDamage(damage: Structure.MissileCannonValues.damage[level])
+            weaponComponent.setDamage(damage: Structure.MissileCannonValues.damageRate[level])
+            weaponComponent.setDamage(damage: Structure.MissileCannonValues.range[level])
+        }
+    }
+    
+    override func upgrade_isMaxLevel() -> Bool {
+        return level >= Structure.MissileCannonValues.level_max
+    }
+    
     override func didFinishPlacement() {
         super.didFinishPlacement()
         
@@ -25,20 +69,23 @@ class MissileCannon : Turret {
         let spriteComponent = component(ofType: SpriteComponent.self)
         
         addComponent(MoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent!.spriteNode.size.width * 0.5), name: "Missile Cannon"))
-        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.MissileCannonValues.maxHealth))
+        addComponent(HealthComponent(parentNode: spriteComponent!.node, barWidth: spriteComponent!.spriteNode.size.width * 0.5, barOffset: spriteComponent!.spriteNode.size.height * 0.61, health: Structure.MissileCannonValues.maxHealth[level]))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
         spriteComponent!.node.name! += "_missileCannon"
         
-        let weapon = MissileCannonComponent(range: Structure.MissileCannonValues.range, damage: Structure.MissileCannonValues.damage, damageRate: Structure.MissileCannonValues.damageRate, player: 1, targetPlayers: [666])
+        let weapon = MissileCannonComponent(range: Structure.MissileCannonValues.range[level],
+                                            damage: Structure.MissileCannonValues.damage[level],
+                                            damageRate: Structure.MissileCannonValues.damageRate[level],
+                                            player: 1, targetPlayers: [666])
         weapon.setPossibleTargets(types: .ship)
         
         addComponent(weapon)
         
         // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)
+        power_lowOverlay = SKSpriteNode(texture: Structure.Textures.outOfPowerOverlay, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
         power_toUse = Structure.PulseCannonValues.power_toUse

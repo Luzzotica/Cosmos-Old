@@ -12,7 +12,7 @@ import GameplayKit
 
 class Structure : GKEntity {
     
-    var level : Int = 1
+    var level : Int = 0
     
     var power_toUse : Int = 0
     
@@ -60,10 +60,6 @@ class Structure : GKEntity {
         spriteComponent!.deselect()
     }
     
-    func levelup() {
-        level += 1
-    }
-    
     func didDied() {
         //Remove self from global structures list and individual type list
         connection_powerLine?.destroySelf()
@@ -75,6 +71,22 @@ class Structure : GKEntity {
     
     func tick() {
         power_handleOverlay()
+    }
+    
+    func upgrade_start() {
+        
+    }
+    
+    func upgrade_finish() {
+        upgrade_setLevel(level: self.level + 1)
+    }
+    
+    func upgrade_setLevel(level: Int) {
+        
+    }
+    
+    func upgrade_isMaxLevel() -> Bool {
+        return false
     }
     
     // MARK: - POWERRRR FUNCTIONS

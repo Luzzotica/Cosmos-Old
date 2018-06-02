@@ -92,8 +92,6 @@ class ContactComponent: GKComponent {
                             enemyHealthComponent.takeDamage(damage)
                         }
                         
-                        
-                        
                         // Destroy self
                         if destroySelf {
                             EntityManager.shared.remove(entity!)

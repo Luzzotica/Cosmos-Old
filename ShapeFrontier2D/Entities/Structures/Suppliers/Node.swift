@@ -35,7 +35,7 @@ class Node : Supplier {
         spriteComponent!.node.name! += "_node"
         
         // Set up low power overlay
-        power_lowOverlay = SKSpriteNode(texture: Structures.nodeLowPower, size: spriteComponent!.spriteNode.size)
+        power_lowOverlay = SKSpriteNode(texture: Structure.Textures.nodeLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
     }

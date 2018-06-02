@@ -62,6 +62,7 @@ class PlayerHUD : SKCameraNode {
         
         // Setup button listeners
         infoNode.destroyButton.setListener(function: destroySelectedStructure)
+        infoNode.upgradeButton.setListener(function: upgradeSelectedStructure)
         
         // Add the resource node to the bottom bar
         bottomBarNode.addChild(constructionNode)
@@ -92,7 +93,8 @@ class PlayerHUD : SKCameraNode {
         displayConstruction()
     }
     
-    // Info Node
+    // MARK: - Info Node
+    
     func displayInfo(entity: GKEntity) {
         infoNode.displayInfo(entity: entity)
         
@@ -111,6 +113,10 @@ class PlayerHUD : SKCameraNode {
     func destroySelectedStructure() {
         displayConstruction()
         infoNode.destroySelectedStructure()
+    }
+    
+    func upgradeSelectedStructure() {
+        infoNode.upgradeSelectedStructure()
     }
     
     func updateHUD() {

@@ -14,6 +14,10 @@ class SpriteComponent: GKComponent {
     let spriteNode: SKSpriteNode
     let node: SKNode
     
+    func setSpriteTexture(texture: SKTexture) {
+        spriteNode.texture = texture
+    }
+    
     func select(toAdd: [SKNode]) {
         for i in 0..<toAdd.count {
             node.addChild(toAdd[i])

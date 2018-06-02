@@ -14,7 +14,7 @@ class HealthComponent: GKComponent {
     static var hideAction : SKAction!
     static var showAction : SKAction!
     
-    let health_max: CGFloat
+    var health_max: CGFloat
     var health_current: CGFloat
     let healthBarFullWidth: CGFloat
     let healthBar: SKShapeNode
@@ -98,6 +98,15 @@ class HealthComponent: GKComponent {
         if health_current == 0 {
             EntityManager.shared.remove(entity!)
         }
+    }
+    
+    func setMaxHealth(_ amount: CGFloat) {
+        let amountChanged = amount - health_max
+        
+        health_max = amount
+        health_current += amountChanged
+        
+        updateHealthBar()
     }
     
     func updateHealthBar() {

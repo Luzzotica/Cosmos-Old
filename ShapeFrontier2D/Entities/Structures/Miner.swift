@@ -16,6 +16,44 @@ class Miner : Structure {
     var asteroid_current : Asteroid?
     var asteroid_distance : CGFloat = sceneWidth * 0.2
     
+    // MARK: - Upgrade Functions
+    
+    override func upgrade_start() {
+        super.upgrade_start()
+        
+        let upgradeComponent = UpgradeComponent(ticks: Structure.MinerValues.upgrade_ticks[level],
+                                                power: Structure.MinerValues.power_toUpgrade)
+        
+        // Add the component to ourselves
+        addComponent(upgradeComponent)
+        
+        // Add the component to the entity manager
+        EntityManager.shared.addComponent(component: upgradeComponent)
+    }
+    
+    override func upgrade_finish() {
+        super.upgrade_finish()
+        
+    }
+    
+    override func upgrade_setLevel(level: Int) {
+        self.level = level
+        
+        // Change his health
+        if let healthComponent = component(ofType: HealthComponent.self) {
+            healthComponent.setMaxHealth(Structure.MinerValues.maxHealth[level])
+        }
+        
+        // Change his sprite
+        if let spriteComponent = component(ofType: SpriteComponent.self) {
+            spriteComponent.setSpriteTexture(texture: Structure.Textures.miner)
+        }
+    }
+    
+    override func upgrade_isMaxLevel() -> Bool {
+        return level >= Structure.MinerValues.level_max
+    }
+    
     override func tick() {
         super.tick()
         
@@ -47,7 +85,7 @@ class Miner : Structure {
                 // Find power!
                 if power_find(amount: power_toUse, distance: 0, dontLookAtID: ID) != -1 {
                     let asteroidComponent = asteroid_current?.component(ofType: AsteroidComponent.self)
-                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.MinerValues.damage)
+                    gameScene.minerals_current += asteroidComponent!.getMineAmount(amount: Structure.MinerValues.damage[level])
                     let nodeOne = component(ofType: SpriteComponent.self)!.node
                     let nodeTwo = asteroid_current?.component(ofType: SpriteComponent.self)!.node
                     let laser = Laser(nodeOne: nodeOne, nodeTwo: nodeTwo!, color: .green, width: sceneWidth * 0.005)
@@ -135,14 +173,14 @@ class Miner : Structure {
         addComponent(HealthComponent(parentNode: spriteComponent!.node,
                                      barWidth: spriteComponent!.spriteNode.size.width * 0.5,
                                      barOffset: spriteComponent!.spriteNode.size.height * 0.61,
-                                     health: Structure.MinerValues.maxHealth))
+                                     health: Structure.MinerValues.maxHealth[level]))
         addComponent(TeamComponent(team: team))
         addComponent(PlayerComponent(player: 1))
         addComponent(EntityTypeComponent(type: Type.structure))
         
         spriteComponent!.node.name! += "_miner"
         
-        power_lowOverlay = SKSpriteNode(texture: Structures.minerLowPower, size: spriteComponent!.spriteNode.size)
+        power_lowOverlay = SKSpriteNode(texture: Structure.Textures.minerLowPower, size: spriteComponent!.spriteNode.size)
         power_lowOverlay.zPosition = 1
         
         power_toUse = Structure.MinerValues.power_toUse
