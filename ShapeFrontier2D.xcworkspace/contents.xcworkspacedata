@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ShapeFrontier2D.xcodeproj">
+      location = "group:/Users/Luzzotica/Desktop/Swift Games/ShapeFrontier2D/Cosmos.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
