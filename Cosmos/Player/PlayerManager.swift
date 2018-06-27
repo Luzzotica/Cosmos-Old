@@ -20,11 +20,9 @@ class PlayerManager: NSObject {
     var currentID : Int = 1
     
     func addThisPlayer() -> PlayerEntity {
-        // Create a new HUD for the player
-        let HUD = PlayerHUD()
         
         // Create a new player entity
-        let newPlayer = PlayerEntity(player: currentID, playerHUD: HUD)
+        let newPlayer = PlayerEntity(player: currentID, playerHUD: PlayerHUD.shared)
         
         // Add the player to our player dictionary
         players[currentID] = newPlayer

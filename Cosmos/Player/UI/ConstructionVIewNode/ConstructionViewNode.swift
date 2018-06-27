@@ -56,31 +56,36 @@ class ConstructionViewNode : SKNode {
     func startStructureCreation(name: String, location: CGPoint) {
         var structure : Structure!
         
+        // Get the player from the HUD
+        guard let player = PlayerHUD.shared.playerEntity else { return }
+        
+        print("TEST")
+        
 //        print(name)
         if name.contains("constructor") {
             if name.contains("reactor") {
-                let reactor = Reactor(texture: Structure.Textures.reactor[0], teamID: Teams.one)
+                let reactor = Reactor(playerID: player.playerID)
                 structure = reactor
                 structure.constructionCost = StructureCost.Reactor
             }
             else if name.contains("miner") {
-                let miner = Miner(texture: Structure.Textures.miner, teamID: Teams.one)
+                let miner = Miner(playerID: player.playerID)
                 miner.select()
                 structure = miner
                 structure.constructionCost = StructureCost.Miner
             }
             else if name.contains("node") {
-                structure = Node(texture: Structure.Textures.node, teamID: Teams.one)
+                structure = Node(playerID: player.playerID)
                 structure.constructionCost = StructureCost.Node
             }
             else if name.contains("missileCannon") {
-                let turret = MissileCannon(texture: Structure.Textures.missileCannon[0], teamID: Teams.one)
+                let turret = MissileCannon(playerID: player.playerID)
                 turret.select()
                 structure = turret
                 structure.constructionCost = StructureCost.MissileTurret
             }
             else if name.contains("pulseLaser") {
-                let turret = PulseCannon(texture: Structure.Textures.pulseLaser[0], teamID: Teams.one)
+                let turret = PulseCannon(playerID: player.playerID)
                 turret.select()
                 structure = turret
                 structure.constructionCost = StructureCost.PulseLaser

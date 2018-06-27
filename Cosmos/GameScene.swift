@@ -33,15 +33,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var touches_disabled_timer : TimeInterval = 0
     
     override func didMove(to view: SKView) {
-        physicsWorld.contactDelegate = self
-        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
-        
-        // Set up game and all it's goodness
-        setupGame()
-        
         // Add some teams and players
         let player = PlayerManager.shared.addThisPlayer()
         let _ = TeamManager.shared.createNewTeam()
+        
+        // Set up game and all it's goodness
+        setupGame()
         
         // Add the first player reactor
         let firstReactor = Reactor(playerID: player.playerID)
@@ -259,17 +256,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        player_structures.removeAll()
     }
     
-    /*
- 
-     Game Setup Stuff
-     
-     Set Up Game
- 
-    */
+    // MARK: - Game Setup
     
     func setupGame() {
+        // Setup world physics
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
+        
         // Get the HUD from the main player
-        let playerCamera = PlayerManager.shared.mainPlayer.playerHUD!
+        let playerCamera = PlayerHUD.shared
         addChild(playerCamera)
         camera = playerCamera
 
@@ -287,6 +282,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set the background to a nice dark blue
         backgroundColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
     }
+    
+    // MARK: - UI Actions
     
     @objc func zoom(_ sender: UIPinchGestureRecognizer) {
         

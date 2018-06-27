@@ -17,9 +17,6 @@ extension ResourceViewNode {
         mineralsLevelLabel = setupMineralLabel()
         miningRateLabel = setupMiningRateLabel()
         
-        // Update the resources
-        update_resources()
-        
         // Add each one to the mineralNode
         node.addChild(mineralsLevelLabel)
         node.addChild(miningRateLabel)
@@ -65,8 +62,7 @@ extension ResourceViewNode {
 	
 	func update_mineralsLabel() {
         // Get the player from the HUD
-        let HUD = parent as! PlayerHUD
-        guard let player = HUD.playerEntity else { return }
+        guard let player = PlayerHUD.shared.playerEntity else { return }
         
         // Update the minerals from the gameScene
 		miningRateLabel.text = "\(player.getCurrentMinerals()) mins / minute"

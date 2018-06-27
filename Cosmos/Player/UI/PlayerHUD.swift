@@ -11,6 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class PlayerHUD : SKCameraNode {
+    // MARK: - Properties
     
     static let shared = PlayerHUD()
     weak var playerEntity : PlayerEntity!
@@ -39,6 +40,8 @@ class PlayerHUD : SKCameraNode {
     let backgroundNode = SKNode()
     var backgroundOne = SKNode()
     var backgroundTwo = SKNode()
+    
+    // MARK: - Initializers
     
     override init() {
         super.init()
@@ -138,7 +141,8 @@ class PlayerHUD : SKCameraNode {
         resourceNode.update_resources()
     }
     
-    // Move the camera function
+    // MARK: - Camera Actions
+    
     func cameraMoved(dPoint: CGPoint) {
         
         // Check if we are out of bounds
@@ -186,6 +190,8 @@ class PlayerHUD : SKCameraNode {
         run(scaleAction)
         backgroundNode.run(SKAction.scale(by: 1.0 / backgroundScale, duration: 0))
     }
+    
+    // MARK: - Background Creation
     
     func createBackground() {
         

@@ -13,13 +13,7 @@ class PlayerEntity : GKEntity {
     // MARK: - Properties
     
     var playerID : Int
-    var playerHUD : PlayerHUD? {
-        didSet {
-            if let HUD = playerHUD {
-                HUD.playerEntity = self
-            }
-        }
-    }
+    var playerHUD : PlayerHUD?
     
     // Player structures in game
     var player_Clusters : [Structure] = []
@@ -46,6 +40,9 @@ class PlayerEntity : GKEntity {
         self.playerID = player
         
         super.init()
+        
+        // Set the playerHUD, if there was one, to have self as a player
+        self.playerHUD?.playerEntity = self
         
     }
     

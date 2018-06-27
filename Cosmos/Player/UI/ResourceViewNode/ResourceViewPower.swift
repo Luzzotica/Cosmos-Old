@@ -62,16 +62,15 @@ extension ResourceViewNode {
 	
 	func update_powerLabel() {
         // Get the player from the HUD
-        let HUD = parent as! PlayerHUD
-        let player = HUD.playerEntity
+        guard let player = PlayerHUD.shared.playerEntity else { return }
         
         // Update the powerlevel label and the power bar. Increase/decrease it's width
-		powerLevelNode.size.width = -leftAnchor * CGFloat(player!.power_getCurrent()) / CGFloat(player!.power_getMax())
-        if player!.power_getCurrent() == 0 {
+		powerLevelNode.size.width = -leftAnchor * CGFloat(player.power_getCurrent()) / CGFloat(player.power_getMax())
+        if player.power_getCurrent() == 0 {
             powerLevelLabel.text = "No power!"
         }
         else {
-            powerLevelLabel.text = "\(player!.power_getCurrent()) energy (\(Int(CGFloat(player!.power_getCurrent()) / CGFloat(player!.power_getMax()) * 100.0))%)"
+            powerLevelLabel.text = "\(player.power_getCurrent()) energy (\(Int(CGFloat(player.power_getCurrent()) / CGFloat(player.power_getMax()) * 100.0))%)"
         }
 		
 	}
