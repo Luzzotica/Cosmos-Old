@@ -1,6 +1,6 @@
 //
-//  WeaponComponent.swift
-//  ShapeFrontier2D
+//  StructureWeaponComponent.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 4/25/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

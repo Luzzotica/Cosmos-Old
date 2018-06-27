@@ -1,6 +1,6 @@
 //
-//  PlayerHUDDecor.swift
-//  ShapeFrontier2D
+//  PlayerHUDExt_Decor.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 2/10/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

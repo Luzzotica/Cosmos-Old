@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 1/4/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         // Add some teams and players
-        let player = PlayerManager.shared.addThisPlayer()
+        let player = PlayerManager.shared.createClientPlayer()
         let _ = TeamManager.shared.createNewTeam()
         
         // Set up game and all it's goodness
@@ -44,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstReactor = Reactor(playerID: player.playerID)
         
         // Move the reactor to the center of the screen
-        firstReactor.component(ofType: SpriteComponent.self)?.node.position = PlayerManager.shared.mainPlayer.playerHUD!.position
+        firstReactor.component(ofType: SpriteComponent.self)?.node.position = PlayerManager.shared.clientPlayer.playerHUD!.position
         
         // Update the positioning of the move component
         if let moveComponent = firstReactor.component(ofType: MoveComponent.self),

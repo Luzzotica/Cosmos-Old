@@ -1,6 +1,6 @@
 //
-//  UICreator_PauseGame.swift
-//  DOTKey Resistance
+//  UIHandler.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 1/1/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

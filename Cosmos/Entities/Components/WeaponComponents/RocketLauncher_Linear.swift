@@ -1,6 +1,6 @@
 //
-//  FiringComponent.swift
-//  MonsterWars
+//  RocketLauncher_Linear.swift
+//  Cosmos
 //
 //  Created by Main Account on 11/3/15.
 //  Copyright © 2015 Razeware LLC. All rights reserved.

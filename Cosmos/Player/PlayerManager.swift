@@ -1,6 +1,6 @@
 //
 //  PlayerManager.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 6/21/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
@@ -13,14 +13,13 @@ class PlayerManager: NSObject {
     
     static let shared = PlayerManager()
     
-    var mainPlayer : PlayerEntity!
+    var clientPlayer : PlayerEntity!
     
     var players : [Int:PlayerEntity] = [:]
     
     var currentID : Int = 1
     
-    func addThisPlayer() -> PlayerEntity {
-        
+    func createClientPlayer() -> PlayerEntity {
         // Create a new player entity
         let newPlayer = PlayerEntity(player: currentID, playerHUD: PlayerHUD.shared)
         
@@ -31,7 +30,7 @@ class PlayerManager: NSObject {
         currentID += 1
         
         // This is our main player! Set him up!
-        mainPlayer = newPlayer
+        clientPlayer = newPlayer
         
         return newPlayer
     }

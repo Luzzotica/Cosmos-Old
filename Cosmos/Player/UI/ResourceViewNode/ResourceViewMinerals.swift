@@ -1,6 +1,6 @@
 //
-//  PlayerMiningHandler.swift
-//  ShapeFrontier2D
+//  ResourceViewMinerals.swift
+//  Cosmos
 //
 //  Created by Eric on 1/5/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

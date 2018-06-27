@@ -1,6 +1,6 @@
 //
 //  UI_SliderButton.swift
-//  DOTKey Resistance
+//  Cosmos
 //
 //  Created by Sterling Long on 1/23/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

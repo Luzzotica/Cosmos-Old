@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  DOTKey Resistance
+//  PlayerHUD.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 12/29/17.
 //  Copyright © 2017 Sterling Long. All rights reserved.

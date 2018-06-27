@@ -1,9 +1,9 @@
 //
-//  Lasser.swift
-//  MonsterWars
+//  Missile_Linear.swift
+//  Cosmos
 //
-//  Created by Main Account on 11/3/15.
-//  Copyright © 2015 Razeware LLC. All rights reserved.
+//  Created by Sterling Long on 3/25/18.
+//  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
 import Foundation

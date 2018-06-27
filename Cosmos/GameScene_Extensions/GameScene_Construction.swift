@@ -1,6 +1,6 @@
 //
 //  GameScene_Construction.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 3/10/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

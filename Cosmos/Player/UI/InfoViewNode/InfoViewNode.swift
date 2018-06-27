@@ -1,6 +1,6 @@
 //
-//  PlayerHUDExt_StructureInfo.swift
-//  ShapeFrontier2D
+//  InfoViewNode.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 2/19/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

@@ -1,6 +1,6 @@
 //
-//  ConstructionHandler.swift
-//  ShapeFrontier2D
+//  ConstructionViewNode.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 1/5/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

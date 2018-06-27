@@ -1,9 +1,9 @@
 //
 //  HealthComponent.swift
-//  DinoDefense
+//  Cosmos
 //
-//  Created by Toby Stephens on 20/10/2015.
-//  Copyright © 2015 razeware. All rights reserved.
+//  Created by Sterling Long on 3/25/18.
+//  Copyright © 2018 Sterling Long. All rights reserved.
 //
 
 import SpriteKit

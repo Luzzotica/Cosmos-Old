@@ -1,6 +1,6 @@
 //
-//  EnemyDetectorComponent.swift
-//  ShapeFrontier2D
+//  EnemyIndicatorManager.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 3/30/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

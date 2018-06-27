@@ -1,6 +1,6 @@
 //
-//  BuildingItem.swift
-//  ShapeFrontier2D
+//  ConstructionItem.swift
+//  Cosmos
 //
 //  Created by Eric on 1/4/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

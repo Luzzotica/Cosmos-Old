@@ -1,17 +1,9 @@
 //
 //  EntityManager.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 3/3/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
-//
-
-//
-//  EntityManager.swift
-//  MonsterWars
-//
-//  Created by Main Account on 11/3/15.
-//  Copyright © 2015 Razeware LLC. All rights reserved.
 //
 
 import Foundation

@@ -1,6 +1,6 @@
 //
-//  PlayerButtonHandler.swift
-//  DOTKey Resistance
+//  PlayerHUDExt_Buttons.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 1/1/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

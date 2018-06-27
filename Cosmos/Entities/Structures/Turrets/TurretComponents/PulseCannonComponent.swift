@@ -1,6 +1,6 @@
 //
-//  LaserTurret.swift
-//  ShapeFrontier2D
+//  PulseCannonComponent.swift
+//  Cosmos
 //
 //  Created by Sterling Long on 4/28/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

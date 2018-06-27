@@ -1,6 +1,6 @@
 //
 //  Laser.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 2/10/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

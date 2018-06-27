@@ -1,6 +1,6 @@
 //
 //  BuildComponent.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 5/3/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.

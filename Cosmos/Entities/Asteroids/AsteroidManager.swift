@@ -1,6 +1,6 @@
 //
 //  AsteroidManager.swift
-//  ShapeFrontier2D
+//  Cosmos
 //
 //  Created by Sterling Long on 1/4/18.
 //  Copyright © 2018 Sterling Long. All rights reserved.
