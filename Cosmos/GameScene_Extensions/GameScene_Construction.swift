@@ -51,7 +51,7 @@ extension GameScene {
         toBuildNode!.position += translation
         
         // Get structures we can draw to
-        let drawTo = searchStructuresForPlayerInRange(playerID: toBuild!.playerID,
+        let drawTo = searchPlayerStructuresInRange(playerID: toBuild!.playerID,
                                                       isSupplier: toBuild!.isSupplier)
         
         if toBuild!.isSupplier {
@@ -123,7 +123,7 @@ extension GameScene {
         isBuilding = false
     }
     
-    func searchStructuresForPlayerInRange(playerID: Int, isSupplier: Bool) -> [Structure] {
+    func searchPlayerStructuresInRange(playerID: Int, isSupplier: Bool) -> [Structure] {
         var inRange : [Structure] = []
         var currentRange : CGFloat = sceneWidth
         

@@ -59,8 +59,6 @@ class ConstructionViewNode : SKNode {
         // Get the player from the HUD
         guard let player = PlayerHUD.shared.playerEntity else { return }
         
-        print("TEST")
-        
 //        print(name)
         if name.contains("constructor") {
             if name.contains("reactor") {

@@ -75,6 +75,8 @@ class BuildComponent: GKComponent {
                     return
                 }
                 
+                print("Got Here")
+                
                 // Build the structure based on ticks to build and his max health
                 let healAmount = healthComponent.health_max / CGFloat(build_ticksToBuild)
                 healthComponent.heal(healAmount)

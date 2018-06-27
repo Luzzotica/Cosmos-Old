@@ -14,7 +14,11 @@ class PlayerHUD : SKCameraNode {
     // MARK: - Properties
     
     static let shared = PlayerHUD()
-    weak var playerEntity : PlayerEntity!
+    weak var playerEntity : PlayerEntity! {
+        didSet {
+            print("playerEntity set")
+        }
+    }
     
     // Max camera range
     let cameraRange = sceneWidth * 5.0

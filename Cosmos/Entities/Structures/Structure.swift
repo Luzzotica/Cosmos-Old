@@ -215,6 +215,8 @@ class Structure : GKEntity {
         }
     }
     
+    // MARK: - Construction
+    
     func didFinishPlacement() {
         print("Got build component")
         
@@ -239,6 +241,7 @@ class Structure : GKEntity {
     
     init(texture: SKTexture, size: CGSize, playerID: Int) {
         self.playerID = playerID
+        print(playerID)
         
         super.init()
         

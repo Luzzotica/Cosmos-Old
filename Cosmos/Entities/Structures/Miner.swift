@@ -156,6 +156,8 @@ class Miner : Structure {
         spriteComponent!.select(toAdd: [range])
     }
     
+    // MARK: - Construction
+    
     override func didFinishPlacement() {
         super.didFinishPlacement()
         

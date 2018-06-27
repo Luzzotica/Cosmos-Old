@@ -61,11 +61,11 @@ class Reactor : Supplier {
             // If the power is greater than his capacity, then we cap it, and add to the game scene what was added
             if power_current > Structure.ReactorValues.power_capacity[level] {
                 let powerOver = power_current - Structure.ReactorValues.power_capacity[level]
-                PlayerManager.shared.players[playerID]?.power_add(amount: Structure.ReactorValues.power_provided[level] - powerOver)
+                PlayerManager.shared.players[playerID]?.power_current += Structure.ReactorValues.power_provided[level] - powerOver
                 power_current = Structure.ReactorValues.power_capacity[level]
             }
             else {
-                PlayerManager.shared.players[playerID]?.power_add(amount: Structure.ReactorValues.power_provided[level])
+                PlayerManager.shared.players[playerID]?.power_current += Structure.ReactorValues.power_provided[level]
             }
 //            print("Local power is: \(power_current)")
             
@@ -96,8 +96,8 @@ class Reactor : Supplier {
         super.didFinishConstruction()
         
         // Update overall energy variables
-        PlayerManager.shared.players[playerID]?.power_changeMax(amount: Structure.ReactorValues.power_capacity[level])
-        PlayerManager.shared.players[playerID]?.power_add(amount: power_current)
+        PlayerManager.shared.players[playerID]?.power_max += Structure.ReactorValues.power_capacity[level]
+        PlayerManager.shared.players[playerID]?.power_current += power_current
     }
     
     override func didDied() {
@@ -108,8 +108,8 @@ class Reactor : Supplier {
         }
         
         // Make sure the game scene power is updated when a reactor is destroyed
-        PlayerManager.shared.players[playerID]!.power_changeMax(amount: -Structure.ReactorValues.power_capacity[level])
-        PlayerManager.shared.players[playerID]!.power_add(amount: -power_current)
+        PlayerManager.shared.players[playerID]?.power_max -= Structure.ReactorValues.power_capacity[level]
+        PlayerManager.shared.players[playerID]?.power_current -= power_current
     }
     
     init(playerID: Int) {

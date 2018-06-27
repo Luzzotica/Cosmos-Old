@@ -25,15 +25,16 @@ class EntityManager {
     var obstacles : [GKObstacle] = []
     
     lazy var componentSystems: [GKComponentSystem] = {
-        let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
-        let contactSystem = GKComponentSystem(componentClass: ContactComponent.self)
         let rocketSystem_Linear = GKComponentSystem(componentClass: RocketLauncher_Linear.self)
         let rocketSystem_Tracer = GKComponentSystem(componentClass: MissileCannonComponent.self)
-        let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
         let pulseCannonSystem = GKComponentSystem(componentClass: PulseCannonComponent.self)
         let buildSystem = GKComponentSystem(componentClass: BuildComponent.self)
         let upgradeSystem = GKComponentSystem(componentClass: UpgradeComponent.self)
-        return [moveSystem, contactSystem, rocketSystem_Linear, rocketSystem_Tracer, traceSystem, pulseCannonSystem, buildSystem, upgradeSystem]
+        let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
+        let contactSystem = GKComponentSystem(componentClass: ContactComponent.self)
+        let traceSystem = GKComponentSystem(componentClass: TraceComponent.self)
+        
+        return [rocketSystem_Linear, rocketSystem_Tracer, pulseCannonSystem, buildSystem, upgradeSystem, moveSystem, contactSystem, traceSystem]
     }()
     
     func addPlayer(_ player: PlayerEntity) {

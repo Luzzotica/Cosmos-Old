@@ -15,20 +15,23 @@ class PlayerEntity : GKEntity {
     var playerID : Int
     var playerHUD : PlayerHUD?
     
-    // Player structures in game
-    var player_Clusters : [Structure] = []
-    var player_structures : [Structure] = []
-    
-    // Priority structures
-    var player_suppliers : [Supplier] = []
-    var player_turrets : [Turret] = []
-    var player_miners : [Miner] = []
-    
     var teamEntity : TeamEntity?
     
     // Player Power
-    var power_max : Int = 0
-    var power_current : Int = 0
+    var power_max : Int = 100 {
+        didSet {
+            print("Set max power")
+            // Do cool things!
+        }
+    }
+    var power_current : Int = 100 {
+        didSet {
+            print("Set current power")
+            if power_current > power_max {
+                power_current = power_max
+            }
+        }
+    }
     
     // Player Minerals
     var minerals : Int = 10000
@@ -48,21 +51,8 @@ class PlayerEntity : GKEntity {
     
     // MARK: - Power
     
-    func power_add(amount: Int) {
-        power_current += amount
-        
-        if power_current > power_max
-        {
-            power_current = power_max
-        }
-    }
-    
     func power_getCurrent() -> Int {
         return power_current
-    }
-    
-    func power_changeMax(amount: Int) {
-        power_max += amount
     }
     
     func power_getMax() -> Int {
@@ -104,11 +94,11 @@ class PlayerEntity : GKEntity {
     }
     
     func power_findPowerSourceWithPower() -> Supplier? {
-        for reactor in player_suppliers {
-            if reactor.power_current > 0 {
-                return reactor
-            }
-        }
+//        for reactor in player_suppliers {
+//            if reactor.power_current > 0 {
+//                return reactor
+//            }
+//        }
         
         return nil
     }
