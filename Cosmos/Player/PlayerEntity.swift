@@ -24,6 +24,7 @@ class PlayerEntity : GKEntity {
             // Do cool things!
         }
     }
+    
     var power_current : Int = 100 {
         didSet {
             print("Set current power")
