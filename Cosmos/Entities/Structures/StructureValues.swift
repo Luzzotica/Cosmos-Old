@@ -11,6 +11,8 @@ import SpriteKit
 
 extension Structure {
     
+    static let connection_length : CGFloat = sceneWidth * 0.225
+    
     struct Size {
         static let large = CGSize(width: sceneWidth * 0.09, height: sceneWidth * 0.09)
         static let small = CGSize(width: sceneWidth * 0.05, height: sceneWidth * 0.05)

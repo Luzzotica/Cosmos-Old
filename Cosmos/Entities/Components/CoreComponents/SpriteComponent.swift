@@ -33,14 +33,13 @@ class SpriteComponent: GKComponent {
         }
     }
 
-    init(entity: GKEntity, texture: SKTexture, size: CGSize) {
+    init(texture: SKTexture, size: CGSize) {
         node = SKNode()
         spriteNode = SKSpriteNode(texture: texture,
                         color: SKColor.white, size: size)
         
         super.init()
-        node.entity = entity
-        spriteNode.entity = entity
+        
         
         // Setup his physics body
         node.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
@@ -48,13 +47,11 @@ class SpriteComponent: GKComponent {
         node.addChild(spriteNode)
     }
     
-    init(entity: GKEntity, size: CGSize) {
+    init(size: CGSize) {
         node = SKNode()
         spriteNode = SKSpriteNode(color: SKColor.red, size: size)
         
         super.init()
-        node.entity = entity
-        spriteNode.entity = entity
         
         node.physicsBody = SKPhysicsBody(circleOfRadius: size.width * 0.5)
         

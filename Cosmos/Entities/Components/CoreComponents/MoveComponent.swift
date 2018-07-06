@@ -13,12 +13,9 @@ import GameplayKit
 class MoveComponent : GKAgent2D, GKAgentDelegate {
     
     // The target he tries to attack!
-    var name : String
     var target : Int = 1
     
-    init(maxSpeed: Float, maxAcceleration: Float, radius: Float, name: String) {
-        self.name = name
-        
+    init(maxSpeed: Float, maxAcceleration: Float, radius: Float) {
         super.init()
         self.delegate = self
         self.maxSpeed = maxSpeed
